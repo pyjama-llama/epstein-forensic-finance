@@ -1,5 +1,15 @@
 # Disclosure Tier Framework
 
+## Why This Framework Exists
+
+During analysis of the EFTA corpus, it became apparent that the Department of Justice applied redactions improperly across a significant portion of scanned documents — black bars were drawn over content at the image level, but the underlying text layer was left intact. This is a government failure in document production, not a finding this project sought to create.
+
+The immediate consequence is that names recoverable from under those redactions include not only public figures, financial institutions, and persons already known in connection with the case — but also victims. People who were harmed. People whose identities the DOJ intended to protect, and whose protection was compromised by inadequate redaction practices.
+
+This framework was designed and implemented before any recovered content entered the reporting pipeline. Its purpose is to ensure that the financial analysis — the money, the institutions, the transaction patterns — can be published without causing further harm to the people this case was supposed to protect.
+
+Every fragment defaults to WITHHELD until proven safe to disclose. The burden is on the data to demonstrate public nexus, not on the individual to request suppression.
+
 ## Purpose
 
 The EFTA corpus contains redacted content that, when analyzed, may reveal names of victims, witnesses, cooperators, or other individuals whose identities were concealed for legitimate protective reasons. The disclosure tier framework ensures that recovered information is classified before it enters any deliverable, preventing inadvertent exposure of protected individuals.
