@@ -1,26 +1,146 @@
-# EFTA Financial Forensics Pipeline
+# Epstein Financial Forensics
 
-**The largest independent corpus and the only automated financial extraction pipeline built against the DOJ Epstein Files Transparency Act release.**
+**Automated forensic financial reconstruction from 1.83 million DOJ EFTA documents**
 
-| Metric | This Project | DOJ Release | Next Largest Independent |
-|--------|-------------|-------------|------------------------|
-| **Files indexed** | 1,831,659 | ~1,400,000 | ~1,385,000 |
-| **Pages processed** | 6,900,000+ | 3,500,000 | ~2,770,000 |
-| **Fund flow records extracted** | 23,832 | Not provided | 1,489 |
-| **Named entities (NLP)** | 11,400,000+ | Not provided | ~4,000 |
-| **Persons identified** | 734,000+ | Not provided | ~1,200 |
-| **Datasets** | 19 | 12 | 14 |
-| **Database size** | 6.9 GB (SQLite) | N/A | ~4 GB |
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 
 ---
 
 ## What This Is
 
-A forensic financial analysis pipeline that processes the full EFTA corpus — all 12 DOJ datasets plus 7 supplementary sources — and extracts, classifies, and cross-references every financial transaction against known Suspicious Activity Report (SAR) filings.
+This repository contains the methodology, findings, and documentation for a computational forensic analysis of the U.S. Department of Justice's Epstein Files Transparency Act (EFTA) corpus — the largest such analysis by file volume and analytical depth in the public domain.
 
-The DOJ released 3.5 million pages of Epstein-related evidence. They did not organize, classify, or cross-reference any of it. This pipeline does.
+The project applies professional financial auditing methodology to reconstruct fund flows, map entity networks, and quantify what the DOJ's document release reveals (and conceals) about the financial infrastructure surrounding Jeffrey Epstein.
 
-**This is not a search engine.** Other projects index the documents for keyword search. This project reconstructs the financial ledger — who sent money to whom, through which banks, in what amounts, and whether those transactions appear in known SAR filings.
+---
+
+## The Database
+
+| Metric | This Project | Largest Narrative Repo | Largest Search Platform | Others |
+|--------|:------------:|:----------------------:|:----------------------:|:------:|
+| **Total files indexed** | **1,831,659** | 1,380,937 | 1,120,000 | < 20,000 |
+| **Datasets covered** | **19** (DS1-12 + DS98-104) | 12 | 12 | 1-3 |
+| **Extracted text records** | **1.48M+** | 993,406 pages | — | — |
+| **Entity extraction (NLP)** | **11.4M entities** | ~4,000 curated | 1,589 manual | < 500 |
+| **Unique persons identified** | **568,000+** | 1,536 registry | 1,589 | — |
+| **Financial transactions modeled** | **24,623** | ~1,489 narrative | 0 | 0 |
+| **Directional fund flows (A→B)** | **23,832** | qualitative | 0 | 0 |
+| **Relational database tables** | **28+** | 3-4 | — | — |
+| **Confidence-tiered scoring** | ✅ 5-axis | — | — | — |
+| **Redaction proximity analysis** | ✅ | ✅ (different method) | — | — |
+| **SAR cross-validation** | ✅ | — | — | — |
+| **Senate-ready output format** | ✅ SSFS-aligned | — | — | — |
+
+> **Note:** The largest narrative repo's 1,380,937 figure counts individual *pages* as records; their unique PDF file count is ~519,548. Our 1,831,659 are unique files each with a distinct DOJ URL or registered serial. Multiple projects in this space are doing valuable, complementary work — narrative forensic reporting, searchable archives, community preservation. This project's lane is systematic financial reconstruction at scale.
+
+---
+
+## Database Schema (28+ Tables)
+
+This is not a search index. This is a relational forensic database.
+
+**Financial Analysis**
+- `fund_flows` — 23,832 directional money movements (entity_from → entity_to, amount, date, confidence)
+- `fincen_transactions` — FinCEN SAR data cross-referenced against corpus
+- `fincen_bank_connections` — Bank relationship mapping from regulatory filings
+- `financial_hits` — Raw financial content extraction markers
+- `financial_redactions` — Redacted financial content specifically tracked
+
+**Entity Intelligence**
+- `entities` — 11.4M extracted entities with NLP classification (PERSON, ORG, GPE)
+- `poi_rankings` — Persons of interest scored by multi-axis corpus frequency
+- `evidence_index` — Evidentiary chain linking across documents
+
+**Redaction Analysis**
+- `redaction_recovery` — Content recovered from under redaction overlays
+- `redaction_markers` — Systematic redaction position tracking
+- `redaction_summary` — Aggregated redaction analysis per document
+
+**Corpus Infrastructure**
+- `files` — 1,831,659 file records with metadata, classification, dates
+- `dates_found` — Temporal mapping across entire corpus
+- `media_evidence` — DS10 image/video catalog (503K images + 874 videos)
+
+**External Cross-Reference**
+- `faa_master`, `faa_engine`, `faa_acftref` — FAA aircraft registry for flight tracking
+- `icij_entities`, `icij_officers`, `icij_relationships` — ICIJ Offshore Leaks for shell company cross-referencing
+
+---
+
+## Pipeline Architecture
+
+```
+Phase 1    DOJ EFTA Scraper + Community Gap-Fill → 1.83M files registered
+Phase 2    Download & Verify → local corpus with integrity checks
+Phase 3    Extract, Classify & Enrich → text, doc types, dates
+Phase 3B   Entity Extraction (spaCy NLP) → 11.4M entities, 568K persons
+Phase 5A   Person-of-Interest Network → news-filtered, multi-source scoring
+Phase 5B   Operational Cost Model → confidence-tiered financial extraction
+Phase 5C   Entity-to-Entity Fund Flows → directional A→B with 5-axis scoring
+Phase 5D   Payment-Travel-Victim Correlation → temporal pattern analysis
+Phase 5E   Redaction Map → congressional navigation tool
+Phase 6    DOJ 303 Names Cross-Reference → scoring politically exposed persons
+Phase 7    Redaction Inference Engine → cross-corpus context recovery
+```
+
+---
+
+## Financial Methodology: 5-Axis Forensic Scoring
+
+Every financial record is independently scored across five axes:
+
+| Axis | Weight | What It Measures |
+|------|:------:|-----------------|
+| Context Language | ×3 | Transaction vocabulary (wire, routing, SWIFT) vs. noise (lawsuit, net worth) |
+| Amount Specificity | ×1 | $2,473,891.55 scores high; $10,000,000.00 exactly scores low |
+| Date Presence | ×1 | Full date > year only > no date |
+| Entity Quality | ×2 | 28 known banks, 64 financial actors, 71+ garbage entity exclusions |
+| Source Document Type | ×1 | Financial/spreadsheet > email > general document |
+
+**Classification Tiers:**
+- **PROVEN** (≥12): Bank statement language, multi-axis confirmation, ctx_txn ≥ 2
+- **STRONG** (8-11): Good signals, minor gaps
+- **MODERATE** (5-7): Mixed signals
+- **WEAK** / **VERY_WEAK** / **REJECT**: Insufficient evidence or known noise
+
+**Validation:** v6.1 spot-check achieved 93% accuracy on top-30 PROVEN transactions (28/30), with 0% balance contamination (down from 47% in v5).
+
+---
+
+## Key Findings
+
+> ⚠️ **All findings are navigational tools derived from automated extraction. They have not been independently verified and should not be treated as established fact. (Unverified) tags apply throughout. See [METHODOLOGY.md](methodology/METHODOLOGY.md) for full disclaimers.**
+
+### Finding 001: Fund Flow Network Topology
+*[PENDING — current pipeline run in progress. Financial figures will be populated upon completion.]*
+
+**Preliminary indicators from v6.1 audit:**
+- PROVEN-tier transactions: `[TBD]` deduped entries / `$[TBD]`
+- STRONG-tier transactions: `[TBD]` entries / `$[TBD]`
+- Combined bank-backed (P+S): `$[TBD]` — representing `[TBD]%` of $1.878B SAR benchmark
+- Internal network flows (trust-to-trust, beyond SARs): `$[TBD]`
+
+**SAR Benchmark** (public record, independently verified):
+| Bank | Reported SARs |
+|------|:------------:|
+| JPMorgan Chase | ~$1.1B (4,700+ transactions) |
+| Deutsche Bank | ~$400M |
+| Bank of New York Mellon | ~$378M |
+| **Total known SARs** | **$1.878B** |
+
+*Sources: U.S. Senate Permanent Subcommittee on Investigations; NYDFS Consent Order (2020); JPMorgan USVI Settlement (2023)*
+
+---
+
+## What Makes This Different
+
+**We didn't read the documents. We audited the money.**
+
+Other projects in this space build search engines, write narrative reports, or create browsable archives. All valuable work. This project applies the same methodology used in professional public-sector financial auditing — multi-affiliate reconciliation, exception reporting, variance analysis, confidence tiering — to computationally reconstruct the financial infrastructure visible in the EFTA corpus.
+
+The question we answer isn't "what do the documents say?" It's: **"Where did the money go, who moved it, and what did the DOJ redact around it?"**
+
+---
 
 ## Author
 
@@ -31,159 +151,52 @@ MS Applied Data Science, Syracuse University
 
 Professional background in multi-affiliate financial reconciliation, budget auditing, and large-scale fiscal operations. Builds automated classification and exception reporting systems for institutional financial data. This project applies the same methodology used in professional public-sector financial auditing to the EFTA corpus.
 
-## Database Schema
+---
 
-The pipeline produces a 6.9 GB relational SQLite database with 28+ tables. Key analytical tables:
+## Ethical Standards
 
-### Financial Forensics
-| Table | Records | Description |
-|-------|---------|-------------|
-| `fund_flows` | 24,623 | Directional money movements: entity_from → entity_to with amount, date, confidence |
-| `fincen_transactions` | — | FinCEN SAR data cross-referenced against corpus extractions |
-| `fincen_bank_connections` | — | Bank relationship mapping from suspicious activity filings |
-| `financial_hits` | — | Raw dollar amount extraction markers with source context |
-| `financial_redactions` | — | Redacted financial content specifically tracked and cataloged |
+- **Victim protection**: No victim names, identifying details, or testimony content is stored, published, or extractable from any output. Victim-adjacent redactions are noted by proximity only.
+- **SSFS alignment**: All outputs include frozen Row 1 caveats, (Unverified) column tags, and navigational-tool disclaimers consistent with professional auditing standards.
+- **No attribution of guilt**: Financial flows are documented as they appear in DOJ documents. Appearance in this database does not imply wrongdoing.
+- **Open methodology**: Every extraction rule, scoring weight, and classification threshold is documented and reproducible.
 
-### Entity Intelligence
-| Table | Records | Description |
-|-------|---------|-------------|
-| `entities` | 11,400,000+ | NLP-extracted entities (persons, organizations, locations, dates, amounts) |
-| `poi_rankings` | — | Persons of interest scored by corpus frequency and financial involvement |
-| `evidence_index` | — | Evidentiary chain linking entities to source documents |
+---
 
-### Redaction Analysis
-| Table | Records | Description |
-|-------|---------|-------------|
-| `redaction_markers` | — | Systematic redaction location and type tracking |
-| `redaction_recovery` | — | Content recovered from beneath failed redaction overlays |
-| `redaction_summary` | — | Per-document redaction density and pattern analysis |
-
-### Cross-Reference Sources
-| Table | Description |
-|-------|-------------|
-| `icij_entities` | Panama Papers / Paradise Papers offshore entity cross-reference |
-| `icij_officers` | Offshore company officer registry |
-| `icij_relationships` | Offshore entity relationship mapping |
-| `faa_master` | FAA aircraft registration (Epstein fleet tracking) |
-| `faa_engine` / `faa_acftref` | Aircraft specification cross-reference |
-| `media_evidence` | DS10 image/video catalog (941K serials registered) |
-| `dates_found` | Temporal mapping across entire corpus |
-
-## Dataset Inventory
-
-| ID | Source | Files | Description |
-|----|--------|-------|-------------|
-| DS1–DS8 | DOJ EFTA | ~57,000 | FBI interviews, Palm Beach PD reports (2005–2008) |
-| DS9 | DOJ EFTA | 531,284 | Email evidence, DOJ internal correspondence, NPA documents |
-| DS10 | DOJ EFTA | 503,000+ | 180K images + 2K videos from seized devices |
-| DS11 | DOJ EFTA | 331,659 | Financial ledgers, flight manifests, property seizures, 475K emails |
-| DS12 | DOJ EFTA | ~150 | Late productions requiring extended legal review |
-| DS98 | FBI Vault | 1,037 | FOIA releases predating EFTA |
-| DS99 | House Oversight | 56,421 | Estate documents, congressional subpoena production |
-| DS100 | DOJ Supplemental | 92 | December 2025 early release batch |
-| DS101 | DOJ Supplemental | 92 | Additional December 2025 materials |
-| DS102 | DOJ Supplemental | 67 | Pre-January supplemental filings |
-| DS103 | House Oversight | 41,231 | Trump financial disclosures — excluded from financial pipeline |
-| DS104 | House Oversight | 29,718 | Additional congressional production |
-
-**Total: 1,831,659 files across 19 datasets.**
-
-## Pipeline Architecture (v18)
+## Citation
 
 ```
-Phase 5A: News-filtered entity extraction (40+ false-positive exclusions, OCR normalization)
-     ↓
-Phase 5B: Financial transaction classification
-          ├── Tier 1: Direct bank evidence (DB-SDNY production documents)
-          ├── Tier 2: Corpus-wide extraction (keyword + amount + context scoring)
-          └── Tier 3: Entity-matched transactions (NLP entity ↔ financial record linkage)
-     ↓
-Phase 5C: SAR cross-reference (benchmark against known FinCEN filings)
-     ↓
-Phase 5D: Deduplication (composite key: amount + entity + date)
-     ↓
-Phase 5E: Confidence scoring and tier assignment
-     ↓
-Phase 6:  DOJ release gap analysis (303-name PEP list cross-reference)
+Taylor, R.S. (2026). Epstein Financial Forensics: Automated forensic financial
+reconstruction from 1.83 million DOJ EFTA documents. GitHub.
+https://github.com/randallscott25-star/epstein-financial-forensics
 ```
 
-### Current Pipeline Output
-
-The pipeline's `fund_flows` table contains **23,832 directional fund flow records** — extracted transactions with sender, receiver, amount, and date — totaling $10.73B in extracted volume.
-
-| Confidence | Entries | Amount | Description |
-|------------|---------|--------|-------------|
-| **High** | 675 | $267,244,458 | Anchored by bank production documents (DB-SDNY, JPM-SDNYLIT series) |
-| Low | 23,157 | $10,460,970,150 | Corpus-wide extraction — contains duplication from same transactions appearing across multiple documents |
-| **Total** | **23,832** | **$10,728,214,608** | |
-
-**Important:** The $10.7B figure is **extracted volume**, not verified transaction volume. The same wire transfer may appear in a bank statement, an email confirmation, a wire request form, and a legal filing — generating multiple fund flow records. The high-confidence $267M represents the floor of verified, deduplicated financial activity. The network topology (who sent money to whom) is more reliable than the aggregate dollar amounts.
-
-### Bank Routing (from fund_flows)
-
-| Bank | Role | Records | Extracted Volume |
-|------|------|---------|-----------------|
-| Deutsche Bank | Sender | 2,311 | $1,475,373,584 |
-| JPMorgan | Sender | 795 | $933,057,678 |
-| JPMorgan | Receiver | 705 | $342,716,349 |
-| Citibank | Sender | 165 | $198,209,007 |
-
-### SAR Benchmark Context
-
-| Bank | Known SAR Filing | Pipeline Extracted (as sender) | Ratio |
-|------|-----------------|-------------------------------|-------|
-| JPMorgan Chase | $1,100,000,000 | $933,057,678 | 0.85x |
-| Deutsche Bank | ~$400,000,000 | $1,475,373,584 | 3.69x |
-| BNY Mellon | $378,000,000 | In progress | — |
-
-Deutsche Bank's extraction exceeds its known SAR filing by 3.7x. This does not mean the pipeline found $1.5B in unique transactions — it means Deutsche Bank appears as a sender in fund flow records totaling that amount, which likely includes duplication. However, the ratio suggests Deutsche Bank processed substantial Epstein-related activity beyond what it reported as suspicious.
-
-## Findings
-
-| # | Title | Status |
-|---|-------|--------|
-| [001](findings/FINDING_001_FUND_FLOW_NETWORK.md) | Reconstructing the Epstein Fund Flow Network: 23,832 Directional Records Across 19 Datasets | Published |
-
-## Methodology
-
-All analysis is performed on publicly released U.S. government records under the Epstein Files Transparency Act (Public Law 118-299). No data was obtained through leaks, hacking, or non-public channels.
-
-- **Text extraction**: PyMuPDF (digital PDFs), Tesseract OCR (scanned documents and images)
-- **Entity extraction**: spaCy NLP pipeline + custom Epstein-domain entity recognizer
-- **Financial extraction**: Multi-pass regex with context scoring, false-positive filtering, sanity caps
-- **Deduplication**: Composite keys (amount + entity + date) with quality tiers
-- **Cross-referencing**: SAR benchmark data from Senate Finance Committee public filings
-- **Victim protection**: No victim names, addresses, or identifying information in any published output
-
-## Publication Policy
-
-**This repository publishes findings, methodology, and source citations. It does not publish the database or pipeline code.**
-
-Why:
-
-- **Victim protection.** The EFTA corpus contains victim names, home addresses, phone numbers, and intimate images — much of which the DOJ itself failed to properly redact. Over 200 survivors have filed legal action over the DOJ's handling of this data. A structured, searchable database that indexes this material would compound that harm. This project will not contribute to it.
-
-- **Professional standard.** Forensic financial analysis publishes findings with sufficient methodology for independent verification — not raw working papers. Every claim in every finding includes EFTA serial numbers that can be checked directly against the source documents on [justice.gov/epstein](https://www.justice.gov/epstein).
-
-- **Active analysis.** The pipeline is under active development (v18, 19 versions over 70+ sessions). Code and schema will be evaluated for release after the analytical work is complete and victim-sensitive content can be properly separated.
-
-Anyone can verify any finding by following the EFTA citations to the original DOJ documents. That is the standard this project holds itself to.
-
-## Replication
-
-All EFTA source documents are available at [justice.gov/epstein](https://www.justice.gov/epstein). Any EFTA citation can be verified:
-
-```
-https://www.justice.gov/epstein/files/DataSet {N}/EFTA{XXXXXXXX}.pdf
-```
-
-## Project Timeline
-
-- **Started**: February 7, 2026
-- **Development**: 200+ paired hours across 70+ sessions
-- **Pipeline versions**: v1 through v19
-- **Built from scratch**: DOJ document crawler, 19-dataset aggregator, 1.83M file corpus, full financial forensic pipeline
+---
 
 ## License
 
-Analysis of public government records. Underlying EFTA documents are U.S. government works. Structured analytical outputs are released into the public domain.
+This work is licensed under [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/).
+
+The underlying DOJ documents are U.S. government publications in the public domain. This repository contains only metadata, extracted analysis, and methodology — no copyrighted source material is reproduced.
+
+---
+
+## Project Timeline
+
+| Date | Milestone |
+|------|-----------|
+| Feb 7, 2026 | Project started — DOJ scraper built, first dataset indexed |
+| Feb 8 | DS11 (76,969 financial ledgers) fully scraped |
+| Feb 10 | 633,842 files indexed — published to GitHub and Archive.org |
+| Feb 12 | Phase 3 text extraction complete (513K files) |
+| Feb 14 | Entity extraction (3B) launched — 565K files queued |
+| Feb 15 | Corpus expanded to 1.57M with DS10 + community gap-fill |
+| Feb 16 | Phase 5 financial analysis chain operational |
+| Feb 18 | Barton letter sent to U.S. Senate |
+| Feb 18 | Corpus expanded to 1.83M across 19 datasets |
+| Feb 20 | Fund flows audit v6.1 validated at 93% accuracy |
+| Ongoing | Full pipeline re-run with expanded corpus and refined scoring |
+
+---
+
+*200+ paired hours. 70+ sessions. Built from scratch.*
+*For the girls.*
