@@ -1,0 +1,168 @@
+# Methodology
+
+> ⚠️ **This analysis does not constitute an audit, examination, or review performed in accordance with GAAS, GAGAS, or AICPA SSFS No. 1. All dollar figures are (Unverified) automated extractions. Verification tiers are analyst assessments, not audit opinions. See [COMPLIANCE.md](COMPLIANCE.md) for full professional standards discussion.**
+
+## Overview
+
+This document describes the 24-phase extraction pipeline I built to identify and quantify financial wire transfers from 1,575,000 files across 19 DOJ EFTA datasets. The pipeline produced a final audited total of **$1,964,229,742** (Unverified) — 104.6% of the $1.878 billion FinCEN SAR benchmark.
+
+I wrote all extraction code, designed the database schema, and performed the forensic analysis as a solo effort, with AI assistance (Claude, Anthropic) for development acceleration and quality assurance. The full database architecture is documented in **[SCHEMA.md](SCHEMA.md)**.
+
+---
+
+## Data Sources
+
+### DOJ EFTA Corpus
+
+| Metric | Value |
+|--------|------:|
+| Total files indexed | 1,476,377 + 503,154 media |
+| Datasets | 19 (DS1-12 + DS98-104) |
+| Extracted text records | 1.48M+ |
+| Entity extraction (spaCy NLP) | 11,438,106 entities |
+| Unique persons identified | 734,122 |
+| Database size | 6.9GB SQLite |
+| Relational tables | 28+ |
+
+### Structured Database Tables Used in Wire Extraction
+
+| Table | Rows | Description | Quality |
+|-------|-----:|-------------|---------|
+| `verified_wires` | 185 | Court-exhibit authenticated wire transfers (Alfano exhibits, DB-SDNY) | Gold standard — dates, bates numbers, exhibits |
+| `fund_flows_audited` | 7,355 | 5-tier classified financial flows (PROVEN/STRONG/MODERATE/WEAK/VERY_WEAK) | Audited — entity-pair matching, context scoring |
+| `fund_flows` | 16,677 | Raw financial flows before classification | Unfiltered — contains balances, noise |
+| `financial_hits` | 35,375 | Keyword-flagged financial references | Mixed — wire_transfer category filtered |
+| `trust_transfers` | Variable | Trust-to-trust transfer records | Structured — trust administration records |
+
+### FinCEN SAR Benchmark
+
+| Bank | SAR Amount | Source |
+|------|----------:|--------|
+| JPMorgan Chase | $1,100,000,000 | U.S. Senate Permanent Subcommittee on Investigations |
+| Deutsche Bank | $400,000,000 | FinCEN SAR filings |
+| BNY Mellon | $378,000,000 | FinCEN SAR filings |
+| **Combined** | **$1,878,000,000** | |
+
+*Sources: NYDFS Consent Order (2020); JPMorgan USVI Settlement (2023)*
+
+---
+
+## 5-Axis Forensic Scoring
+
+Every financial record extracted from the EFTA corpus is independently scored across five axes before entering the wire extraction pipeline:
+
+| Axis | Weight | What It Measures |
+|------|:------:|-----------------|
+| Context Language | ×3 | Transaction vocabulary (wire, routing, SWIFT) vs. noise (lawsuit, net worth) |
+| Amount Specificity | ×1 | $2,473,891.55 scores high; $10,000,000.00 exactly scores low |
+| Date Presence | ×1 | Full date > year only > no date |
+| Entity Quality | ×2 | 28 known banks, 64 financial actors, 71+ garbage entity exclusions |
+| Source Document Type | ×1 | Financial/spreadsheet > email > general document |
+
+**Classification Tiers:**
+- **PROVEN** (≥12): Bank statement language, multi-axis confirmation, ctx_txn ≥ 2
+- **STRONG** (8-11): Good signals, minor gaps
+- **MODERATE** (5-7): Mixed signals
+- **WEAK** / **VERY_WEAK** / **REJECT**: Insufficient evidence or known noise
+
+**Validation:** v6.2 spot-check achieved 93% accuracy on top-30 PROVEN transactions (28/30), with 0% balance contamination (down from 47% in v5).
+
+---
+
+## Extraction Pipeline
+
+### Phase-by-Phase Log
+
+All amounts are (Unverified) automated extractions.
+
+| Phase | Description | Amount | Running Total | % SAR | Quality Gate |
+|-------|-------------|-------:|--------------:|------:|-------------|
+| v2 | Core OCR Extraction | +$1,204,000,000 | $1,204,000,000 | 64.1% | Amount-unique dedup |
+| BF adj | Butterfly Trust Correction | -$63,000,000 | $1,141,000,000 | 60.8% | Manual review |
+| v3.2 | 7-Layer Wire Expansion | +$237,452,186 | $1,378,452,186 | 73.4% | 7-layer proximity filter |
+| 14.5 | Known Entity Fund Flows | +$90,936,712 | $1,469,388,898 | 78.2% | Entity name match |
+| **14.5B** | **Balance Contamination Fix** | **-$53,766,217** | $1,415,622,681 | 75.4% | **BUG FIX** |
+| 15E | Fund Flows Real Wires | +$14,000,000 | $1,429,622,681 | 76.1% | Wire keyword required |
+| 15F | Redaction Recovery | +$368,170 | $1,429,990,851 | 76.1% | Proximity scan |
+| 16.1 | Transaction-Line Parser | +$78,547,827 | $1,508,538,678 | 80.3% | Format validation |
+| 16.2 | Round-Wire Extractor | +$4,975,350 | $1,513,514,028 | 80.6% | Round-amount + context |
+| 17 | Trust Transfers + DS8 | +$12,720,752 | $1,526,234,780 | 81.3% | Table structure |
+| 18 | Full Category Sweep | +$3,854,313 | $1,530,089,093 | 81.5% | Category filter |
+| **19** | **Audited PROVEN Fix** | **+$59,524,629** | $1,589,613,722 | 84.6% | **BUG FIX** |
+| 20A | Verified Wires (amount-new) | +$53,093,926 | $1,642,707,648 | 87.5% | Court-exhibit verified |
+| 21A/B | STRONG/MODERATE New Amounts | +$9,641,465 | $1,652,349,113 | 88.0% | Wire indicator + tier |
+| **23** | **Date-Aware Wire Census** | **+$191,304,691** | $1,843,653,804 | 98.2% | **Date dedup** |
+| **24** | **Above-Cap Verified Wires** | **+$120,575,938** | $1,964,229,742 | 104.6% | **Court-exhibit verified** |
+
+---
+
+## Deduplication Strategy
+
+### Three-Stage Dedup Evolution
+
+**Stage 1 (Phases v2-20): Amount-Only Dedup**
+Each unique dollar amount was counted once, regardless of entity pairs or dates. Maximally conservative but destroyed legitimate repeat wires.
+
+**Stage 2 (Phase 23): Date-Aware Census**
+I added date as a dedup dimension: `(amount, entity_from, entity_to, date)`. This recovered 95 same-amount different-date wires worth $189M.
+
+**Stage 3 (Phase 24): Verified-Tier Cap Removal**
+I removed the $10M safety cap for court-exhibit verified wires. All 8 above-cap entries had exhibit numbers, bates stamps, dates, and named counterparties.
+
+### Entity Classification
+
+| Type | Description | Examples |
+|------|-------------|---------|
+| **EPSTEIN ENTITY** | Controlled trusts, shells, personal accounts | Southern Trust, Jeepers Inc., Plan D LLC |
+| **EXTERNAL PARTY** | Investors, beneficiaries, counterparties | Leon Black, Sotheby's, Tudor Futures |
+| **BANK/CUSTODIAN** | Financial institutions intermediating transfers | Deutsche Bank, JPMorgan, HSBC |
+| **UNKNOWN** | Unclassifiable short strings or OCR artifacts | — |
+
+Entity normalization handled 178+ OCR variants (e.g., "JJEFFREY EPSTEIN" → "Jeffrey Epstein", "GHISLA1NE MAXWELL" → "Ghislaine Maxwell").
+
+---
+
+## Contamination Bugs Found & Fixed
+
+Nine data quality issues were identified and corrected during the pipeline:
+
+| # | Phase | Bug | Impact | What Went Wrong | How Fixed |
+|---|-------|-----|--------|-----------------|-----------|
+| 1 | 14.5B | Balance Contamination | -$53.8M | Running statement balances extracted as wire amounts | `is_balance` flag; excluded from subsequent phases |
+| 2 | 16.1 | Brokerage Noise | -$155M | Securities language mixed with wire data | BROKERAGE_NOISE regex filter |
+| 3 | 19 | Self-Dedup Bug | +$59.5M | Table checking new entries against itself | Fixed dedup reference to prior-phase JSON only |
+| 4 | 20D | Amount-Only Dedup | +$115M | Same amount, different entity pairs collapsed | Entity-pair aware dedup (created Bug 5) |
+| 5 | 22 | Chain-Hop Inflation | -$311M | $10M through 4 entities counted as $40M | INTERNAL entity taxonomy; excluded internal hops |
+| 6 | 22 | Cross-Table Name Duplication | Risk flagged | Same wire as "Leon & Debra Black" and "LEON_BLACK" | Three-tier confidence framework |
+| 7 | 22 | Statement Noise as Entities | -$59M | "Balance Transfers", "Gift Cards" as wire entities | STATEMENT_NOISE filter; 188 entries removed |
+| 8 | 23 | Date-Blind Dedup | +$189M | Four $10M wires on different dates counted as one | Date-aware master ledger composite key |
+| 9 | 24 | Arbitrary Cap + Custodian | +$120.6M / -$113.4M | $10M cap excluded verified wires; "(DBAGNY)" misclassified | Cap removed for verified tier; custodian audit |
+
+---
+
+## Limitations
+
+1. **Not a professional audit**: This is automated text extraction, not a review under GAAS, GAGAS, or AICPA SSFS No. 1.
+2. **Solo practitioner**: No segregation of duties or independent partner review. AI-assisted QA provides partial mitigation.
+3. **OCR quality varies**: Some amounts may be misread from scan artifacts (e.g., $1M vs $10M).
+4. **Entity normalization is imperfect**: Some entities may be misidentified or incorrectly merged across OCR variants.
+5. **Sealed documents are inaccessible**: Court-sealed records cannot be extracted. The dollar value of sealed financial activity is unknown.
+6. **SAR vs. completed transactions**: The SAR benchmark counts **attempted** suspicious transactions; I extract **completed** wire transfers.
+7. **Destroyed records**: Pre-retention period records may have been destroyed. The dollar value is unquantifiable from the EFTA corpus.
+8. **Cross-table name overlap**: Same wire may appear with different entity formatting across database tables.
+9. **Chain-hop filtering trade-offs**: Some legitimate multi-step transactions may have been excluded by the internal entity filter.
+10. **Date coverage**: 122 of 382 master ledger entries have dates. Undated entries carry higher duplication risk.
+
+---
+
+## Tools & Infrastructure
+
+- **Language**: Python 3.12
+- **Database**: SQLite (6.9GB, 28+ tables, 19 datasets)
+- **NLP**: spaCy entity extraction (11.4M entities, 734K persons)
+- **OCR Processing**: Tesseract-based text extraction with custom noise filters
+- **Analysis**: pandas, openpyxl, json
+- **Scoring**: 5-axis forensic confidence scoring (v6.2, 93% PROVEN accuracy)
+- **AI Assistance**: Claude (Anthropic) — development acceleration and quality assurance
+- **Version Control**: Git/GitHub
+- **Total effort**: ~200+ hours across 70+ sessions (February 7-21, 2026), solo practitioner
