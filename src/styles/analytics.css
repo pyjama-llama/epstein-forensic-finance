@@ -1,0 +1,189 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   ANALYTICS DASHBOARD — Styles
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── App Shell ───────────────────────────────────────────────────────────── */
+#analytics-app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+#analytics-main {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 24px 32px 48px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+}
+
+/* ── Page Navigation ─────────────────────────────────────────────────────── */
+#page-nav {
+    display: flex;
+    gap: 4px;
+    background: var(--bg-elevated);
+    border-radius: var(--radius);
+    padding: 3px;
+}
+
+.nav-tab {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 6px 16px;
+    border-radius: calc(var(--radius) - 2px);
+    transition: all var(--t-fast);
+}
+
+.nav-tab:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.nav-tab.active {
+    color: var(--accent);
+    background: var(--accent-glow);
+}
+
+/* ── Summary Cards ───────────────────────────────────────────────────────── */
+#summary-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 28px;
+}
+
+.summary-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    text-align: center;
+}
+
+.summary-value {
+    font-family: var(--font-mono);
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--text-bright);
+    line-height: 1;
+    margin-bottom: 6px;
+}
+
+.summary-label {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+}
+
+/* ── Chart Grid ──────────────────────────────────────────────────────────── */
+.chart-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.chart-panel {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    overflow: hidden;
+}
+
+.chart-panel-wide {
+    grid-column: 1 / -1;
+}
+
+.chart-title {
+    font-family: var(--font-ui);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.chart-subtitle {
+    font-family: var(--font-ui);
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+}
+
+.chart-container {
+    width: 100%;
+    min-height: 350px;
+    position: relative;
+}
+
+.chart-container svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* ── Chart Axes ──────────────────────────────────────────────────────────── */
+.chart-container .tick text {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    fill: var(--text-secondary);
+}
+
+.chart-container .tick line {
+    stroke: var(--border);
+    stroke-opacity: 0.5;
+}
+
+.chart-container .domain {
+    stroke: var(--border);
+}
+
+/* ── Bar Chart Bars ──────────────────────────────────────────────────────── */
+.bar-label {
+    font-family: var(--font-ui);
+    font-size: 13px;
+    fill: var(--text-primary);
+}
+
+.bar-value {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    fill: var(--text-secondary);
+}
+
+/* ── Arrow Dot Plot ──────────────────────────────────────────────────────── */
+.dot-label {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    fill: var(--text-secondary);
+}
+
+.arrow-line {
+    stroke-width: 2;
+}
+
+/* ── Large Monitor Scaling ───────────────────────────────────────────────── */
+@media (min-width: 1400px) {
+    .summary-value {
+        font-size: 32px !important;
+    }
+
+    .chart-title {
+        font-size: 18px !important;
+    }
+
+    .chart-subtitle {
+        font-size: 14px !important;
+    }
+
+    .chart-container {
+        min-height: 420px;
+    }
+}

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+        content="Financial analytics dashboard for the Epstein forensic network. Bar charts, Sankey diagrams, and flow analysis of $557M+ in documented wire transfers." />
+    <title>Analytics — Epstein Forensic Finance</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="/src/styles/main.css" />
+    <link rel="stylesheet" href="/src/styles/analytics.css" />
+</head>
+
+<body>
+
+    <div id="analytics-app">
+
+        <!-- Shared Top Bar -->
+        <header id="topbar">
+            <div id="topbar-left">
+                <div id="logo">
+                    <span class="logo-icon">⬡</span>
+                    <span class="logo-text">FORENSIC <span class="logo-accent">NETWORK</span></span>
+                </div>
+            </div>
+
+            <!-- Page Navigation -->
+            <nav id="page-nav">
+                <a href="./index.html" class="nav-tab">Network</a>
+                <a href="./analytics.html" class="nav-tab active">Analytics</a>
+            </nav>
+
+            <div id="topbar-right">
+                <!-- Placeholder for future controls -->
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <main id="analytics-main">
+
+            <!-- Summary KPI Cards -->
+            <section id="summary-cards" class="chart-row">
+                <div class="summary-card">
+                    <div class="summary-value" id="kpi-total-flow">—</div>
+                    <div class="summary-label">TOTAL FLOW</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-value" id="kpi-entities">—</div>
+                    <div class="summary-label">ENTITIES</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-value" id="kpi-transactions">—</div>
+                    <div class="summary-label">TRANSACTIONS</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-value" id="kpi-date-range">—</div>
+                    <div class="summary-label">DATE RANGE</div>
+                </div>
+            </section>
+
+            <!-- Chart Grid -->
+            <section class="chart-grid">
+
+                <!-- Top Entities Bar Chart -->
+                <article class="chart-panel chart-panel-wide">
+                    <h2 class="chart-title">Top 20 Entities by Total Flow</h2>
+                    <p class="chart-subtitle">Horizontal bar chart ranked by total inflow + outflow</p>
+                    <div id="chart-top-entities" class="chart-container"></div>
+                </article>
+
+                <!-- Arrow Dot Plot -->
+                <article class="chart-panel chart-panel-wide">
+                    <h2 class="chart-title">Net Flow by Entity</h2>
+                    <p class="chart-subtitle">Arrow dot plot — sources (net out) vs sinks (net in)</p>
+                    <div id="chart-net-flow" class="chart-container"></div>
+                </article>
+
+                <!-- Flow by Year Stacked Bar -->
+                <article class="chart-panel">
+                    <h2 class="chart-title">Flow by Year</h2>
+                    <p class="chart-subtitle">Stacked by source tier</p>
+                    <div id="chart-flow-year" class="chart-container"></div>
+                </article>
+
+                <!-- Voronoi Bubble Map -->
+                <article class="chart-panel">
+                    <h2 class="chart-title">Entity Volume Map</h2>
+                    <p class="chart-subtitle">Voronoi tessellation of financial volume</p>
+                    <div id="chart-voronoi" class="chart-container"></div>
+                </article>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <script type="module" src="/src/analytics.js"></script>
+</body>
+
+</html>
