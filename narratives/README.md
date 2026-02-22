@@ -19,6 +19,8 @@ All amounts are **(Unverified)** automated extractions. These are not audit find
 | 5 | [Deutsche Bank's Role](05_deutsche_bank.md) | 38 wires across every major Epstein entity, 75% of volume in last 6 months | 38 | $56,792,936 |
 | 6 | [Gratitude America](06_gratitude_america.md) | Charity sent 88% of outflows to investment accounts, 7% to charitable purposes | 20 | $13,080,518 |
 | 7 | [Follow the Money, Follow the Plane](07_follow_the_money_follow_the_plane.md) | Wire transfers and Epstein aircraft flights overlap at 4.3× random chance; $169M within ±3 days of St. Thomas flights | 185 + 321 flights | $575,359,330 |
+| 8 | [The Infrastructure of Access](08_infrastructure_of_access.md) | The people who moved the money are the same people victims named — Maxwell in 204 financial docs and 1,312 victim docs | 11.4M entities | — |
+| 9 | [734,122 Names](09_734122_names.md) | Asked every person in 1.48M files who bridges financial and victim docs. 57 real names. 10 operational staff. No one hiding who hasn't been found | 734,122 persons | — |
 
 ---
 
