@@ -1,0 +1,20 @@
+{
+  "name": "epstein-forensic-finance",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "preprocess": "node scripts/preprocess.js",
+    "validate": "node scripts/validate.js"
+  },
+  "devDependencies": {
+    "vite": "^5.4.0"
+  },
+  "dependencies": {
+    "d3": "^7.9.0",
+    "fuse.js": "^7.0.0"
+  }
+}

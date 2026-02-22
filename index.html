@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Interactive forensic financial network analysis of wire transfers. Search, filter, and explore $557M+ in documented money flows." />
+  <title>Epstein Network — Forensic Financial Analysis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/src/styles/main.css" />
+</head>
+
+<body>
+
+  <!-- App Shell -->
+  <div id="app">
+
+    <!-- Top Bar -->
+    <header id="topbar">
+      <div id="topbar-left">
+        <div id="logo">
+          <span class="logo-icon">⬡</span>
+          <span class="logo-text">FORENSIC <span class="logo-accent">NETWORK</span></span>
+        </div>
+      </div>
+
+      <!-- KPI Counters -->
+      <div id="kpi-bar">
+        <div class="kpi-item">
+          <span class="kpi-value" id="kpi-nodes">—</span>
+          <span class="kpi-label">Entities</span>
+        </div>
+        <div class="kpi-divider"></div>
+        <div class="kpi-item">
+          <span class="kpi-value" id="kpi-edges">—</span>
+          <span class="kpi-label">Transactions</span>
+        </div>
+        <div class="kpi-divider"></div>
+        <div class="kpi-item">
+          <span class="kpi-value" id="kpi-flow">—</span>
+          <span class="kpi-label">Total Flow</span>
+        </div>
+        <div class="kpi-divider"></div>
+        <div class="kpi-item">
+          <span class="kpi-value" id="kpi-dates">—</span>
+          <span class="kpi-label">Date Range</span>
+        </div>
+      </div>
+
+      <div id="topbar-right">
+        <button id="btn-info" class="btn-ghost" title="About this visualization">ⓘ About</button>
+        <button id="btn-reset" class="btn-ghost" title="Reset view">Reset</button>
+        <button id="btn-fit" class="btn-ghost" title="Fit graph">Fit</button>
+      </div>
+    </header>
+
+    <!-- Search Overlay -->
+    <div id="search-container">
+      <div id="search-wrapper">
+        <span class="search-icon">⌕</span>
+        <input id="search-input" type="text" placeholder="Search entities… (e.g. Maxwell, Deutsche Bank)"
+          autocomplete="off" spellcheck="false" />
+        <kbd class="search-shortcut">⌘K</kbd>
+      </div>
+      <ul id="search-results" class="hidden" role="listbox" aria-label="Search results"></ul>
+    </div>
+
+    <!-- Left: Filter Panel -->
+    <aside id="filter-panel">
+      <div class="panel-header">
+        <span class="panel-title">FILTERS</span>
+        <button id="filter-clear" class="btn-ghost-sm">Clear all</button>
+      </div>
+
+      <!-- Source Tier -->
+      <div class="filter-group">
+        <div class="filter-group-label">Source Tier</div>
+        <label class="filter-check" data-filter="tier" data-value="verified_wires">
+          <span class="check-dot" style="background:var(--tier-verified)"></span>
+          <input type="checkbox" value="verified_wires" checked /> Verified Wires
+        </label>
+        <label class="filter-check" data-filter="tier" data-value="audited_PROVEN">
+          <span class="check-dot" style="background:var(--tier-proven)"></span>
+          <input type="checkbox" value="audited_PROVEN" checked /> Audited — PROVEN
+        </label>
+        <label class="filter-check" data-filter="tier" data-value="audited_STRONG">
+          <span class="check-dot" style="background:var(--tier-strong)"></span>
+          <input type="checkbox" value="audited_STRONG" checked /> Audited — STRONG
+        </label>
+        <label class="filter-check" data-filter="tier" data-value="audited_MODERATE">
+          <span class="check-dot" style="background:var(--tier-moderate)"></span>
+          <input type="checkbox" value="audited_MODERATE" checked /> Audited — MODERATE
+        </label>
+      </div>
+
+      <!-- Exhibit -->
+      <div class="filter-group">
+        <div class="filter-group-label">Court Exhibit</div>
+        <div class="filter-pills" id="exhibit-pills">
+          <button class="pill active" data-filter="exhibit" data-value="A">A</button>
+          <button class="pill active" data-filter="exhibit" data-value="B">B</button>
+          <button class="pill active" data-filter="exhibit" data-value="C">C</button>
+          <button class="pill active" data-filter="exhibit" data-value="D">D</button>
+          <button class="pill active" data-filter="exhibit" data-value="E">E</button>
+        </div>
+      </div>
+
+      <!-- Amount Range -->
+      <div class="filter-group">
+        <div class="filter-group-label">
+          Amount Range
+          <span class="filter-value-display" id="amount-display">All</span>
+        </div>
+        <div class="range-track">
+          <input type="range" id="amount-min" min="0" max="100" value="0" class="range-input" />
+          <input type="range" id="amount-max" min="0" max="100" value="100" class="range-input" />
+        </div>
+        <div class="range-labels">
+          <span id="amount-label-min">$0</span>
+          <span id="amount-label-max">$23M+</span>
+        </div>
+      </div>
+
+      <!-- Date Range -->
+      <div class="filter-group">
+        <div class="filter-group-label">
+          Date Range
+          <span class="filter-value-display" id="date-display">All</span>
+        </div>
+        <div class="date-inputs">
+          <input type="text" id="date-from" placeholder="2013" class="date-input" maxlength="4" />
+          <span class="date-sep">→</span>
+          <input type="text" id="date-to" placeholder="2019" class="date-input" maxlength="4" />
+        </div>
+      </div>
+
+      <!-- Bank Involved -->
+      <div class="filter-group">
+        <div class="filter-group-label">Bank Involvement</div>
+        <div class="filter-pills">
+          <button class="pill active" id="bank-all" data-bank="all">All</button>
+          <button class="pill" id="bank-yes" data-bank="yes">Bank ✓</button>
+          <button class="pill" id="bank-no" data-bank="no">Bank ✗</button>
+        </div>
+      </div>
+
+      <!-- Legend -->
+      <div class="filter-group legend-group">
+        <div class="filter-group-label">Legend</div>
+        <div class="legend-item">
+          <div class="legend-edge" style="background:var(--tier-verified); height:3px;"></div>
+          <span>Verified court wire</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-edge"
+            style="background:var(--tier-proven); height:2px; border-top: 2px dashed var(--tier-proven); background:none;">
+          </div>
+          <span>Audited — PROVEN</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-edge" style="border-top: 2px dashed var(--tier-strong); width:32px;"></div>
+          <span>Audited — STRONG</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-edge" style="border-top: 2px dotted var(--tier-moderate); width:32px;"></div>
+          <span>Audited — MODERATE</span>
+        </div>
+        <div class="legend-item" style="margin-top:8px">
+          <div class="legend-node small"></div>
+          <span>Node size = money flow</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-node large"></div>
+          <span>Edge width = amount</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Graph Canvas -->
+    <main id="graph-container">
+      <div id="graph-loading">
+        <div class="spinner"></div>
+        <span>Building network…</span>
+      </div>
+      <svg id="graph-svg"></svg>
+
+      <!-- Interaction hints -->
+      <div id="hint-bar">
+        <span>Scroll to zoom · Drag to pan · <b>Click</b> node to highlight · <b>Double-click</b> for details</span>
+      </div>
+    </main>
+
+    <!-- Right: Detail Panel (hidden by default) -->
+    <aside id="detail-panel" class="hidden">
+      <div class="panel-header">
+        <span class="panel-title" id="detail-panel-title">ENTITY DETAIL</span>
+        <button id="detail-close" class="btn-ghost-sm">✕</button>
+      </div>
+      <div id="detail-content"></div>
+    </aside>
+
+  </div>
+
+  <!-- Info / Attribution Modal -->
+  <div id="info-modal" class="modal-backdrop hidden">
+    <div class="modal-box">
+      <div class="modal-header">
+        <span class="modal-title">⬡ FORENSIC NETWORK — About</span>
+        <button id="info-close" class="btn-ghost-sm">✕</button>
+      </div>
+      <div class="modal-body">
+
+        <section class="modal-section">
+          <h2>What is this?</h2>
+          <p>An interactive forensic financial network graph mapping <strong>$557,952,981</strong> in documented wire
+            transfers across <strong>141 entities</strong> and <strong>382 transactions</strong> (2009–2019) connected
+            to the Jeffrey Epstein financial network.</p>
+        </section>
+
+        <section class="modal-section">
+          <h2>How to read the graph</h2>
+          <div class="info-grid">
+            <div class="info-card">
+              <div class="info-icon">⬤</div>
+              <div><strong>Node size</strong> = total money flow<br><span class="info-sub">Bigger circle = more money
+                  in/out</span></div>
+            </div>
+            <div class="info-card">
+              <div class="info-icon">→</div>
+              <div><strong>Arrow direction</strong> = flow<br><span class="info-sub">Points FROM sender TO
+                  receiver</span></div>
+            </div>
+            <div class="info-card">
+              <div class="info-icon" style="font-size:18px;font-weight:900;">━</div>
+              <div><strong>Line thickness</strong> = amount<br><span class="info-sub">Thicker edge = more money</span>
+              </div>
+            </div>
+            <div class="info-card">
+              <div class="info-icon">🔍</div>
+              <div><strong>⌘K to search</strong><br><span class="info-sub">Find any entity by name</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="modal-section">
+          <h2>Data confidence tiers</h2>
+          <div class="tier-list">
+            <div class="tier-row">
+              <div class="tier-swatch" style="background:var(--tier-verified)"></div>
+              <div><strong>Verified Wires</strong> — From official court exhibits A–E. Highest confidence.</div>
+            </div>
+            <div class="tier-row">
+              <div class="tier-swatch" style="background:var(--tier-proven)"></div>
+              <div><strong>Audited PROVEN</strong> — Forensically audited with multiple corroborating sources.</div>
+            </div>
+            <div class="tier-row">
+              <div class="tier-swatch" style="background:var(--tier-strong)"></div>
+              <div><strong>Audited STRONG</strong> — Strong evidence but some inference. Medium confidence.</div>
+            </div>
+            <div class="tier-row">
+              <div class="tier-swatch" style="background:var(--tier-moderate)"></div>
+              <div><strong>Audited MODERATE</strong> — Moderate confidence. Review with appropriate skepticism.</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="modal-section">
+          <h2>Data attribution</h2>
+          <p>Wire transfer data sourced from the forensic financial investigation dataset. See <a
+              href="https://github.com/pyjama-llama/epstein-forensic-finance/blob/main/CREDITS.md" target="_blank"
+              rel="noopener">CREDITS.md</a> for full attribution.</p>
+          <p style="margin-top:8px">Visualization built with <a href="https://d3js.org" target="_blank"
+              rel="noopener">D3.js</a>, <a href="https://fusejs.io" target="_blank" rel="noopener">Fuse.js</a>, and <a
+              href="https://vitejs.dev" target="_blank" rel="noopener">Vite</a>. Source code: <a
+              href="https://github.com/pyjama-llama/epstein-forensic-finance" target="_blank" rel="noopener">GitHub</a>.
+          </p>
+        </section>
+
+        <section class="modal-section modal-disclaimer">
+          <strong>Disclaimer</strong> — This visualization is for informational purposes only. It maps documented
+          financial transactions from public records and forensic audits. No legal conclusions are drawn or implied.
+        </section>
+
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>
