@@ -52,16 +52,17 @@ export class ForceGraph {
         Object.entries(TIER_COLORS).forEach(([tier, color]) => {
             defs.append('marker')
                 .attr('id', `arrow-${tier}`)
-                .attr('viewBox', '0 -4 8 8')
-                .attr('refX', 18)   // pushed back so arrow sits at node edge
+                .attr('viewBox', '0 -3 8 6')
+                .attr('refX', 7)   // Tip lands slightly inside the boundary so it meets the stroke
                 .attr('refY', 0)
-                .attr('markerWidth', 6)
-                .attr('markerHeight', 6)
+                .attr('markerWidth', 10)
+                .attr('markerHeight', 10)
+                .attr('markerUnits', 'userSpaceOnUse') // Stops arrow from scaling with stroke-width
                 .attr('orient', 'auto')
                 .append('path')
-                .attr('d', 'M0,-4L8,0L0,4')
+                .attr('d', 'M0,-3L8,0L0,3') // Sleeker shape
                 .attr('fill', color)
-                .attr('opacity', 0.8);
+                .attr('opacity', 0.85);
         });
 
         // Glow filter for selected node
@@ -318,13 +319,32 @@ export class ForceGraph {
         const dx = tx - sx, dy = ty - sy;
         const dr = Math.sqrt(dx * dx + dy * dy);
 
-        // All edges are straight; distinctly multi-edges could use curvature
+        if (dr === 0) return `M${sx},${sy} L${sx},${sy}`; // Prevent NaN flicker for identical positions
+
         // For cleanliness we use quadratic bezier with mild bend
         const curvature = 0.15;
         const mx = (sx + tx) / 2 - dy * curvature;
         const my = (sy + ty) / 2 + dx * curvature;
 
-        return `M${sx},${sy} Q${mx},${my} ${tx},${ty}`;
+        // Pull back target point exactly to the border of the target node
+        const dtx = tx - mx;
+        const dty = ty - my;
+        const distControlToTarget = Math.sqrt(dtx * dtx + dty * dty);
+
+        if (distControlToTarget === 0) return `M${sx},${sy} Q${mx},${my} ${tx},${ty}`; // safety
+
+        // Target pullback radius (target node size) + 1px padding
+        const targetPullback = (d.target.r || 10) + 1;
+
+        // Shorten the end point along the curve tangent
+        const ratio = distControlToTarget > targetPullback
+            ? (distControlToTarget - targetPullback) / distControlToTarget
+            : 0.01;
+
+        const endX = mx + dtx * ratio;
+        const endY = my + dty * ratio;
+
+        return `M${sx},${sy} Q${mx},${my} ${endX},${endY}`;
     }
 
     // ── Highlight ─────────────────────────────────────────────────────────────
