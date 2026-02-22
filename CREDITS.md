@@ -17,7 +17,7 @@ Under CC BY 4.0, you are free to share and adapt this material for any purpose, 
 
 ## Visualization
 
-**Author**: pyjama-llama
+**Author**: Victor Blaer ([LinkedIn](https://www.linkedin.com/in/victorblaer/))
 **Repository**: https://github.com/pyjama-llama/epstein-forensic-finance
 **License**: MIT (covers visualization code only — not the underlying data)
 
