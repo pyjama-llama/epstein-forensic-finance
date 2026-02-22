@@ -1122,3 +1122,81 @@ body {
     r: calc(var(--pulse-r, 8px) * 1.4);
   }
 }
+
+/* ── Large Monitor Scaling ────────────────────────────────────────────────── */
+@media (min-width: 1400px) {
+  .node-label {
+    font-size: 13px !important;
+  }
+
+  .kpi-value {
+    font-size: 18px !important;
+    font-weight: 600 !important;
+  }
+
+  .kpi-label {
+    font-size: 11px !important;
+  }
+
+  .filter-panel {
+    width: 340px !important;
+  }
+
+  .filter-group-title {
+    font-size: 13px !important;
+  }
+
+  .checkbox-label {
+    font-size: 14px !important;
+  }
+
+  #search-wrapper {
+    width: 600px !important;
+  }
+
+  #search-input {
+    font-size: 18px !important;
+  }
+
+  .stat-box-value {
+    font-size: 16px !important;
+  }
+
+  .tx-amount {
+    font-size: 15px !important;
+  }
+
+  .detail-entity-name {
+    font-size: 24px !important;
+  }
+
+  .tx-counterparty {
+    font-size: 13px !important;
+  }
+
+  .tx-meta {
+    font-size: 11px !important;
+  }
+
+  .legend-item {
+    font-size: 13px !important;
+  }
+
+  #detail-panel-title {
+    font-size: 15px !important;
+  }
+
+  .hint-bar {
+    font-size: 16px !important;
+    padding: 10px 24px !important;
+  }
+
+  .btn-ghost {
+    font-size: 14px !important;
+    padding: 8px 16px !important;
+  }
+
+  .logo-text {
+    font-size: 18px !important;
+  }
+}

@@ -253,6 +253,9 @@ export class ForceGraph {
                 d3.select(`#label-${CSS.escape(d.id)}`).classed('hover-visible', false);
             });
 
+        // Apply instant transform to center the graph to avoid top-left initial jump
+        this.svg.call(this._zoom.transform, d3.zoomIdentity.translate(width / 2, height / 2).scale(0.65));
+
         nodeSel.append('circle')
             .attr('class', 'node-circle')
             .attr('r', d => d.r)
@@ -398,9 +401,13 @@ export class ForceGraph {
             .classed('link-faded', d => !connectedEdgeIds.has(d.id))
             .attr('opacity', d => connectedEdgeIds.has(d.id) ? 0.9 : 0.04);
 
+        // Hollow out the highlighted arrows so they don't blend into the thick lines    
         this._arrowSel
             .classed('link-faded', d => !connectedEdgeIds.has(d.id))
-            .attr('opacity', d => connectedEdgeIds.has(d.id) ? 0.9 : 0.04);
+            .attr('opacity', d => connectedEdgeIds.has(d.id) ? 1 : 0.04)
+            .attr('fill', d => connectedEdgeIds.has(d.id) ? '#070810' : (TIER_COLORS[d.dominantTier] || '#555'))
+            .attr('stroke', d => connectedEdgeIds.has(d.id) ? (TIER_COLORS[d.dominantTier] || '#555') : 'none')
+            .attr('stroke-width', d => connectedEdgeIds.has(d.id) ? 1.5 : 0);
 
         // Labels
         this._labelSel
@@ -424,7 +431,10 @@ export class ForceGraph {
 
         this._arrowSel
             .classed('link-faded', false)
-            .attr('opacity', 0.85);
+            .attr('opacity', 0.85)
+            .attr('fill', d => TIER_COLORS[d.dominantTier] || '#555')
+            .attr('stroke', 'none')
+            .attr('stroke-width', 0);
 
         this._labelSel
             .classed('selected', false)
