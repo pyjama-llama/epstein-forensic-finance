@@ -123,7 +123,7 @@ body {
   align-items: center;
   gap: 8px;
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -160,14 +160,14 @@ body {
 
 .kpi-value {
   font-family: var(--font-mono);
-  font-size: 15px;
-  font-weight: 500;
+  font-size: 26px;
+  font-weight: 600;
   color: var(--text-bright);
   line-height: 1;
 }
 
 .kpi-label {
-  font-size: 9px;
+  font-size: 13px;
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -193,7 +193,7 @@ body {
   border: 1px solid var(--border-light);
   color: var(--text-secondary);
   font-family: var(--font-ui);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
   padding: 5px 12px;
   border-radius: var(--radius-sm);
@@ -212,7 +212,7 @@ body {
   border: none;
   color: var(--text-muted);
   font-family: var(--font-ui);
-  font-size: 11px;
+  font-size: 13px;
   cursor: pointer;
   transition: color var(--t-fast);
   padding: 2px 4px;
@@ -273,7 +273,7 @@ body {
 
 .search-shortcut {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 13px;
   color: var(--text-muted);
   border: 1px solid var(--border);
   border-radius: 3px;
@@ -313,7 +313,7 @@ body {
 }
 
 .result-name {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   color: var(--text-primary);
   flex: 1;
@@ -330,7 +330,7 @@ body {
 
 .result-meta {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 13px;
   color: var(--text-muted);
   white-space: nowrap;
 }
@@ -365,9 +365,9 @@ body {
 
 .panel-title {
   font-family: var(--font-mono);
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.15em;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
   color: var(--text-muted);
 }
 
@@ -377,9 +377,9 @@ body {
 }
 
 .filter-group-label {
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 600;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--text-muted);
   margin-bottom: 10px;
@@ -404,7 +404,7 @@ body {
   gap: 8px;
   padding: 5px 0;
   cursor: pointer;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-secondary);
   transition: color var(--t-fast);
 }
@@ -434,9 +434,9 @@ body {
 .filter-check input[type="checkbox"]:checked::after {
   content: '✓';
   position: absolute;
-  top: -1px;
+  top: -2px;
   left: 1px;
-  font-size: 10px;
+  font-size: 13px;
   color: var(--bg-base);
   font-weight: 700;
 }
@@ -462,7 +462,7 @@ body {
   background: transparent;
   color: var(--text-muted);
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 13px;
   cursor: pointer;
   transition: all var(--t-fast);
 }
@@ -516,8 +516,7 @@ body {
   display: flex;
   justify-content: space-between;
   font-family: var(--font-mono);
-  font-size: 12px;
-  /* Increased from 11px for readability */
+  font-size: 13px;
   color: var(--text-muted);
   margin-top: 5px;
 }
@@ -561,7 +560,7 @@ body {
 
 .date-sep {
   color: var(--text-muted);
-  font-size: 12px;
+  font-size: 14px;
   flex-shrink: 0;
 }
 
@@ -575,8 +574,7 @@ body {
   align-items: center;
   gap: 10px;
   margin-bottom: 8px;
-  font-size: 12px;
-  /* Increased from 11px */
+  font-size: 14px;
   color: var(--text-secondary);
 }
 
@@ -659,8 +657,7 @@ body {
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 13px;
-  /* was 11px — significantly more readable */
+  font-size: 14px;
   font-weight: 400;
   color: var(--text-secondary);
   /* brighter than muted */
@@ -710,7 +707,7 @@ body {
 }
 
 .detail-section-title {
-  font-size: 9px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -719,7 +716,7 @@ body {
 }
 
 .detail-entity-name {
-  font-size: 17px;
+  font-size: 20px;
   font-weight: 600;
   color: var(--text-bright);
   line-height: 1.3;
@@ -727,7 +724,7 @@ body {
 }
 
 .detail-aliases {
-  font-size: 11px;
+  font-size: 13px;
   color: var(--text-muted);
   font-style: italic;
   margin-bottom: 12px;
@@ -748,7 +745,7 @@ body {
 }
 
 .stat-box-label {
-  font-size: 9px;
+  font-size: 13px;
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -783,7 +780,7 @@ body {
   gap: 10px;
   padding: 8px 0;
   border-bottom: 1px solid var(--border);
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .tx-item:last-child {
@@ -813,7 +810,7 @@ body {
 
 .tx-meta {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 13px;
   color: var(--text-muted);
   margin-top: 2px;
 }
@@ -832,7 +829,7 @@ body {
 .tier-badge {
   display: inline-block;
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 13px;
   font-weight: 500;
   padding: 2px 6px;
   border-radius: 3px;
@@ -854,7 +851,7 @@ body {
 
 .node-label {
   font-family: var(--font-ui);
-  font-size: 10px;
+  font-size: 13px;
   fill: var(--text-secondary);
   pointer-events: none;
   user-select: none;
@@ -872,7 +869,7 @@ body {
 .node-label.selected {
   font-weight: 700;
   fill: var(--text-bright);
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .link-path {
@@ -921,7 +918,7 @@ body {
 }
 
 .tooltip-name {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--text-bright);
   margin-bottom: 6px;
@@ -931,7 +928,7 @@ body {
   display: flex;
   justify-content: space-between;
   gap: 16px;
-  font-size: 11px;
+  font-size: 13px;
   margin-bottom: 2px;
 }
 
@@ -998,7 +995,7 @@ body {
 
 .modal-title {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.1em;
   color: var(--accent);
@@ -1021,7 +1018,7 @@ body {
 }
 
 .modal-section h2 {
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -1030,7 +1027,7 @@ body {
 }
 
 .modal-section p {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text-secondary);
   line-height: 1.6;
 }
@@ -1058,7 +1055,7 @@ body {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 12px;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-secondary);
   line-height: 1.5;
 }
@@ -1072,7 +1069,7 @@ body {
 
 .info-sub {
   color: var(--text-muted);
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .tier-list {
@@ -1085,7 +1082,7 @@ body {
   display: flex;
   align-items: flex-start;
   gap: 12px;
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text-secondary);
   line-height: 1.5;
 }
@@ -1099,7 +1096,7 @@ body {
 }
 
 .modal-disclaimer {
-  font-size: 11px;
+  font-size: 13px;
   color: var(--text-muted);
   line-height: 1.6;
 }
@@ -1109,7 +1106,7 @@ body {
   border-left: 3px solid var(--accent-dim);
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
   padding: 10px 14px;
-  font-size: 12px;
+  font-size: 13px;
   color: var(--text-secondary);
   line-height: 1.7;
   font-style: normal;
@@ -1145,40 +1142,63 @@ body {
   }
 }
 
-/* ── Large Monitor Scaling ────────────────────────────────────────────────── */
+/* ── Standard Monitor Base Sizes ──────────────────────────────────────────── */
+/* 
+By default, the entire app is built on a robust 14px base font up to 1400px, 
+so that standard laptops display content comfortably without feeling "empty". 
+Elements scaling up automatically adjust layout.
+*/
+
+/* ── Large Monitor Scaling (>1400px) ──────────────────────────────────────── */
 @media (min-width: 1400px) {
-  .node-label {
-    font-size: 13px !important;
-  }
 
-  .kpi-value {
-    font-size: 26px !important;
-    /* Scales up total detail flow */
-    font-weight: 600 !important;
-  }
-
-  .kpi-label {
-    font-size: 11px !important;
-  }
-
-  #filters {
+  /* Scale Panels */
+  #filter-panel {
     width: 340px !important;
-  }
-
-  .filter-group-title {
-    font-size: 13px !important;
-  }
-
-  .checkbox-label {
-    font-size: 14px !important;
   }
 
   #search-wrapper {
     width: 600px !important;
   }
 
-  #search-input {
+  /* Topbar Headers */
+  .logo-text {
     font-size: 18px !important;
+  }
+
+  .kpi-value {
+    font-size: 32px !important;
+    font-weight: 600 !important;
+  }
+
+  .kpi-label {
+    font-size: 14px !important;
+  }
+
+  /* Filter Panel */
+  .filter-group-title {
+    font-size: 16px !important;
+  }
+
+  .checkbox-label {
+    font-size: 16px !important;
+  }
+
+  .range-labels {
+    font-size: 14px !important;
+  }
+
+  /* Detail Panel */
+  .filter-value-disp.val-amount {
+    font-size: 32px !important;
+  }
+
+  .detail-entity-name {
+    font-size: 26px !important;
+  }
+
+  #detail-panel-title {
+    font-size: 16px !important;
   }
 
   .stat-box-value {
@@ -1186,51 +1206,37 @@ body {
   }
 
   .tx-amount {
-    font-size: 16px !important;
-    /* Scales up monetary amounts */
-  }
-
-  .filter-value-disp.val-amount {
-    font-size: 26px !important;
-    /* Scales up total detail flow */
-  }
-
-  .detail-entity-name {
-    font-size: 24px !important;
-  }
-
-  .tx-counterparty {
-    font-size: 13px !important;
-  }
-
-  .tx-meta {
-    font-size: 11px !important;
-  }
-
-  .legend-item {
-    font-size: 13px !important;
-  }
-
-  #detail-panel-title {
-    font-size: 15px !important;
-  }
-
-  .hint-bar {
-    font-size: 16px !important;
-    padding: 10px 24px !important;
-  }
-
-  .btn-ghost {
-    font-size: 14px !important;
-    padding: 8px 16px !important;
-  }
-
-  .logo-text {
     font-size: 18px !important;
   }
 
-  .range-labels {
-    font-size: 12px !important;
-    /* Scales up tiny filter numbers */
+  .tx-counterparty {
+    font-size: 15px !important;
+  }
+
+  .tx-meta {
+    font-size: 14px !important;
+  }
+
+  /* Misc UI */
+  #search-input {
+    font-size: 18px !important;
+  }
+
+  .node-label {
+    font-size: 14px !important;
+  }
+
+  .legend-item {
+    font-size: 16px !important;
+  }
+
+  .hint-bar {
+    font-size: 18px !important;
+    padding: 12px 28px !important;
+  }
+
+  .btn-ghost {
+    font-size: 16px !important;
+    padding: 8px 16px !important;
   }
 }
