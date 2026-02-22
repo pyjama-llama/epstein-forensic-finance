@@ -103,6 +103,6 @@ The round-number problem is not that the transfers are fake. It is that they are
 
 ---
 
-*Source: DOJ EFTA Document Release — Deutsche Bank-SDNY Production (Exhibits A–E), 185 verified wire transfers totaling $557,372,954. Benford's Law analysis performed on first-digit and first-two-digit distributions. Round-number classification by modular arithmetic at million, hundred-thousand, ten-thousand, and thousand levels. This analysis is published as part of the [Epstein Financial Forensics](https://github.com/randallscott25-star/epstein-forensic-finance) repository.*
+*Source: DOJ EFTA Document Release — Deutsche Bank-SDNY Production (Exhibits A–E), 185 verified wire transfers totaling $557,372,954. Benford's Law analysis performed on first-digit and first-two-digit distributions. Round-number classification by modular arithmetic at million, hundred-thousand, ten-thousand, and thousand levels. Supporting data: [Forensic Workbook (view-only)](https://docs.google.com/spreadsheets/d/11lw0QjMZ-rYIjWesv5VG1YKts57ahPEm/edit?usp=sharing&ouid=103970896670138914877&rtpof=true&sd=true). This analysis is published as part of the [Epstein Financial Forensics](https://github.com/randallscott25-star/epstein-forensic-finance) repository.*
 
 *For the girls.*

@@ -46,6 +46,8 @@ Each narrative follows the same structure:
 
 The first six narratives trace wire transfer patterns through Epstein's shell network. Narratives 7–10 expand the aperture: flight correlations, entity co-occurrence across 11.4 million records, full-corpus person scans, and forensic accounting tests. The methodology scales with the questions.
 
+The source workbook containing all exhibits referenced in these narratives is available here: **[Forensic Workbook (Google Sheets)](https://docs.google.com/spreadsheets/d/11lw0QjMZ-rYIjWesv5VG1YKts57ahPEm/edit?usp=sharing&ouid=103970896670138914877&rtpof=true&sd=true)** (view-only).
+
 I report what the data shows. Interpretation of intent, legality, or business purpose is left to qualified investigators, regulators, and readers.
 
 ---

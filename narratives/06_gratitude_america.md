@@ -86,4 +86,4 @@ The largest single destination for Gratitude America's outflows was "Gratitude A
 
 ---
 
-*Source: DOJ EFTA Document Release, Deutsche Bank-SDNY Production, Exhibit E. All data extracted via automated pipeline. This finding appears in the [master wire ledger](../data/master_wire_ledger_phase25.json) published with this repository.*
+*Source: DOJ EFTA Document Release, Deutsche Bank-SDNY Production, Exhibit E. All data extracted via automated pipeline. Supporting data: [Forensic Workbook (view-only)](https://docs.google.com/spreadsheets/d/11lw0QjMZ-rYIjWesv5VG1YKts57ahPEm/edit?usp=sharing&ouid=103970896670138914877&rtpof=true&sd=true). This finding appears in the [master wire ledger](../data/master_wire_ledger_phase25.json) published with this repository.*
