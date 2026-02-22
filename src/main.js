@@ -7,6 +7,7 @@ import { SearchBar } from './ui/SearchBar.js';
 import { NodePanel } from './ui/NodePanel.js';
 import { KPIBar } from './ui/KPIBar.js';
 import { FilterPanel } from './ui/FilterPanel.js';
+import { initLayoutSwitcher } from './ui/LayoutSwitcher.js';
 
 async function main() {
     // ── 1. Load processed graph data ─────────────────────────────────────────
@@ -63,6 +64,9 @@ async function main() {
     });
 
     forceGraph.load(graph);
+
+    // ── Layout Switcher ──────────────────────────────────────────────────────
+    initLayoutSwitcher('#topbar-right', forceGraph);
 
     // ── 4. Toolbar buttons ────────────────────────────────────────────────────
     document.getElementById('btn-fit').addEventListener('click', () => forceGraph.fitToView());

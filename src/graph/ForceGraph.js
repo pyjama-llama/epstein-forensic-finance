@@ -129,6 +129,81 @@ export class ForceGraph {
             .call(this._zoom.transform, d3.zoomIdentity.translate(width / 2, height / 2).scale(0.7));
     }
 
+    // ── Layout Transitions ───────────────────────────────────────────────────
+
+    /**
+     * Stop the live simulation and smoothly animate all nodes to
+     * pre-computed static positions from a layout JSON file.
+     * @param {Object} positions - { nodeId: { x, y }, ... }
+     */
+    transitionToLayout(positions) {
+        if (!this._simulation || !this._simNodes) return;
+
+        // Stop the live physics
+        this._simulation.stop();
+        this._isStaticLayout = true;
+
+        const duration = 800;
+        const t = d3.transition().duration(duration).ease(d3.easeCubicInOut);
+
+        // Animate each node to its new position
+        this._simNodes.forEach(n => {
+            const target = positions[n.id];
+            if (target) {
+                n.fx = target.x;
+                n.fy = target.y;
+            }
+        });
+
+        // Animate node groups
+        this._nodeSel.transition(t)
+            .attr('transform', d => {
+                const target = positions[d.id];
+                if (target) {
+                    d.x = target.x;
+                    d.y = target.y;
+                    this._nodePositions.set(d.id, { x: target.x, y: target.y });
+                }
+                return `translate(${d.x},${d.y})`;
+            });
+
+        // Animate labels
+        this._labelSel.transition(t)
+            .attr('x', d => positions[d.id]?.x ?? d.x)
+            .attr('y', d => positions[d.id]?.y ?? d.y);
+
+        // After transition, update edges
+        setTimeout(() => {
+            this._edgeSel.attr('d', d => this._linkArc(d));
+            this._arrowSel.attr('transform', d => {
+                if (!d._arcMeta) return '';
+                const { sx, sy, mx, my, tx, ty } = d._arcMeta;
+                const midX = 0.25 * sx + 0.5 * mx + 0.25 * tx;
+                const midY = 0.25 * sy + 0.5 * my + 0.25 * ty;
+                const angle = Math.atan2(ty - sy, tx - sx) * 180 / Math.PI;
+                return `translate(${midX},${midY}) rotate(${angle})`;
+            });
+        }, duration + 50);
+    }
+
+    /**
+     * Restart the live D3 force simulation, releasing fixed positions.
+     */
+    restartSimulation() {
+        if (!this._simulation || !this._simNodes) return;
+
+        this._isStaticLayout = false;
+
+        // Release all fixed positions
+        this._simNodes.forEach(n => {
+            n.fx = null;
+            n.fy = null;
+        });
+
+        // Restart simulation
+        this._simulation.alpha(0.5).restart();
+    }
+
     // ── Rendering ─────────────────────────────────────────────────────────────
 
     _render() {
