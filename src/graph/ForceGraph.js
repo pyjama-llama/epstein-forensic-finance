@@ -445,7 +445,7 @@ export class ForceGraph {
         <div class="tooltip-name">${d.label}</div>
         <div class="tooltip-row"><span class="tooltip-key">In</span><span class="tooltip-val">${inFlow}</span></div>
         <div class="tooltip-row"><span class="tooltip-key">Out</span><span class="tooltip-val">${outFlow}</span></div>
-        <div class="tooltip-row"><span class="tooltip-key">Connections</span><span class="tooltip-val">${d.degree}</span></div>
+        <div class="tooltip-row"><span class="tooltip-key">Directed Edges</span><span class="tooltip-val">${d.degree}</span></div>
         <div class="tooltip-row"><span class="tooltip-key">Tier</span><span class="tooltip-val">${d.sourceTiers?.join(', ') || '—'}</span></div>
       `);
         this._positionTooltip(event);
