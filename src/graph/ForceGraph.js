@@ -47,23 +47,8 @@ export class ForceGraph {
         const svg = this.svg;
         svg.attr('width', '100%').attr('height', '100%');
 
-        // Defs: arrow markers (one per tier)
+        // Defs: glow filter for selected node
         const defs = svg.append('defs');
-        Object.entries(TIER_COLORS).forEach(([tier, color]) => {
-            defs.append('marker')
-                .attr('id', `arrow-${tier}`)
-                .attr('viewBox', '0 -3 8 6')
-                .attr('refX', 7)   // Tip lands slightly inside the boundary so it meets the stroke
-                .attr('refY', 0)
-                .attr('markerWidth', 10)
-                .attr('markerHeight', 10)
-                .attr('markerUnits', 'userSpaceOnUse') // Stops arrow from scaling with stroke-width
-                .attr('orient', 'auto')
-                .append('path')
-                .attr('d', 'M0,-3L8,0L0,3') // Sleeker shape
-                .attr('fill', color)
-                .attr('opacity', 0.85);
-        });
 
         // Glow filter for selected node
         const glow = defs.append('filter').attr('id', 'glow');
@@ -75,6 +60,7 @@ export class ForceGraph {
         // Root group (zoom target)
         this._g = svg.append('g').attr('class', 'graph-root');
         this._gEdges = this._g.append('g').attr('class', 'edges');
+        this._gArrows = this._g.append('g').attr('class', 'arrows'); // rendered on top of edges
         this._gNodes = this._g.append('g').attr('class', 'nodes');
         this._gLabels = this._g.append('g').attr('class', 'labels');
 
@@ -209,13 +195,23 @@ export class ForceGraph {
             .attr('stroke-width', d => strokeScale(Math.log10(Math.max(d.totalAmount, 1))))
             .attr('stroke-dasharray', d => TIER_DASH[d.dominantTier] || 'none')
             .attr('opacity', 0.55)
-            .attr('marker-end', d => `url(#arrow-${d.dominantTier})`)
+            .attr('fill', 'none')
             .on('click', (event, d) => {
                 event.stopPropagation();
                 this.onEdgeClick?.(d);
             })
             .on('mouseenter', (event, d) => this._showEdgeTooltip(event, d))
             .on('mouseleave', () => this._hideTooltip());
+
+        // ── Arrows (Midpoint) ──────────────────────────────────────────────────
+        const arrowSel = this._gArrows.selectAll('.link-arrow')
+            .data(simEdges, d => d.id)
+            .join('path')
+            .attr('class', 'link-arrow')
+            .attr('d', 'M-6,-4.5 L6,0 L-6,4.5 Z') // Slender arrow shape
+            .attr('fill', d => TIER_COLORS[d.dominantTier] || '#555')
+            .attr('opacity', 0.85)
+            .style('pointer-events', 'none'); // Let clicks pass through to the edge path underneath
 
         // ── Nodes ──────────────────────────────────────────────────────────────
         const nodeSel = this._gNodes.selectAll('.node-g')
@@ -283,6 +279,21 @@ export class ForceGraph {
             // Curved edges for multi-edges between same pair
             edgeSel.attr('d', d => this._linkArc(d));
 
+            // Position arrows exactly at the bezier curve midpoint t=0.5
+            arrowSel.attr('transform', d => {
+                if (!d._arcMeta) return '';
+                const { sx, sy, mx, my, tx, ty } = d._arcMeta;
+
+                // Bezier position formula at t=0.5
+                const midX = 0.25 * sx + 0.5 * mx + 0.25 * tx;
+                const midY = 0.25 * sy + 0.5 * my + 0.25 * ty;
+
+                // Bezier tangent (derivative) at t=0.5 is exactly the vector from Start to End!
+                const angle = Math.atan2(ty - sy, tx - sx) * 180 / Math.PI;
+
+                return `translate(${midX},${midY}) rotate(${angle})`;
+            });
+
             nodeSel.attr('transform', d => {
                 this._nodePositions.set(d.id, { x: d.x, y: d.y });
                 return `translate(${d.x},${d.y})`;
@@ -302,6 +313,7 @@ export class ForceGraph {
         this._simEdges = simEdges;
         this._nodeSel = nodeSel;
         this._edgeSel = edgeSel;
+        this._arrowSel = arrowSel;
         this._labelSel = labelSel;
         this._rScale = rScale;
 
@@ -319,7 +331,10 @@ export class ForceGraph {
         const dx = tx - sx, dy = ty - sy;
         const dr = Math.sqrt(dx * dx + dy * dy);
 
-        if (dr === 0) return `M${sx},${sy} L${sx},${sy}`; // Prevent NaN flicker for identical positions
+        if (dr === 0) {
+            d._arcMeta = { sx, sy, mx: sx, my: sy, tx: sx, ty: sy };
+            return `M${sx},${sy} L${sx},${sy}`; // Prevent NaN flicker
+        }
 
         // For cleanliness we use quadratic bezier with mild bend
         const curvature = 0.15;
@@ -331,7 +346,10 @@ export class ForceGraph {
         const dty = ty - my;
         const distControlToTarget = Math.sqrt(dtx * dtx + dty * dty);
 
-        if (distControlToTarget === 0) return `M${sx},${sy} Q${mx},${my} ${tx},${ty}`; // safety
+        if (distControlToTarget === 0) {
+            d._arcMeta = { sx, sy, mx, my, tx, ty };
+            return `M${sx},${sy} Q${mx},${my} ${tx},${ty}`; // safety
+        }
 
         // Target pullback radius (target node size) + 1px padding
         const targetPullback = (d.target.r || 10) + 1;
@@ -344,6 +362,8 @@ export class ForceGraph {
         const endX = mx + dtx * ratio;
         const endY = my + dty * ratio;
 
+        // Store the exact curve coordinates for the arrow positioner in _tick
+        d._arcMeta = { sx, sy, mx, my, tx: endX, ty: endY };
         return `M${sx},${sy} Q${mx},${my} ${endX},${endY}`;
     }
 
@@ -378,6 +398,10 @@ export class ForceGraph {
             .classed('link-faded', d => !connectedEdgeIds.has(d.id))
             .attr('opacity', d => connectedEdgeIds.has(d.id) ? 0.9 : 0.04);
 
+        this._arrowSel
+            .classed('link-faded', d => !connectedEdgeIds.has(d.id))
+            .attr('opacity', d => connectedEdgeIds.has(d.id) ? 0.9 : 0.04);
+
         // Labels
         this._labelSel
             .style('display', d => (adjacentIds.has(d.id) || this._alwaysLabelIds.has(d.id)) ? 'block' : 'none')
@@ -398,6 +422,10 @@ export class ForceGraph {
             .classed('link-faded', false)
             .attr('opacity', 0.55);
 
+        this._arrowSel
+            .classed('link-faded', false)
+            .attr('opacity', 0.85);
+
         this._labelSel
             .classed('selected', false)
             .style('display', d => this._alwaysLabelIds.has(d.id) ? 'block' : 'none');
@@ -414,6 +442,9 @@ export class ForceGraph {
             this._visibleNodeIds.has(d.id) ? null : 'none'
         );
         this._edgeSel.style('display', d =>
+            this._visibleEdgeIds.has(d.id) ? null : 'none'
+        );
+        this._arrowSel.style('display', d =>
             this._visibleEdgeIds.has(d.id) ? null : 'none'
         );
         this._labelSel.style('display', d => {
