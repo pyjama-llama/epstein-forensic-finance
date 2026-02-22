@@ -88,11 +88,11 @@ The records exist. They sit somewhere in JPMorgan Chase's legacy systems. The qu
 
 ---
 
-**Methodology:** Entity co-occurrence analysis across 1,476,377 EFTA documents. Money-mention volumes calculated by automated extraction. Bear Stearns document characterization based on OCR-extracted letterhead and statement formatting. Financial Trust Company banking relationship inferred from co-occurrence patterns (66 shared files with Bear Stearns entities). All amounts are unverified automated extractions. See [Methodology](../METHODOLOGY.md) for full technical documentation.
+**Methodology:** Entity co-occurrence analysis across 1,476,377 EFTA documents. Money-mention volumes calculated by automated extraction. Bear Stearns document characterization based on OCR-extracted letterhead and statement formatting. Financial Trust Company banking relationship inferred from co-occurrence patterns (66 shared files with Bear Stearns entities). All amounts are unverified automated extractions. See [Methodology](../docs/METHODOLOGY.md) for full technical documentation.
 
 **Source data:** [Master Wire Ledger](../data/master_wire_ledger_phase25.json) · <a href="https://docs.google.com/spreadsheets/d/11lw0QjMZ-rYIjWesv5VG1YKts57ahPEm/edit?usp=sharing&ouid=103970896670138914877&rtpof=true&sd=true" target="_blank">Forensic Workbook</a> · <a href="https://randallscott25-star.github.io/epstein-forensic-finance/visualizations/shell_network.html" target="_blank">Interactive Network</a>
 
-**Related narratives:** [N1: Money Pipeline](01_money_pipeline.md) · [N5: Bear Stearns vs. Deutsche Bank](05_bear_stearns_gap.md) · [N11: The Shell Map](11_the_shell_map.md)
+**Related narratives:** [N1: Money Pipeline](01_jeepers_pipeline.md) · [N5: Bear Stearns vs. Deutsche Bank](05_deutsche_bank.md) · [N11: The Shell Map](11_the_shell_map.md)
 
 *All findings are (Unverified) automated extractions from DOJ EFTA documents released under the Epstein Files Transparency Act. Entity mention does not imply wrongdoing. This analysis identifies patterns for further investigation — it does not make legal conclusions.*
 
@@ -150,4 +150,4 @@ Top recurring amounts: $80M (37 mentions), $500M (14), $55M (15), $10M (21), $20
 | Methodology | <a href="https://docs.google.com/spreadsheets/d/11lw0QjMZ-rYIjWesv5VG1YKts57ahPEm/edit?gid=1840632994#gid=1840632994" target="_blank">📊 Open Tab</a> |
 
 ### How to Verify
-EFTA document IDs from public DOJ release at <a href="https://efts.gov" target="_blank">efts.gov</a>. Banking infrastructure data in [METHODOLOGY.md](METHODOLOGY.md).
+EFTA document IDs from public DOJ release at <a href="https://efts.gov" target="_blank">efts.gov</a>. Banking infrastructure data in [METHODOLOGY.md](../docs/METHODOLOGY.md).

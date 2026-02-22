@@ -133,11 +133,11 @@ An accounting firm earning modest fees but routing 18,833 emails across a networ
 
 ---
 
-**Methodology:** Entity co-occurrence analysis of HBRK-flagged documents against shell entity names (by document type), person names, and money values. Document type classification from automated pipeline. Person co-occurrence at file level (distinct file_id). All amounts are unverified automated extractions. See [Methodology](../METHODOLOGY.md).
+**Methodology:** Entity co-occurrence analysis of HBRK-flagged documents against shell entity names (by document type), person names, and money values. Document type classification from automated pipeline. Person co-occurrence at file level (distinct file_id). All amounts are unverified automated extractions. See [Methodology](../docs/METHODOLOGY.md).
 
 **Source data:** [Master Wire Ledger](../data/master_wire_ledger_phase25.json) · <a href="https://docs.google.com/spreadsheets/d/11lw0QjMZ-rYIjWesv5VG1YKts57ahPEm/edit?usp=sharing&ouid=103970896670138914877&rtpof=true&sd=true" target="_blank">Forensic Workbook</a> · <a href="https://randallscott25-star.github.io/epstein-forensic-finance/visualizations/shell_network.html" target="_blank">Interactive Network</a>
 
-**Related narratives:** [N8: Entity Co-Occurrence](08_entity_cooccurrence.md) · [N11: The Shell Map](11_the_shell_map.md) · [N14: Leon Black](14_where_leon_blacks_money_went.md) · [N15: Gratitude America](15_gratitude_america.md)
+**Related narratives:** [N8: Entity Co-Occurrence](08_infrastructure_of_access.md) · [N11: The Shell Map](11_the_shell_map.md) · [N14: Leon Black](14_where_leon_blacks_money_went.md) · [N15: Gratitude America](15_gratitude_america.md)
 
 *All findings are (Unverified) automated extractions from DOJ EFTA documents released under the Epstein Files Transparency Act. Entity mention does not imply wrongdoing. This analysis identifies patterns for further investigation — it does not make legal conclusions.*
 
@@ -207,4 +207,4 @@ Richard Kahn (11,153), Jeffrey Epstein (4,510), JEE variants (7,300 combined), R
 | Methodology | <a href="https://docs.google.com/spreadsheets/d/11lw0QjMZ-rYIjWesv5VG1YKts57ahPEm/edit?gid=1840632994#gid=1840632994" target="_blank">📊 Open Tab</a> |
 
 ### How to Verify
-EFTA document IDs from public DOJ release at <a href="https://efts.gov" target="_blank">efts.gov</a>. Full methodology in [METHODOLOGY.md](METHODOLOGY.md).
+EFTA document IDs from public DOJ release at <a href="https://efts.gov" target="_blank">efts.gov</a>. Full methodology in [METHODOLOGY.md](../docs/METHODOLOGY.md).

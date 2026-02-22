@@ -2,7 +2,7 @@
 
 **32 same-day matches. 4.3× above random chance. $575 million in wire transfers within 3 days of a documented Epstein aircraft flight.**
 
-*All amounts are (Unverified) automated extractions from DOJ EFTA documents. Appearance in this analysis does not imply wrongdoing. See [COMPLIANCE.md](../COMPLIANCE.md) for professional standards framework.*
+*All amounts are (Unverified) automated extractions from DOJ EFTA documents. Appearance in this analysis does not imply wrongdoing. See [COMPLIANCE.md](../docs/COMPLIANCE.md) for professional standards framework.*
 
 ---
 
@@ -141,7 +141,7 @@ Flight logs extracted from EFTA corpus (doc_type = flight_log). Correlation comp
 ### Corpus Statistics Source
 **Method**: Temporal correlation analysis — wire dates vs. flight log dates with geographic enrichment.
 **Finding**: 4.3× random correlation rate; $169M in wires within ±3 days of St. Thomas flights.
-**Database**: 1,476,377 files, 11.4M extracted entities (see METHODOLOGY.md).
+**Database**: 1,476,377 files, 11.4M extracted entities (see [METHODOLOGY.md](../docs/METHODOLOGY.md)).
 
 ### Scope Note
 Wire dates are from Deutsche Bank production only. Flight correlations may also exist with Bear Stearns/JPMorgan transaction dates not available in this production. The 4.3× rate is a lower bound.
@@ -168,4 +168,4 @@ Wire dates are from Deutsche Bank production only. Flight correlations may also 
 | Methodology | <a href="https://docs.google.com/spreadsheets/d/11lw0QjMZ-rYIjWesv5VG1YKts57ahPEm/edit?gid=1840632994#gid=1840632994" target="_blank">📊 Open Tab</a> |
 
 ### How to Verify
-EFTA document IDs from public DOJ release at <a href="https://efts.gov" target="_blank">efts.gov</a>. Wire data from <a href="https://www.justice.gov/epstein/files/DataSet%208/EFTA00027019.pdf" target="_blank">EFTA00027019</a> Exhibits A–E. Flight logs from EFTA corpus. Full methodology in [METHODOLOGY.md](METHODOLOGY.md).
+EFTA document IDs from public DOJ release at <a href="https://efts.gov" target="_blank">efts.gov</a>. Wire data from <a href="https://www.justice.gov/epstein/files/DataSet%208/EFTA00027019.pdf" target="_blank">EFTA00027019</a> Exhibits A–E. Flight logs from EFTA corpus. Full methodology in [METHODOLOGY.md](../docs/METHODOLOGY.md).

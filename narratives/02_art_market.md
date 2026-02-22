@@ -2,7 +2,7 @@
 
 **$18.9 million in auction proceeds entered the trust network through a single account — then dispersed across the shell structure.**
 
-*All amounts are (Unverified) automated extractions from DOJ EFTA documents. Appearance in this analysis does not imply wrongdoing. See [COMPLIANCE.md](../COMPLIANCE.md) for professional standards framework.*
+*All amounts are (Unverified) automated extractions from DOJ EFTA documents. Appearance in this analysis does not imply wrongdoing. See [COMPLIANCE.md](../docs/COMPLIANCE.md) for professional standards framework.*
 
 ---
 
@@ -98,7 +98,7 @@ The outflow amounts ($5M, $8M, $9M, $10M) are round numbers — consistent with 
 
 ### Corpus Statistics Source
 **Method**: Entity co-occurrence analysis across files containing "Haze Trust" and auction house entity variants.
-**Database**: 1,476,377 files, 11.4M extracted entities (see METHODOLOGY.md).
+**Database**: 1,476,377 files, 11.4M extracted entities (see [METHODOLOGY.md](../docs/METHODOLOGY.md)).
 
 ### Scope Note
 Haze Trust also co-occurs with Financial Trust Company (19 shared files), which banked at Bear Stearns. The HSBC Bermuda wire ($58,328) confirms an offshore banking relationship beyond Deutsche Bank. See N11 for full multi-bank context.
@@ -122,4 +122,4 @@ Haze Trust also co-occurs with Financial Trust Company (19 shared files), which 
 | Methodology | <a href="https://docs.google.com/spreadsheets/d/11lw0QjMZ-rYIjWesv5VG1YKts57ahPEm/edit?gid=1840632994#gid=1840632994" target="_blank">📊 Open Tab</a> |
 
 ### How to Verify
-EFTA document IDs from public DOJ release at <a href="https://efts.gov" target="_blank">efts.gov</a>. Wire data from <a href="https://www.justice.gov/epstein/files/DataSet%208/EFTA00027019.pdf" target="_blank">EFTA00027019</a> Exhibit D. Full methodology in [METHODOLOGY.md](METHODOLOGY.md).
+EFTA document IDs from public DOJ release at <a href="https://efts.gov" target="_blank">efts.gov</a>. Wire data from <a href="https://www.justice.gov/epstein/files/DataSet%208/EFTA00027019.pdf" target="_blank">EFTA00027019</a> Exhibit D. Full methodology in [METHODOLOGY.md](../docs/METHODOLOGY.md).

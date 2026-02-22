@@ -107,11 +107,11 @@ Their presence on Southern Trust Company records places them inside the Epstein 
 
 ---
 
-**Methodology:** Entity co-occurrence analysis using Leon Black variant names (Leon Black, Leon & Debra, Black Family Partners, Elysium Management, Narrow Holdings, BV70) against shell entity names and investment fund names across financial documents. Wire amounts from verified Deutsche Bank production (Exhibits A–E). All co-occurrence counts are file-level (distinct file_id). See [Methodology](../METHODOLOGY.md).
+**Methodology:** Entity co-occurrence analysis using Leon Black variant names (Leon Black, Leon & Debra, Black Family Partners, Elysium Management, Narrow Holdings, BV70) against shell entity names and investment fund names across financial documents. Wire amounts from verified Deutsche Bank production (Exhibits A–E). All co-occurrence counts are file-level (distinct file_id). See [Methodology](../docs/METHODOLOGY.md).
 
 **Source data:** [Master Wire Ledger](../data/master_wire_ledger_phase25.json) · <a href="https://docs.google.com/spreadsheets/d/11lw0QjMZ-rYIjWesv5VG1YKts57ahPEm/edit?usp=sharing&ouid=103970896670138914877&rtpof=true&sd=true" target="_blank">Forensic Workbook</a> · <a href="https://randallscott25-star.github.io/epstein-forensic-finance/visualizations/shell_network.html" target="_blank">Interactive Network</a>
 
-**Related narratives:** [N1: Money Pipeline](01_money_pipeline.md) · [N3: Outflow Recipients](03_outflow_recipients.md) · [N11: The Shell Map](11_the_shell_map.md) · [N15: Gratitude America](15_gratitude_america.md)
+**Related narratives:** [N1: Money Pipeline](01_jeepers_pipeline.md) · [N3: Outflow Recipients](03_plan_d_question.md) · [N11: The Shell Map](11_the_shell_map.md) · [N15: Gratitude America](15_gratitude_america.md)
 
 *All findings are (Unverified) automated extractions from DOJ EFTA documents released under the Epstein Files Transparency Act. Entity mention does not imply wrongdoing. This analysis identifies patterns for further investigation — it does not make legal conclusions.*
 
@@ -190,4 +190,4 @@ Apollo Management (13 files), Elysium Management LLC (9), Coatue Enterprises (6)
 | Methodology | <a href="https://docs.google.com/spreadsheets/d/11lw0QjMZ-rYIjWesv5VG1YKts57ahPEm/edit?gid=1840632994#gid=1840632994" target="_blank">📊 Open Tab</a> |
 
 ### How to Verify
-EFTA document IDs from public DOJ release at <a href="https://efts.gov" target="_blank">efts.gov</a>. Wire data from <a href="https://www.justice.gov/epstein/files/DataSet%208/EFTA00027019.pdf" target="_blank">EFTA00027019</a> Exhibit A. Full methodology in [METHODOLOGY.md](METHODOLOGY.md).
+EFTA document IDs from public DOJ release at <a href="https://efts.gov" target="_blank">efts.gov</a>. Wire data from <a href="https://www.justice.gov/epstein/files/DataSet%208/EFTA00027019.pdf" target="_blank">EFTA00027019</a> Exhibit A. Full methodology in [METHODOLOGY.md](../docs/METHODOLOGY.md).

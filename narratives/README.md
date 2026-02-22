@@ -2,9 +2,9 @@
 
 **The financial data tells stories that numbers alone cannot convey.**
 
-These narratives trace fund flow patterns, entity relationships, temporal correlations, and forensic accounting anomalies identified across the 1.48 million documents in the DOJ EFTA release. Early narratives are grounded in wire-level data from the [master wire ledger](../data/master_wire_ledger_phase25.json). Later narratives draw on the full corpus: 11.4 million entity extractions, 734,122 unique persons, 2.4 million dates, and 321 aircraft flight records. Each finding is extracted through the [25-phase pipeline](../METHODOLOGY.md) and cross-referenced against court exhibits where available.
+These narratives trace fund flow patterns, entity relationships, temporal correlations, and forensic accounting anomalies identified across the 1.48 million documents in the DOJ EFTA release. Early narratives are grounded in wire-level data from the [master wire ledger](../data/master_wire_ledger_phase25.json). Later narratives draw on the full corpus: 11.4 million entity extractions, 734,122 unique persons, 2.4 million dates, and 321 aircraft flight records. Each finding is extracted through the [25-phase pipeline](../docs/METHODOLOGY.md) and cross-referenced against court exhibits where available.
 
-All amounts are **(Unverified)** automated extractions. These are not audit findings — they are data observations. See [COMPLIANCE.md](../COMPLIANCE.md) for the professional standards framework governing this analysis.
+All amounts are **(Unverified)** automated extractions. These are not audit findings — they are data observations. See [COMPLIANCE.md](../docs/COMPLIANCE.md) for the professional standards framework governing this analysis.
 
 ---
 

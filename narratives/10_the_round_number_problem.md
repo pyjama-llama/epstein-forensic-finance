@@ -2,7 +2,7 @@
 
 **84.3% of Epstein wire transfers are exact round numbers. Benford's Law fails on this dataset — not because of fraud, but because this money was moved by instruction, not by transaction.**
 
-*This analysis applies Benford's Law — a standard forensic accounting test for financial data integrity — to the 185 verified wire transfers in the master ledger. See [COMPLIANCE.md](../COMPLIANCE.md) for professional standards framework.*
+*This analysis applies Benford's Law — a standard forensic accounting test for financial data integrity — to the 185 verified wire transfers in the master ledger. See [COMPLIANCE.md](../docs/COMPLIANCE.md) for professional standards framework.*
 
 ---
 
@@ -143,4 +143,4 @@ Benford's test applied to Deutsche Bank wire production only. The test could be 
 | Methodology | <a href="https://docs.google.com/spreadsheets/d/11lw0QjMZ-rYIjWesv5VG1YKts57ahPEm/edit?gid=1840632994#gid=1840632994" target="_blank">📊 Open Tab</a> |
 
 ### How to Verify
-EFTA document IDs from public DOJ release at <a href="https://efts.gov" target="_blank">efts.gov</a>. Wire data from <a href="https://www.justice.gov/epstein/files/DataSet%208/EFTA00027019.pdf" target="_blank">EFTA00027019</a> Exhibits A–E. Full methodology in [METHODOLOGY.md](METHODOLOGY.md).
+EFTA document IDs from public DOJ release at <a href="https://efts.gov" target="_blank">efts.gov</a>. Wire data from <a href="https://www.justice.gov/epstein/files/DataSet%208/EFTA00027019.pdf" target="_blank">EFTA00027019</a> Exhibits A–E. Full methodology in [METHODOLOGY.md](../docs/METHODOLOGY.md).

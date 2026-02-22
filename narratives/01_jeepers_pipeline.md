@@ -2,7 +2,7 @@
 
 **$57,876,640 through a brokerage shell into personal checking — all documented, all dated, all on one exhibit.**
 
-*All amounts are (Unverified) automated extractions from DOJ EFTA documents. Appearance in this analysis does not imply wrongdoing. See [COMPLIANCE.md](../COMPLIANCE.md) for professional standards framework.*
+*All amounts are (Unverified) automated extractions from DOJ EFTA documents. Appearance in this analysis does not imply wrongdoing. See [COMPLIANCE.md](../docs/COMPLIANCE.md) for professional standards framework.*
 
 ---
 
@@ -88,7 +88,7 @@ Several bates stamps show OCR artifacts in entity names: "Jee ers Inc." appears 
 
 ### Corpus Statistics Source
 **Method**: Entity co-occurrence analysis across files containing "Jeepers" entity variants.
-**Database**: 1,476,377 files, 11.4M extracted entities (see METHODOLOGY.md).
+**Database**: 1,476,377 files, 11.4M extracted entities (see [METHODOLOGY.md](../docs/METHODOLOGY.md)).
 
 ### Scope Note
 Wire data sourced exclusively from Deutsche Bank production (Exhibits A–E). Jeepers Inc. also co-occurs with Financial Trust Company (125 shared files), which banked primarily at Bear Stearns — indicating additional financial activity outside this production's scope. See N11 (Shell Map) and N12 (Bear Stearns) for multi-bank context.
@@ -112,4 +112,4 @@ Wire data sourced exclusively from Deutsche Bank production (Exhibits A–E). Je
 | Methodology | <a href="https://docs.google.com/spreadsheets/d/11lw0QjMZ-rYIjWesv5VG1YKts57ahPEm/edit?gid=1840632994#gid=1840632994" target="_blank">📊 Open Tab</a> |
 
 ### How to Verify
-All EFTA document IDs are from the public DOJ release under the Epstein Files Transparency Act at <a href="https://efts.gov" target="_blank">efts.gov</a>. Wire data from <a href="https://www.justice.gov/epstein/files/DataSet%208/EFTA00027019.pdf" target="_blank">EFTA00027019</a> Exhibit C. Full methodology in [METHODOLOGY.md](METHODOLOGY.md).
+All EFTA document IDs are from the public DOJ release under the Epstein Files Transparency Act at <a href="https://efts.gov" target="_blank">efts.gov</a>. Wire data from <a href="https://www.justice.gov/epstein/files/DataSet%208/EFTA00027019.pdf" target="_blank">EFTA00027019</a> Exhibit C. Full methodology in [METHODOLOGY.md](../docs/METHODOLOGY.md).

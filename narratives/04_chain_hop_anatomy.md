@@ -2,7 +2,7 @@
 
 **How money moved through the 4-tier trust network — and how I caught $311 million in inflation from counting the same dollar twice.**
 
-*All amounts are (Unverified) automated extractions from DOJ EFTA documents. Appearance in this analysis does not imply wrongdoing. See [COMPLIANCE.md](../COMPLIANCE.md) for professional standards framework.*
+*All amounts are (Unverified) automated extractions from DOJ EFTA documents. Appearance in this analysis does not imply wrongdoing. See [COMPLIANCE.md](../docs/COMPLIANCE.md) for professional standards framework.*
 
 ---
 
@@ -66,7 +66,7 @@ I did not automatically remove these matches. Each was reviewed in the context o
 
 ---
 
-*Source: DOJ EFTA Document Release, Deutsche Bank-SDNY Production, Exhibits A and D. Chain-hop removal methodology documented in [METHODOLOGY.md](../METHODOLOGY.md), Phase 22. Entity classifications and shell-to-shell flags are included in the [master wire ledger](../data/master_wire_ledger_phase25.json).*
+*Source: DOJ EFTA Document Release, Deutsche Bank-SDNY Production, Exhibits A and D. Chain-hop removal methodology documented in [METHODOLOGY.md](../docs/METHODOLOGY.md), Phase 22. Entity classifications and shell-to-shell flags are included in the [master wire ledger](../data/master_wire_ledger_phase25.json).*
 
 ---
 
@@ -88,7 +88,7 @@ This narrative synthesizes the full 382-wire ledger to demonstrate inter-entity 
 
 ### Corpus Statistics Source
 **Method**: Entity co-occurrence + wire pathway analysis across all shell entities.
-**Database**: 1,476,377 files, 11.4M extracted entities (see METHODOLOGY.md).
+**Database**: 1,476,377 files, 11.4M extracted entities (see [METHODOLOGY.md](../docs/METHODOLOGY.md)).
 
 ### Scope Note
 The 4-tier model (intake → holding → distribution → personal) describes patterns visible in one bank's production. The full architecture includes Financial Trust Company (Bear Stearns), Outgoing Money Trust (7 banks), and other entities documented in N11–N13.
@@ -113,4 +113,4 @@ The 4-tier model (intake → holding → distribution → personal) describes pa
 | Methodology | <a href="https://docs.google.com/spreadsheets/d/11lw0QjMZ-rYIjWesv5VG1YKts57ahPEm/edit?gid=1840632994#gid=1840632994" target="_blank">📊 Open Tab</a> |
 
 ### How to Verify
-EFTA document IDs from public DOJ release at <a href="https://efts.gov" target="_blank">efts.gov</a>. Wire data from <a href="https://www.justice.gov/epstein/files/DataSet%208/EFTA00027019.pdf" target="_blank">EFTA00027019</a> Exhibits A–E. Full methodology in [METHODOLOGY.md](METHODOLOGY.md).
+EFTA document IDs from public DOJ release at <a href="https://efts.gov" target="_blank">efts.gov</a>. Wire data from <a href="https://www.justice.gov/epstein/files/DataSet%208/EFTA00027019.pdf" target="_blank">EFTA00027019</a> Exhibits A–E. Full methodology in [METHODOLOGY.md](../docs/METHODOLOGY.md).

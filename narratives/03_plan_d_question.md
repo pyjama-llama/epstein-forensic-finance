@@ -2,7 +2,7 @@
 
 **$18 million out to one man. Near-zero coming in. Where did Plan D LLC get its money?**
 
-*All amounts are (Unverified) automated extractions from DOJ EFTA documents. Appearance in this analysis does not imply wrongdoing. See [COMPLIANCE.md](../COMPLIANCE.md) for professional standards framework.*
+*All amounts are (Unverified) automated extractions from DOJ EFTA documents. Appearance in this analysis does not imply wrongdoing. See [COMPLIANCE.md](../docs/COMPLIANCE.md) for professional standards framework.*
 
 ---
 
@@ -103,7 +103,7 @@ Expansion wires (Phase 14–24 extraction) — not from Deutsche Bank Exhibits A
 
 ### Corpus Statistics Source
 **Method**: Entity co-occurrence analysis across files containing "Plan D" (entity_type = ORG).
-**Database**: 1,476,377 files, 11.4M extracted entities (see METHODOLOGY.md).
+**Database**: 1,476,377 files, 11.4M extracted entities (see [METHODOLOGY.md](../docs/METHODOLOGY.md)).
 
 ### External Corroboration
 - Dechert LLP review (2021): Documented $30.5M BV70 LLC → Plan D "loan" for "art transaction"
@@ -131,4 +131,4 @@ Expansion wires (Phase 14–24 extraction) — not from Deutsche Bank Exhibits A
 | Methodology | <a href="https://docs.google.com/spreadsheets/d/11lw0QjMZ-rYIjWesv5VG1YKts57ahPEm/edit?gid=1840632994#gid=1840632994" target="_blank">📊 Open Tab</a> |
 
 ### How to Verify
-EFTA document IDs from public DOJ release at <a href="https://efts.gov" target="_blank">efts.gov</a>. Full methodology in [METHODOLOGY.md](METHODOLOGY.md).
+EFTA document IDs from public DOJ release at <a href="https://efts.gov" target="_blank">efts.gov</a>. Full methodology in [METHODOLOGY.md](../docs/METHODOLOGY.md).

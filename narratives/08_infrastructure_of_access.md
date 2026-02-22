@@ -2,7 +2,7 @@
 
 **The people who moved the money are the same people victims named.**
 
-*This analysis documents entity co-occurrence across 1.48 million DOJ EFTA files. It does not reproduce victim testimony, identify survivors, or attribute guilt. All findings are automated extractions. See [COMPLIANCE.md](../COMPLIANCE.md) for professional standards framework.*
+*This analysis documents entity co-occurrence across 1.48 million DOJ EFTA files. It does not reproduce victim testimony, identify survivors, or attribute guilt. All findings are automated extractions. See [COMPLIANCE.md](../docs/COMPLIANCE.md) for professional standards framework.*
 
 ---
 
@@ -121,7 +121,7 @@ Corpus-wide entity co-occurrence analysis — not limited to any single exhibit.
 
 ### Corpus Statistics Source
 **Method**: Person × document co-occurrence analysis identifying 10 operational staff members who appear across multiple document types and shell entities.
-**Database**: 1,476,377 files, 11.4M extracted entities, 734,122 unique persons (see METHODOLOGY.md).
+**Database**: 1,476,377 files, 11.4M extracted entities, 734,122 unique persons (see [METHODOLOGY.md](../docs/METHODOLOGY.md)).
 **Finding**: 50 co-occurrence documents linking operational staff to shell network.
 
 ### Scope Note
@@ -158,4 +158,4 @@ This narrative draws from the full EFTA corpus, not limited to Deutsche Bank wir
 | Methodology | <a href="https://docs.google.com/spreadsheets/d/11lw0QjMZ-rYIjWesv5VG1YKts57ahPEm/edit?gid=1840632994#gid=1840632994" target="_blank">📊 Open Tab</a> |
 
 ### How to Verify
-EFTA document IDs from public DOJ release at <a href="https://efts.gov" target="_blank">efts.gov</a>. Full methodology in [METHODOLOGY.md](METHODOLOGY.md).
+EFTA document IDs from public DOJ release at <a href="https://efts.gov" target="_blank">efts.gov</a>. Full methodology in [METHODOLOGY.md](../docs/METHODOLOGY.md).

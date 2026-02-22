@@ -4,7 +4,7 @@
 
 *This narrative marks a transition. Narratives 1–10 analyzed what Deutsche Bank produced under a single SDNY subpoena: 382 wire transfers totaling $1.964 billion. That analysis is complete. Starting here, the scope expands to the full EFTA corpus — 1.48 million documents, 11.4 million entities, 463,402 dollar-amount references, and 13,146 emails flowing through a single operational hub. The wire ledger was the map. This is the territory.*
 
-*This analysis maps every shell entity in the Epstein financial network by searching the full EFTA corpus for corporate entities (trusts, LLCs, LPs, and incorporated entities) that co-occur with "Epstein" in the same documents. It then measures document co-occurrence between shells to map their internal connections. See [COMPLIANCE.md](../COMPLIANCE.md) for professional standards framework.*
+*This analysis maps every shell entity in the Epstein financial network by searching the full EFTA corpus for corporate entities (trusts, LLCs, LPs, and incorporated entities) that co-occur with "Epstein" in the same documents. It then measures document co-occurrence between shells to map their internal connections. See [COMPLIANCE.md](../docs/COMPLIANCE.md) for professional standards framework.*
 
 > **📊 Interactive version**: Explore this shell network in the <a href="https://randallscott25-star.github.io/epstein-forensic-finance/visualizations/shell_network.html" target="_blank">interactive flow diagram</a>.
 
@@ -157,7 +157,7 @@ Corpus-wide shell entity co-occurrence and multi-bank infrastructure analysis.
 ### Corpus Statistics Source
 **Method**: Entity × entity co-occurrence across all document types, combined with bank × shell co-occurrence in financial documents.
 **Finding**: 14 shell entities, 12 banking relationships, Bear Stearns 5.7× Deutsche Bank by money-mention volume.
-**Database**: 1,476,377 files, 11.4M extracted entities (see METHODOLOGY.md).
+**Database**: 1,476,377 files, 11.4M extracted entities (see [METHODOLOGY.md](../docs/METHODOLOGY.md)).
 
 ### Banking Infrastructure Table (from analysis)
 
@@ -194,4 +194,4 @@ Corpus-wide shell entity co-occurrence and multi-bank infrastructure analysis.
 | Methodology | <a href="https://docs.google.com/spreadsheets/d/11lw0QjMZ-rYIjWesv5VG1YKts57ahPEm/edit?gid=1840632994#gid=1840632994" target="_blank">📊 Open Tab</a> |
 
 ### How to Verify
-EFTA document IDs from public DOJ release at <a href="https://efts.gov" target="_blank">efts.gov</a>. Interactive visualization: [shell_network_v3.html](shell_network_v3.html). Full methodology in [METHODOLOGY.md](METHODOLOGY.md).
+EFTA document IDs from public DOJ release at <a href="https://efts.gov" target="_blank">efts.gov</a>. Interactive visualization: [shell_network_v3.html](shell_network_v3.html). Full methodology in [METHODOLOGY.md](../docs/METHODOLOGY.md).

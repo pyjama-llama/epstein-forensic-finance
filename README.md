@@ -69,7 +69,7 @@ To my knowledge, this represents the first systematic attempt to reconstruct the
 
 ## Headline Results
 
-> ⚠️ **All findings are navigational tools derived from automated extraction. They have not been independently verified and should not be treated as established fact. See [COMPLIANCE.md](COMPLIANCE.md) for full professional standards disclaimers.**
+> ⚠️ **All findings are navigational tools derived from automated extraction. They have not been independently verified and should not be treated as established fact. See [COMPLIANCE.md](docs/COMPLIANCE.md) for full professional standards disclaimers.**
 
 | Metric | Value |
 |--------|-------|
@@ -98,7 +98,7 @@ The SAR benchmark ($1.878B) represents only transactions banks flagged as **susp
 
 ## The Money Circuit: 4-Tier Trust Hierarchy
 
-> See full annotated flow diagram: **[NETWORK.md](NETWORK.md)**
+> See full annotated flow diagram: **[NETWORK.md](docs/NETWORK.md)**
 
 ```
 TIER 1 — HOLDING TRUSTS (received external deposits)
@@ -123,7 +123,7 @@ TIER 4 — PERSONAL ACCOUNTS (terminal destinations)
   Darren Indyke (estate attorney)      $6.4M in  ← Deutsche Bank
 ```
 
-All amounts are (Unverified) automated extractions. See [FINDINGS.md](FINDINGS.md) for detailed analysis.
+All amounts are (Unverified) automated extractions. See [FINDINGS.md](docs/FINDINGS.md) for detailed analysis.
 
 ### Money Flow Direction Analysis
 
@@ -151,7 +151,7 @@ All amounts are (Unverified) automated extractions. See [FINDINGS.md](FINDINGS.m
 
 ## Database Schema (28+ Tables)
 
-> See full database architecture diagram: **[SCHEMA.md](SCHEMA.md)**
+> See full database architecture diagram: **[SCHEMA.md](docs/SCHEMA.md)**
 
 This is not a search index. This is a relational forensic database.
 
@@ -217,7 +217,7 @@ Phases 14-25  Wire Transfer Extraction Pipeline → 382-wire master ledger, $1.9
 | 25 | Date recovery from source context fields | +75 dates (31.9%→51.6%), 0 collisions |
 | **25** | **Date recovery from source context fields** | **75 dates recovered (31.9%→51.6%), 0 collisions** |
 
-Full phase-by-phase details: **[METHODOLOGY.md](METHODOLOGY.md)**
+Full phase-by-phase details: **[METHODOLOGY.md](docs/METHODOLOGY.md)**
 
 ---
 
@@ -292,25 +292,29 @@ The financial data tells stories that numbers alone cannot convey. As I complete
 
 ```
 ├── README.md                              ← You are here
-├── METHODOLOGY.md                         ← 25-phase pipeline, 9 bugs, 5-axis scoring, limitations
-├── FINDINGS.md                            ← GAP analysis, 8 key discoveries, recommendations
-├── COMPLIANCE.md                          ← Professional standards, GAAS conformance, legal disclaimers
-├── SCHEMA.md                              ← Database architecture diagram
-├── NETWORK.md                             ← Trust network flow diagram
+├── docs/
+│   ├── METHODOLOGY.md                     ← 25-phase pipeline, 9 bugs, 5-axis scoring, limitations
+│   ├── FINDINGS.md                        ← GAP analysis, 8 key discoveries, recommendations
+│   ├── COMPLIANCE.md                      ← Professional standards, GAAS conformance, legal disclaimers
+│   ├── SCHEMA.md                          ← Database architecture diagram
+│   ├── NETWORK.md                         ← Trust network flow diagram
+│   └── SOURCE_APPENDIX_TEMPLATE.md        ← Standard template for future narratives (N17+)
+├── narratives/                            ← 16 forensic data narratives with source appendices
 ├── data/
 │   ├── master_wire_ledger_phase25.json    ← 382 wires (publication dataset)
 │   └── entity_classification.json         ← Entity → type mapping (158 entities)
-├── workbook/
-│   ├── EPSTEIN_FORENSIC_WORKBOOK_v6.xlsx  ← 11-tab forensic workbook
-│   └── forensic_workbook_v6.py            ← Python script to regenerate workbook
-└── scripts/
-    └── publish.sh                         ← Git push script
+├── visualizations/                        ← Interactive shell network diagram
+└── tools/
+    ├── linkify_efta.py                    ← Auto-link EFTA IDs → DOJ PDFs in .md files
+    ├── convert_links_new_tab.py           ← Convert external links to target="_blank"
+    ├── inject_efta_source_table.py        ← Add source document tables to narratives
+    └── append_source_appendices.py        ← Append source appendices to narratives
 ```
 
 ### Visual Guides
 
-- **[SCHEMA.md](SCHEMA.md)** — Full database architecture showing how 28+ tables, 11.4M entities, and 1.48M files feed into the 382-wire master ledger
-- **[NETWORK.md](NETWORK.md)** — Annotated trust network flow diagram with dollar amounts on every edge
+- **[SCHEMA.md](docs/SCHEMA.md)** — Full database architecture showing how 28+ tables, 11.4M entities, and 1.48M files feed into the 382-wire master ledger
+- **[NETWORK.md](docs/NETWORK.md)** — Annotated trust network flow diagram with dollar amounts on every edge
 
 ### Forensic Workbook v6.1 (11 Tabs)
 
@@ -378,7 +382,7 @@ Professional background: multi-affiliate financial reconciliation, budget auditi
 
 ## Disclaimer
 
-This analysis does not constitute an audit, examination, or review performed in accordance with GAAS, GAGAS, or AICPA SSFS No. 1. See **[COMPLIANCE.md](COMPLIANCE.md)** for a detailed discussion of applicable professional standards and how this analysis relates to them.
+This analysis does not constitute an audit, examination, or review performed in accordance with GAAS, GAGAS, or AICPA SSFS No. 1. See **[COMPLIANCE.md](docs/COMPLIANCE.md)** for a detailed discussion of applicable professional standards and how this analysis relates to them.
 
 All financial amounts are (Unverified) automated extractions unless explicitly noted otherwise. Entity classifications are based on OCR text extraction with automated normalization and may contain errors. Shell entity designations are analytical classifications, not legal determinations.
 

@@ -139,11 +139,11 @@ The data is in the EFTA documents. The 990s are public. The comparison is straig
 
 ---
 
-**Methodology:** Entity co-occurrence analysis of Gratitude America financial documents against investment fund names and charitable organization names. Money values from MONEY-type entity extraction on financial documents. Document type classification from automated pipeline. All amounts are unverified automated extractions. See [Methodology](../METHODOLOGY.md).
+**Methodology:** Entity co-occurrence analysis of Gratitude America financial documents against investment fund names and charitable organization names. Money values from MONEY-type entity extraction on financial documents. Document type classification from automated pipeline. All amounts are unverified automated extractions. See [Methodology](../docs/METHODOLOGY.md).
 
 **Source data:** [Master Wire Ledger](../data/master_wire_ledger_phase25.json) · <a href="https://docs.google.com/spreadsheets/d/11lw0QjMZ-rYIjWesv5VG1YKts57ahPEm/edit?usp=sharing&ouid=103970896670138914877&rtpof=true&sd=true" target="_blank">Forensic Workbook</a> · <a href="https://randallscott25-star.github.io/epstein-forensic-finance/visualizations/shell_network.html" target="_blank">Interactive Network</a>
 
-**Related narratives:** [N3: Outflow Recipients](03_outflow_recipients.md) · [N11: The Shell Map](11_the_shell_map.md) · [N14: Leon Black](14_where_leon_blacks_money_went.md)
+**Related narratives:** [N3: Outflow Recipients](03_plan_d_question.md) · [N11: The Shell Map](11_the_shell_map.md) · [N14: Leon Black](14_where_leon_blacks_money_went.md)
 
 *All findings are (Unverified) automated extractions from DOJ EFTA documents released under the Epstein Files Transparency Act. Entity mention does not imply wrongdoing. This analysis identifies patterns for further investigation — it does not make legal conclusions.*
 
@@ -213,4 +213,4 @@ Key wires demonstrating investment vs. charitable split:
 | Methodology | <a href="https://docs.google.com/spreadsheets/d/11lw0QjMZ-rYIjWesv5VG1YKts57ahPEm/edit?gid=1840632994#gid=1840632994" target="_blank">📊 Open Tab</a> |
 
 ### How to Verify
-EFTA document IDs from public DOJ release at <a href="https://efts.gov" target="_blank">efts.gov</a>. Wire data from <a href="https://www.justice.gov/epstein/files/DataSet%208/EFTA00027019.pdf" target="_blank">EFTA00027019</a> Exhibit E. Full methodology in [METHODOLOGY.md](METHODOLOGY.md).
+EFTA document IDs from public DOJ release at <a href="https://efts.gov" target="_blank">efts.gov</a>. Wire data from <a href="https://www.justice.gov/epstein/files/DataSet%208/EFTA00027019.pdf" target="_blank">EFTA00027019</a> Exhibit E. Full methodology in [METHODOLOGY.md](../docs/METHODOLOGY.md).
