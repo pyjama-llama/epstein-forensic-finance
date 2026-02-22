@@ -46,9 +46,14 @@ The data has been categorized by confidence level:
 
 ## Data Attribution
 
-This visualization is built on data from the **[pyjama-llama/epstein-wire-data](https://github.com/pyjama-llama)** dataset.
+This visualization is built on data and forensic analysis by **R.S. Taylor**.
 
-See [CREDITS.md](CREDITS.md) for full attribution details.
+**Citation:**
+> Taylor, R.S. (2026). *Epstein Financial Forensics: Automated forensic financial reconstruction from 1.48 million DOJ EFTA documents.* GitHub. https://github.com/randallscott25-star/epstein-forensic-finance
+
+**License:** [Creative Commons Attribution 4.0 (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/) — you may share and adapt with attribution.
+
+See [CREDITS.md](CREDITS.md) for full details.
 
 ---
 

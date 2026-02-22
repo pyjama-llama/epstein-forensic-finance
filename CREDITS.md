@@ -1,16 +1,25 @@
 # Credits & Attribution
 
-## Data Source
+## Data Source & Analysis
 
-The wire transfer data used in this visualization is sourced from the forensic financial investigation dataset:
+**Author**: R.S. Taylor
 
-**Repository**: [Link to original repo — update this]
-**Author**: [Original author name — update this]
-**License**: [License name — check the original repo's LICENSE file]
+**Citation**:
+> Taylor, R.S. (2026). *Epstein Financial Forensics: Automated forensic financial reconstruction from 1.48 million DOJ EFTA documents.* GitHub. https://github.com/randallscott25-star/epstein-forensic-finance
 
-This project is a derivative visualization built on top of that dataset.
-If you are the original data author and would like different attribution or have concerns,
-please open an issue or contact the maintainer.
+**Repository**: https://github.com/randallscott25-star/epstein-forensic-finance
+
+**License**: [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/)
+
+Under CC BY 4.0, you are free to share and adapt this material for any purpose, provided appropriate credit is given. This visualization project satisfies that requirement through this file, the README, and the in-app About panel.
+
+---
+
+## Visualization
+
+**Author**: pyjama-llama
+**Repository**: https://github.com/pyjama-llama/epstein-forensic-finance
+**License**: MIT (covers visualization code only — not the underlying data)
 
 ---
 

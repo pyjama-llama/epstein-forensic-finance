@@ -193,7 +193,7 @@ export class ForceGraph {
                 .distanceMax(400)
                 .theta(0.9)
             )
-            .force('center', d3.forceCenter(width / 2, height / 2))
+            .force('center', d3.forceCenter(0, 0))
             .force('collision', d3.forceCollide(d => d.r + 6).strength(0.8))
             .alphaDecay(0.015)
             .velocityDecay(0.4);
