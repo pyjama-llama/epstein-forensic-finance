@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Epstein Financial Shell Network — Fund Flow Architecture</title>
+<title>Epstein Financial Shell Network — Full Architecture</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
@@ -18,33 +18,31 @@
   }
 
   .header {
-    padding: 40px 60px 20px;
+    padding: 32px 48px 16px;
     border-bottom: 1px solid rgba(255,255,255,0.06);
   }
 
   .header h1 {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 28px;
+    font-size: 26px;
     font-weight: 600;
     color: #e8e8f0;
     letter-spacing: -0.5px;
   }
 
   .header .subtitle {
-    font-size: 13px;
+    font-size: 12px;
     color: #6a6a78;
-    margin-top: 8px;
+    margin-top: 6px;
     line-height: 1.6;
   }
 
-  .header .subtitle span {
-    color: #8888a0;
-  }
+  .header .subtitle span { color: #8888a0; }
 
   .controls {
-    padding: 16px 60px;
+    padding: 12px 48px;
     display: flex;
-    gap: 12px;
+    gap: 10px;
     border-bottom: 1px solid rgba(255,255,255,0.04);
     flex-wrap: wrap;
     align-items: center;
@@ -54,9 +52,9 @@
     background: rgba(255,255,255,0.04);
     border: 1px solid rgba(255,255,255,0.08);
     color: #8888a0;
-    padding: 6px 14px;
+    padding: 5px 12px;
     font-family: 'DM Mono', monospace;
-    font-size: 11px;
+    font-size: 10px;
     cursor: pointer;
     transition: all 0.2s;
     border-radius: 3px;
@@ -77,15 +75,15 @@
 
   .controls .legend {
     display: flex;
-    gap: 16px;
-    font-size: 10px;
+    gap: 14px;
+    font-size: 9px;
     color: #5a5a68;
   }
 
   .controls .legend-item {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
   }
 
   .controls .legend-dot {
@@ -96,48 +94,33 @@
 
   #canvas-container {
     width: 100%;
-    height: calc(100vh - 180px);
+    height: calc(100vh - 150px);
     position: relative;
     overflow: hidden;
   }
 
-  svg {
-    width: 100%;
-    height: 100%;
-  }
-
-  .node rect {
-    cursor: pointer;
-    transition: opacity 0.2s;
-  }
-
-  .node text {
-    font-family: 'DM Mono', monospace;
-    fill: #b0b0c0;
-    pointer-events: none;
-  }
+  svg { width: 100%; height: 100%; }
 
   .link {
     fill: none;
-    stroke-opacity: 0.25;
+    stroke-opacity: 0.18;
     transition: stroke-opacity 0.3s;
+    cursor: pointer;
   }
 
-  .link:hover {
-    stroke-opacity: 0.6;
-  }
+  .link:hover { stroke-opacity: 0.55; }
 
   .tooltip {
     position: fixed;
     background: #18181e;
     border: 1px solid rgba(255,255,255,0.1);
-    padding: 14px 18px;
+    padding: 12px 16px;
     font-family: 'DM Mono', monospace;
     font-size: 11px;
     color: #c8c8d0;
     pointer-events: none;
     z-index: 100;
-    max-width: 380px;
+    max-width: 420px;
     line-height: 1.7;
     display: none;
     box-shadow: 0 8px 32px rgba(0,0,0,0.5);
@@ -148,57 +131,33 @@
     font-weight: 600;
     font-size: 13px;
     color: #e8e8f0;
-    margin-bottom: 6px;
-  }
-
-  .tooltip .tt-amount {
-    font-size: 16px;
-    font-weight: 500;
     margin-bottom: 4px;
   }
 
-  .tooltip .tt-detail {
-    color: #7a7a88;
-    font-size: 10px;
-  }
-
-  .tier-label {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    fill: #3a3a48;
-  }
-
-  .tier-line {
-    stroke: rgba(255,255,255,0.03);
-    stroke-dasharray: 4 4;
-  }
+  .tooltip .tt-amount { font-size: 15px; font-weight: 500; margin-bottom: 3px; }
+  .tooltip .tt-detail { color: #7a7a88; font-size: 10px; }
 
   .detail-panel {
     position: fixed;
-    right: -420px;
+    right: -440px;
     top: 0;
-    width: 420px;
+    width: 440px;
     height: 100vh;
     background: #111116;
     border-left: 1px solid rgba(255,255,255,0.06);
-    padding: 40px 30px;
+    padding: 36px 28px;
     transition: right 0.3s ease;
     z-index: 50;
     overflow-y: auto;
     font-size: 12px;
   }
 
-  .detail-panel.open {
-    right: 0;
-  }
+  .detail-panel.open { right: 0; }
 
   .detail-panel .close-btn {
     position: absolute;
-    top: 16px;
-    right: 16px;
+    top: 14px;
+    right: 14px;
     background: none;
     border: none;
     color: #6a6a78;
@@ -208,276 +167,361 @@
 
   .detail-panel h2 {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 600;
     color: #e8e8f0;
     margin-bottom: 4px;
   }
 
   .detail-panel .tier-badge {
-    font-size: 10px;
+    font-size: 9px;
     letter-spacing: 1.5px;
     text-transform: uppercase;
     padding: 3px 8px;
     border-radius: 2px;
     display: inline-block;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
   }
 
   .detail-panel .stat-row {
     display: flex;
     justify-content: space-between;
-    padding: 8px 0;
+    padding: 7px 0;
     border-bottom: 1px solid rgba(255,255,255,0.04);
   }
 
   .detail-panel .stat-label { color: #6a6a78; }
   .detail-panel .stat-value { color: #d0d0e0; font-weight: 500; }
 
-  .detail-panel .flow-section {
-    margin-top: 20px;
-  }
+  .detail-panel .flow-section { margin-top: 16px; }
 
   .detail-panel .flow-section h3 {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 500;
     color: #8888a0;
     letter-spacing: 1px;
     text-transform: uppercase;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
 
   .detail-panel .flow-item {
-    padding: 8px 0;
+    padding: 6px 0;
     border-bottom: 1px solid rgba(255,255,255,0.03);
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
 
-  .detail-panel .flow-item .flow-name {
-    color: #a0a0b0;
-    font-size: 11px;
-    max-width: 220px;
-  }
-
-  .detail-panel .flow-item .flow-amount {
-    color: #c8a064;
-    font-size: 11px;
-    font-weight: 500;
-  }
+  .detail-panel .flow-item .flow-name { color: #a0a0b0; font-size: 10px; max-width: 240px; }
+  .detail-panel .flow-item .flow-amount { color: #c8a064; font-size: 10px; font-weight: 500; }
 </style>
 </head>
 <body>
 
 <div class="header">
-  <h1>Epstein Financial Shell Network</h1>
+  <h1>Epstein Financial Shell Network — Full Architecture</h1>
   <div class="subtitle">
-    <span>382 verified wire transfers</span> · $1.964 billion · <span>4-tier shell architecture</span><br>
-    Source: DOJ EFTA Document Release — Deutsche Bank-SDNY Production (Exhibits A–E)
+    <span>14 shell entities</span> · <span>8+ banking institutions</span> · <span>178,592 money references</span> · <span>1.48M documents</span><br>
+    Source: DOJ EFTA Document Release — Full Corpus Analysis (Narrative 11)
   </div>
 </div>
 
 <div class="controls">
-  <button class="active" onclick="showAll()">All Flows</button>
-  <button onclick="highlightExhibit('A')">Exhibit A — Inflows</button>
-  <button onclick="highlightExhibit('B')">Exhibit B — Investments</button>
-  <button onclick="highlightExhibit('C')">Exhibit C — Jeepers</button>
-  <button onclick="highlightExhibit('D')">Exhibit D — Disbursements</button>
-  <button onclick="highlightExhibit('E')">Exhibit E — Deutsche Bank</button>
+  <button class="active" onclick="showView('all')">All Connections</button>
+  <button onclick="showView('cooccurrence')">Shell Co-Occurrence</button>
+  <button onclick="showView('banks')">Bank Relationships</button>
+  <button onclick="showView('wires')">Wire Ledger Only</button>
   <div class="spacer"></div>
   <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#e8c170"></div>Shell Trusts/LLCs</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#6aa4d0"></div>Banks</div>
     <div class="legend-item"><div class="legend-dot" style="background:#c86464"></div>External Sources</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#c8a064"></div>Shell Trusts</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#64a0c8"></div>Operating Accounts</div>
     <div class="legend-item"><div class="legend-dot" style="background:#80c880"></div>Outflow Recipients</div>
   </div>
 </div>
 
-<div id="canvas-container">
-  <svg id="network"></svg>
-</div>
-
+<div id="canvas-container"><svg id="network"></svg></div>
 <div class="tooltip" id="tooltip"></div>
-
 <div class="detail-panel" id="detail-panel">
   <button class="close-btn" onclick="closePanel()">✕</button>
   <div id="panel-content"></div>
 </div>
 
 <script>
-// ─── DATA ─────────────────────────────────────────────────
+// ═══ DATA ═══════════════════════════════════════════════
 const nodes = [
-  // TIER 0: External Sources (left)
-  { id: "leon_black", name: "Leon & Debra Black", short: "L. Black", tier: 0, type: "source", totalOut: 60500000 },
-  { id: "narrow", name: "Narrow Holdings LLC", short: "Narrow Holdings", tier: 0, type: "source", totalOut: 20000000 },
-  { id: "rothschild_b", name: "Benjamin de Rothschild", short: "B. Rothschild", tier: 0, type: "source", totalOut: 14999980 },
-  { id: "rothschild_e", name: "Edmond de Rothschild (Suisse)", short: "E. Rothschild", tier: 0, type: "source", totalOut: 10000000 },
-  { id: "tudor", name: "Tudor Futures Fund", short: "Tudor Futures", tier: 0, type: "source", totalOut: 13503941 },
-  { id: "kellerhals", name: "Kellerhals Ferguson Kroblin", short: "Kellerhals", tier: 0, type: "source", totalOut: 23075000 },
-  { id: "sothebys", name: "Sotheby's", short: "Sotheby's", tier: 0, type: "source", totalOut: 11249417 },
-  { id: "christies", name: "Christie's Inc.", short: "Christie's", tier: 0, type: "source", totalOut: 7725000 },
-  { id: "bly", name: "Adam Bly / Seed Media", short: "A. Bly", tier: 0, type: "source", totalOut: 315468 },
+  // SHELLS
+  { id: "southern_trust", name: "Southern Trust Company Inc.", short: "Southern Trust", type: "shell", totalFiles: 883, financial: 178, money: 78569, inWireLedger: true, wireVolume: "$244M" },
+  { id: "southern_fin", name: "Southern Financial LLC", short: "Southern Financial", type: "shell", totalFiles: 628, financial: 118, money: 57208, inWireLedger: true, wireVolume: "$139M" },
+  { id: "financial_trust", name: "Financial Trust Company", short: "Financial Trust Co", type: "shell", totalFiles: 1014, financial: 325, money: 0, inWireLedger: false, wireVolume: "—" },
+  { id: "epstein_co", name: "Epstein & Co Inc.", short: "Epstein & Co", type: "shell", totalFiles: 400, financial: 174, money: 10482, inWireLedger: false, wireVolume: "—" },
+  { id: "hbrk", name: "HBRK Associates Inc.", short: "HBRK Associates", type: "shell", totalFiles: 13389, financial: 95, emails: 13146, money: 0, inWireLedger: false, wireVolume: "—" },
+  { id: "gratitude", name: "Gratitude America Ltd.", short: "Gratitude America", type: "shell", totalFiles: 209, financial: 89, money: 10407, inWireLedger: true, wireVolume: "$45M" },
+  { id: "haze", name: "The Haze Trust", short: "Haze Trust", type: "shell", totalFiles: 186, financial: 12, money: 8486, inWireLedger: true, wireVolume: "$126M" },
+  { id: "outgoing", name: "Outgoing Money Trust", short: "Outgoing Money Trust", type: "shell", totalFiles: 195, financial: 180, money: 2338, inWireLedger: false, wireVolume: "—" },
+  { id: "butterfly", name: "Butterfly Trust", short: "Butterfly Trust", type: "shell", totalFiles: 219, financial: 73, money: 3302, inWireLedger: false, wireVolume: "—" },
+  { id: "insurance", name: "Jeffrey E. Epstein Insurance Trust", short: "Insurance Trust", type: "shell", totalFiles: 71, financial: 49, money: 7800, inWireLedger: false, wireVolume: "—" },
+  { id: "jeepers", name: "Jeepers Inc.", short: "Jeepers", type: "shell", totalFiles: 270, financial: 19, money: 0, inWireLedger: true, wireVolume: "$58M" },
+  { id: "epstein_int", name: "Epstein Interests Inc.", short: "Epstein Interests", type: "shell", totalFiles: 116, financial: 28, money: 0, inWireLedger: false, wireVolume: "—" },
+  { id: "nautilus", name: "Nautilus Inc.", short: "Nautilus", type: "shell", totalFiles: 149, financial: 13, money: 0, inWireLedger: false, wireVolume: "—" },
+  { id: "plan_d", name: "Plan D LLC", short: "Plan D", type: "shell", totalFiles: 55, financial: 8, money: 0, inWireLedger: true, wireVolume: "$41M" },
 
-  // TIER 1: Shell Trusts (accumulation/distribution)
-  { id: "southern_trust", name: "Southern Trust Company Inc.", short: "Southern Trust", tier: 1, type: "shell", totalFlow: 244299980, victimDocs: 12 },
-  { id: "southern_fin", name: "Southern Financial LLC", short: "Southern Financial", tier: 1, type: "shell", totalFlow: 139244568, victimDocs: 37 },
-  { id: "haze", name: "The Haze Trust", short: "Haze Trust", tier: 1, type: "shell", totalFlow: 126391673, victimDocs: 0 },
-  { id: "gratitude", name: "Gratitude America Ltd.", short: "Gratitude America", tier: 1, type: "shell", totalFlow: 45083245, victimDocs: 6 },
+  // BANKS
+  { id: "bear_stearns", name: "Bear Stearns / JPMorgan", short: "Bear Stearns", type: "bank", moneyMentions: 2381211, financialFiles: 191 },
+  { id: "jpmorgan", name: "JPMorgan Chase", short: "JPMorgan Chase", type: "bank", moneyMentions: 744536, financialFiles: 615 },
+  { id: "deutsche", name: "Deutsche Bank", short: "Deutsche Bank", type: "bank", moneyMentions: 415287, financialFiles: 1564 },
+  { id: "citibank", name: "Citibank", short: "Citibank", type: "bank", moneyMentions: 78176, financialFiles: 39 },
+  { id: "goldman", name: "Goldman Sachs", short: "Goldman Sachs", type: "bank", moneyMentions: 14999, financialFiles: 25 },
+  { id: "hsbc", name: "HSBC", short: "HSBC", type: "bank", moneyMentions: 13389, financialFiles: 44 },
+  { id: "morgan_stanley", name: "Morgan Stanley", short: "Morgan Stanley", type: "bank", moneyMentions: 13255, financialFiles: 82 },
+  { id: "wells_fargo", name: "Wells Fargo", short: "Wells Fargo", type: "bank", moneyMentions: 0, financialFiles: 153 },
+  { id: "boa", name: "Bank of America", short: "Bank of America", type: "bank", moneyMentions: 0, financialFiles: 150 },
+  { id: "bank_hawaii", name: "Bank of Hawaii", short: "Bank of Hawaii", type: "bank", moneyMentions: 0, financialFiles: 734, note: "USVI local banking" },
+  { id: "td_bank", name: "TD Bank", short: "TD Bank", type: "bank", moneyMentions: 0, financialFiles: 0 },
+  { id: "fifth_third", name: "Fifth Third Bank", short: "Fifth Third Bank", type: "bank", moneyMentions: 0, financialFiles: 289 },
 
-  // TIER 2: Operating Accounts (transit)
-  { id: "epstein_now", name: "Epstein NOW/SuperNow Account", short: "Epstein NOW", tier: 2, type: "operating", totalFlow: 107323684 },
-  { id: "jeepers", name: "Jeepers Inc. (Brokerage)", short: "Jeepers Brokerage", tier: 2, type: "operating", totalFlow: 57876640 },
-  { id: "bv70", name: "BV70 LLC", short: "BV70", tier: 2, type: "operating", totalFlow: 60500000 },
-  { id: "plan_d", name: "Plan D LLC", short: "Plan D", tier: 2, type: "operating", totalFlow: 40500000 },
+  // EXTERNAL SOURCES (from wire ledger)
+  { id: "leon_black", name: "Leon & Debra Black / Apollo", short: "L. Black / Apollo", type: "source", wireVolume: "$60.5M" },
+  { id: "rothschild", name: "Rothschild (Benjamin + Edmond)", short: "Rothschild", type: "source", wireVolume: "$25M" },
+  { id: "tudor", name: "Tudor Futures Fund", short: "Tudor Futures", type: "source", wireVolume: "$13.5M" },
+  { id: "sothebys", name: "Sotheby's / Christie's", short: "Sotheby's / Christie's", type: "source", wireVolume: "$19M" },
 
-  // TIER 3: Outflow Recipients (right)
-  { id: "boothbay", name: "Boothbay Fund Complex", short: "Boothbay", tier: 3, type: "recipient", totalIn: 38250000 },
-  { id: "honeycomb", name: "Honeycomb Partners LP", short: "Honeycomb", tier: 3, type: "recipient", totalIn: 64000000 },
-  { id: "valar", name: "Valar Global Funds", short: "Valar Global", tier: 3, type: "recipient", totalIn: 28800000 },
-  { id: "caterpillar", name: "The 2017 Caterpillar Trust", short: "Caterpillar Trust", tier: 3, type: "recipient", totalIn: 15000000 },
-  { id: "ito", name: "Joichi Ito / Neoteny", short: "Ito / Neoteny", tier: 3, type: "recipient", totalIn: 2030000 },
-  { id: "coatue", name: "Coatue Enterprises LLC", short: "Coatue", tier: 3, type: "recipient", totalIn: 2000000 },
-  { id: "melanoma", name: "Melanoma Research Alliance", short: "Melanoma Research", tier: 3, type: "recipient", totalIn: 225000 },
-  { id: "blockchain", name: "Blockchain Capital Funds", short: "Blockchain Capital", tier: 3, type: "recipient", totalIn: 15000000 },
+  // OUTFLOW RECIPIENTS (from wire ledger)
+  { id: "boothbay", name: "Boothbay / Honeycomb / Valar", short: "Investment Funds", type: "recipient", wireVolume: "$131M" },
+  { id: "ito", name: "Joichi Ito / Neoteny / Coatue", short: "Ito / Neoteny / Coatue", type: "recipient", wireVolume: "$4M" },
+  { id: "melanoma", name: "Melanoma Research Alliance", short: "Melanoma Research", type: "recipient", wireVolume: "$225K" },
 ];
 
-const links = [
-  // External Sources → Shell Trusts
-  { source: "leon_black", target: "southern_trust", amount: 60500000, wires: 6, exhibit: "A", label: "$60.5M via Apollo + direct" },
-  { source: "narrow", target: "southern_trust", amount: 20000000, wires: 1, exhibit: "A", label: "$20M c/o Elysium Management" },
-  { source: "rothschild_b", target: "southern_trust", amount: 14999980, wires: 1, exhibit: "A", label: "$15M single wire" },
-  { source: "rothschild_e", target: "southern_trust", amount: 10000000, wires: 1, exhibit: "A", label: "$10M from Swiss account" },
-  { source: "tudor", target: "southern_trust", amount: 13503941, wires: 1, exhibit: "A", label: "$13.5M — only non-round Exhibit A" },
-  { source: "kellerhals", target: "epstein_now", amount: 23075000, wires: 2, exhibit: "C", label: "$23M V.I. legal fees" },
-  { source: "sothebys", target: "haze", amount: 11249417, wires: 1, exhibit: "E", label: "Art auction proceeds" },
-  { source: "christies", target: "haze", amount: 7725000, wires: 1, exhibit: "E", label: "Art auction proceeds" },
-  { source: "bly", target: "epstein_now", amount: 315468, wires: 8, exhibit: "C", label: "$315K across 8 small wires" },
-
-  // Shell Trusts → Operating Accounts
-  { source: "southern_trust", target: "epstein_now", amount: 10000000, wires: 1, exhibit: "A", label: "Trust → personal checking" },
-  { source: "southern_trust", target: "plan_d", amount: 30500000, wires: 4, exhibit: "B", label: "$30.5M to Leon Black vehicle" },
-  { source: "southern_trust", target: "southern_fin", amount: 67855320, wires: 8, exhibit: "B", label: "Trust → Financial LLC" },
-  { source: "haze", target: "southern_fin", amount: 32000000, wires: 5, exhibit: "E", label: "Art money → distribution" },
-  { source: "haze", target: "southern_trust", amount: 15000000, wires: 2, exhibit: "E", label: "Cross-trust transfer" },
-
-  // Operating Accounts — internal
-  { source: "jeepers", target: "epstein_now", amount: 51876640, wires: 21, exhibit: "C", label: "Brokerage ATM — 21 wires" },
-  { source: "jeepers", target: "bv70", amount: 6000000, wires: 3, exhibit: "C", label: "Brokerage → BV70" },
-  { source: "epstein_now", target: "gratitude", amount: 12768369, wires: 24, exhibit: "D", label: "Personal → 'charity'" },
-
-  // Shell Trusts / Operating → Outflow
-  { source: "southern_fin", target: "boothbay", amount: 38250000, wires: 6, exhibit: "B", label: "Investment fund allocation" },
-  { source: "southern_fin", target: "honeycomb", amount: 53000000, wires: 5, exhibit: "B", label: "Investment fund allocation" },
-  { source: "southern_fin", target: "valar", amount: 28800000, wires: 4, exhibit: "B", label: "Peter Thiel-linked fund" },
-  { source: "southern_fin", target: "caterpillar", amount: 15000000, wires: 2, exhibit: "B", label: "Trust disbursement" },
-  { source: "southern_fin", target: "ito", amount: 2030000, wires: 3, exhibit: "B", label: "MIT Media Lab director" },
-  { source: "southern_fin", target: "coatue", amount: 2000000, wires: 4, exhibit: "B", label: "Tech investment fund" },
-  { source: "southern_fin", target: "blockchain", amount: 15000000, wires: 3, exhibit: "B", label: "Crypto venture funds" },
-  { source: "gratitude", target: "melanoma", amount: 225000, wires: 3, exhibit: "D", label: "Rare actual charitable grant" },
-  { source: "plan_d", target: "leon_black", amount: 18000000, wires: 3, exhibit: "B", label: "$18M back to Black — net flow question" },
-  { source: "gratitude", target: "honeycomb", amount: 11000000, wires: 2, exhibit: "D", label: "'Charity' → investment fund" },
+// SHELL CO-OCCURRENCE LINKS (shared document counts)
+const cooccurrenceLinks = [
+  { source: "southern_fin", target: "southern_trust", weight: 163, label: "163 shared files — strongest bond" },
+  { source: "epstein_co", target: "financial_trust", weight: 126, label: "126 shared files — brokerage cluster" },
+  { source: "financial_trust", target: "jeepers", weight: 125, label: "125 shared files — brokerage pipeline" },
+  { source: "hbrk", target: "southern_trust", weight: 111, label: "111 shared files — email hub ↔ trust" },
+  { source: "hbrk", target: "southern_fin", weight: 104, label: "104 shared files — email hub ↔ distribution" },
+  { source: "financial_trust", target: "southern_trust", weight: 92, label: "92 shared files" },
+  { source: "financial_trust", target: "southern_fin", weight: 81, label: "81 shared files" },
+  { source: "epstein_co", target: "southern_fin", weight: 73, label: "73 shared files" },
+  { source: "butterfly", target: "southern_trust", weight: 61, label: "61 shared files" },
+  { source: "butterfly", target: "southern_fin", weight: 55, label: "55 shared files" },
+  { source: "epstein_co", target: "southern_trust", weight: 51, label: "51 shared files" },
+  { source: "gratitude", target: "southern_trust", weight: 50, label: "50 shared files" },
+  { source: "jeepers", target: "southern_trust", weight: 50, label: "50 shared files" },
+  { source: "haze", target: "southern_trust", weight: 49, label: "49 shared files" },
+  { source: "jeepers", target: "southern_fin", weight: 49, label: "49 shared files" },
+  { source: "haze", target: "southern_fin", weight: 48, label: "48 shared files" },
+  { source: "gratitude", target: "southern_fin", weight: 43, label: "43 shared files" },
+  { source: "epstein_int", target: "financial_trust", weight: 41, label: "41 shared files" },
+  { source: "butterfly", target: "hbrk", weight: 37, label: "37 shared files" },
+  { source: "hbrk", target: "haze", weight: 32, label: "32 shared files" },
+  { source: "nautilus", target: "southern_fin", weight: 32, label: "32 shared files" },
+  { source: "butterfly", target: "haze", weight: 30, label: "30 shared files" },
+  { source: "epstein_co", target: "epstein_int", weight: 30, label: "30 shared files" },
+  { source: "gratitude", target: "hbrk", weight: 30, label: "30 shared files" },
+  { source: "butterfly", target: "gratitude", weight: 26, label: "26 shared files" },
+  { source: "nautilus", target: "southern_trust", weight: 22, label: "22 shared files" },
+  { source: "butterfly", target: "jeepers", weight: 21, label: "21 shared files" },
+  { source: "gratitude", target: "haze", weight: 20, label: "20 shared files" },
 ];
 
-// ─── COLOR SCHEME ──────────────────────────────────────────
-const tierColors = {
-  source: { fill: "#c86464", bg: "rgba(200,100,100,0.12)", border: "rgba(200,100,100,0.3)", text: "#c86464" },
-  shell: { fill: "#c8a064", bg: "rgba(200,160,100,0.12)", border: "rgba(200,160,100,0.3)", text: "#c8a064" },
-  operating: { fill: "#64a0c8", bg: "rgba(100,160,200,0.12)", border: "rgba(100,160,200,0.3)", text: "#64a0c8" },
-  recipient: { fill: "#80c880", bg: "rgba(128,200,128,0.12)", border: "rgba(128,200,128,0.3)", text: "#80c880" }
+// BANK-SHELL LINKS (shared financial document counts)
+const bankLinks = [
+  { source: "deutsche", target: "outgoing", weight: 180, label: "180 shared financial docs" },
+  { source: "deutsche", target: "gratitude", weight: 76, label: "76 shared financial docs" },
+  { source: "bear_stearns", target: "financial_trust", weight: 66, label: "66 shared financial docs — 6,910 money mentions" },
+  { source: "wells_fargo", target: "outgoing", weight: 63, label: "63 shared financial docs" },
+  { source: "deutsche", target: "butterfly", weight: 55, label: "55 shared financial docs" },
+  { source: "deutsche", target: "southern_trust", weight: 52, label: "52 shared financial docs" },
+  { source: "deutsche", target: "southern_fin", weight: 48, label: "48 shared financial docs" },
+  { source: "deutsche", target: "insurance", weight: 45, label: "45 shared financial docs" },
+  { source: "bear_stearns", target: "southern_trust", weight: 10, label: "Bear Stearns ↔ Southern Trust" },
+  { source: "boa", target: "outgoing", weight: 38, label: "38 shared financial docs" },
+  { source: "td_bank", target: "outgoing", weight: 23, label: "23 shared financial docs" },
+  { source: "jpmorgan", target: "outgoing", weight: 14, label: "14 shared financial docs" },
+  { source: "jpmorgan", target: "financial_trust", weight: 10, label: "10 shared financial docs" },
+  { source: "deutsche", target: "jeepers", weight: 10, label: "10 shared financial docs" },
+  { source: "hsbc", target: "haze", weight: 5, label: "HSBC Bermuda → Haze Trust" },
+  { source: "morgan_stanley", target: "gratitude", weight: 5, label: "Gratitude America investment vehicle" },
+  { source: "td_bank", target: "southern_fin", weight: 9, label: "9 shared financial docs" },
+];
+
+// WIRE LEDGER LINKS (verified transfers from Deutsche Bank production)
+const wireLinks = [
+  { source: "leon_black", target: "southern_trust", weight: 60, label: "$60.5M — 6 wires, Exhibit A" },
+  { source: "rothschild", target: "southern_trust", weight: 25, label: "$25M — 2 wires, Exhibit A" },
+  { source: "tudor", target: "southern_trust", weight: 13, label: "$13.5M — 1 wire, Exhibit A" },
+  { source: "sothebys", target: "haze", weight: 19, label: "$19M — auction proceeds, Exhibit D" },
+  { source: "southern_trust", target: "southern_fin", weight: 67, label: "$67.9M — 8 wires, Exhibit B" },
+  { source: "southern_trust", target: "plan_d", weight: 30, label: "$30.5M — 4 wires, Exhibit B" },
+  { source: "haze", target: "southern_fin", weight: 32, label: "$32M — 5 wires, Exhibit E" },
+  { source: "haze", target: "southern_trust", weight: 15, label: "$15M — 2 wires, Exhibit E" },
+  { source: "jeepers", target: "southern_trust", weight: 51, label: "$51.9M — 21 wires, Exhibit C" },
+  { source: "southern_fin", target: "boothbay", weight: 131, label: "$131M — investments, Exhibit B" },
+  { source: "southern_fin", target: "ito", weight: 4, label: "$4M — Ito/Neoteny/Coatue, Exhibit B" },
+  { source: "gratitude", target: "melanoma", weight: 0.2, label: "$225K — rare charitable grant" },
+];
+
+// ═══ COLORS ═════════════════════════════════════════════
+const typeColors = {
+  shell:     { fill: "#e8c170", bg: "rgba(232,193,112,0.10)", border: "rgba(232,193,112,0.30)" },
+  bank:      { fill: "#6aa4d0", bg: "rgba(106,164,208,0.10)", border: "rgba(106,164,208,0.30)" },
+  source:    { fill: "#c86464", bg: "rgba(200,100,100,0.10)", border: "rgba(200,100,100,0.30)" },
+  recipient: { fill: "#80c880", bg: "rgba(128,200,128,0.10)", border: "rgba(128,200,128,0.30)" },
 };
 
-const tierLabels = ["EXTERNAL SOURCES", "SHELL TRUSTS", "OPERATING ACCOUNTS", "OUTFLOW RECIPIENTS"];
-
-// ─── LAYOUT ────────────────────────────────────────────────
+// ═══ LAYOUT ENGINE ══════════════════════════════════════
 const svg = document.getElementById('network');
 const container = document.getElementById('canvas-container');
 const tooltip = document.getElementById('tooltip');
+const nodeMap = {};
+nodes.forEach(n => nodeMap[n.id] = n);
+
+let currentView = 'all';
+
+function layout() {
+  const W = container.clientWidth;
+  const H = container.clientHeight;
+  const cx = W / 2, cy = H / 2;
+
+  // Shells in center cluster
+  const shells = nodes.filter(n => n.type === 'shell');
+  const banks = nodes.filter(n => n.type === 'bank');
+  const sources = nodes.filter(n => n.type === 'source');
+  const recipients = nodes.filter(n => n.type === 'recipient');
+
+  // Core shells — force-directed approximation via fixed positions
+  // Hub pair at center
+  const shellPositions = {
+    southern_trust:  { x: cx - 60,  y: cy - 30 },
+    southern_fin:    { x: cx + 60,  y: cy - 30 },
+    financial_trust: { x: cx - 180, y: cy - 100 },
+    epstein_co:      { x: cx - 240, y: cy - 20 },
+    hbrk:            { x: cx + 10,  y: cy + 90 },
+    gratitude:       { x: cx + 180, y: cy + 60 },
+    haze:            { x: cx + 200, y: cy - 80 },
+    butterfly:       { x: cx + 80,  y: cy - 130 },
+    insurance:       { x: cx - 120, y: cy + 80 },
+    jeepers:         { x: cx - 160, y: cy + 30 },
+    outgoing:        { x: cx - 50,  y: cy + 160 },
+    epstein_int:     { x: cx - 280, y: cy - 100 },
+    nautilus:        { x: cx + 260, y: cy + 10 },
+    plan_d:          { x: cx + 280, y: cy - 40 },
+  };
+
+  shells.forEach(n => {
+    const p = shellPositions[n.id] || { x: cx, y: cy };
+    n.x = p.x; n.y = p.y;
+    n.w = 120; n.h = 28;
+  });
+
+  // Banks — arc across top and bottom
+  const bankArc = [
+    { id: "bear_stearns",  x: cx - 340, y: cy - 220 },
+    { id: "jpmorgan",      x: cx - 140, y: cy - 240 },
+    { id: "deutsche",      x: cx + 60,  y: cy - 250 },
+    { id: "citibank",      x: cx + 240, y: cy - 220 },
+    { id: "goldman",       x: cx + 360, y: cy - 160 },
+    { id: "hsbc",          x: cx + 360, y: cy + 100 },
+    { id: "morgan_stanley", x: cx + 340, y: cy + 170 },
+    { id: "wells_fargo",   x: cx - 200, y: cy + 220 },
+    { id: "boa",           x: cx - 50,  y: cy + 250 },
+    { id: "bank_hawaii",   x: cx + 140, y: cy + 230 },
+    { id: "td_bank",       x: cx + 80,  y: cy + 180 },
+    { id: "fifth_third",   x: cx - 340, y: cy + 140 },
+  ];
+
+  bankArc.forEach(p => {
+    const n = nodeMap[p.id];
+    if (n) { n.x = p.x; n.y = p.y; n.w = 110; n.h = 24; }
+  });
+
+  // Sources — far left
+  sources.forEach((n, i) => {
+    n.x = 40; n.y = cy - 120 + i * 60;
+    n.w = 120; n.h = 26;
+  });
+
+  // Recipients — far right
+  recipients.forEach((n, i) => {
+    n.x = W - 160; n.y = cy - 60 + i * 60;
+    n.w = 120; n.h = 26;
+  });
+}
 
 function render() {
   const W = container.clientWidth;
   const H = container.clientHeight;
   svg.innerHTML = '';
+  layout();
 
-  const margin = { top: 50, right: 60, bottom: 30, left: 60 };
-  const innerW = W - margin.left - margin.right;
-  const innerH = H - margin.top - margin.bottom;
+  // Determine visible links
+  let visibleLinks = [];
+  if (currentView === 'all') {
+    visibleLinks = [...cooccurrenceLinks, ...bankLinks, ...wireLinks];
+  } else if (currentView === 'cooccurrence') {
+    visibleLinks = cooccurrenceLinks;
+  } else if (currentView === 'banks') {
+    visibleLinks = bankLinks;
+  } else if (currentView === 'wires') {
+    visibleLinks = wireLinks;
+  }
 
-  // Tier x-positions
-  const tierX = [0, 0.3, 0.6, 0.9].map(t => margin.left + t * innerW);
+  const maxWeight = Math.max(...visibleLinks.map(l => l.weight), 1);
 
-  // Group nodes by tier
-  const tiers = [[], [], [], []];
-  nodes.forEach(n => tiers[n.tier].push(n));
-
-  // Position nodes
-  const nodeHeight = 32;
-  const nodeWidth = 140;
-  tiers.forEach((tierNodes, ti) => {
-    const totalH = tierNodes.length * (nodeHeight + 12);
-    const startY = margin.top + (innerH - totalH) / 2;
-    tierNodes.forEach((n, ni) => {
-      n.x = tierX[ti];
-      n.y = startY + ni * (nodeHeight + 12);
-      n.w = nodeWidth;
-      n.h = nodeHeight;
-    });
-  });
-
-  // Create node lookup
-  const nodeMap = {};
-  nodes.forEach(n => nodeMap[n.id] = n);
-
-  // ─── Draw tier labels and dividers
-  const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
-  svg.appendChild(defs);
-
-  tierLabels.forEach((label, i) => {
-    const x = tierX[i] + nodeWidth / 2;
-    const text = createSVG('text', { x, y: margin.top - 20, 'text-anchor': 'middle', class: 'tier-label' });
-    text.textContent = label;
-    svg.appendChild(text);
-  });
-
-  // ─── Draw links
-  const maxAmount = Math.max(...links.map(l => l.amount));
-
-  links.forEach(link => {
+  // Draw links
+  visibleLinks.forEach(link => {
     const s = nodeMap[link.source];
     const t = nodeMap[link.target];
     if (!s || !t) return;
 
-    const thickness = Math.max(1.5, (link.amount / maxAmount) * 18);
-    const x1 = s.x + s.w;
-    const y1 = s.y + s.h / 2;
-    const x2 = t.x;
-    const y2 = t.y + t.h / 2;
+    const thickness = Math.max(1, (link.weight / maxWeight) * 12);
+    const sx = s.x + s.w / 2, sy = s.y + s.h / 2;
+    const tx = t.x + t.w / 2, ty = t.y + t.h / 2;
+    const dx = tx - sx, dy = ty - sy;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    const cp = dist * 0.3;
 
-    // Handle left-to-right and same-tier links
-    const dx = x2 - x1;
-    const cp = Math.max(Math.abs(dx) * 0.5, 60);
+    // Curve perpendicular to the line
+    const nx = -dy / dist * cp * 0.3;
+    const ny = dx / dist * cp * 0.3;
+    const mx = (sx + tx) / 2 + nx;
+    const my = (sy + ty) / 2 + ny;
+
+    let color = s.type === 'bank' || t.type === 'bank' ? typeColors.bank.fill :
+                s.type === 'source' || t.type === 'source' ? typeColors.source.fill :
+                s.type === 'recipient' || t.type === 'recipient' ? typeColors.recipient.fill :
+                typeColors.shell.fill;
 
     const path = createSVG('path', {
-      d: `M${x1},${y1} C${x1 + cp},${y1} ${x2 - cp},${y2} ${x2},${y2}`,
+      d: `M${sx},${sy} Q${mx},${my} ${tx},${ty}`,
       class: 'link',
-      stroke: tierColors[s.type].fill,
+      stroke: color,
       'stroke-width': thickness,
-      'data-exhibit': link.exhibit,
-      'data-source': link.source,
-      'data-target': link.target
     });
 
-    path.addEventListener('mouseenter', (e) => showLinkTooltip(e, link, s, t));
-    path.addEventListener('mouseleave', hideTooltip);
-    path.addEventListener('click', () => showLinkDetail(link, s, t));
+    path.addEventListener('mouseenter', (e) => {
+      tooltip.innerHTML = `<div class="tt-name">${s.short} ↔ ${t.short}</div><div class="tt-detail">${link.label}</div>`;
+      tooltip.style.display = 'block';
+    });
+    path.addEventListener('mouseleave', () => tooltip.style.display = 'none');
+    path.addEventListener('mousemove', positionTooltip);
     svg.appendChild(path);
   });
 
-  // ─── Draw nodes
+  // Determine visible nodes
+  let visibleNodeIds = new Set();
+  if (currentView === 'all') {
+    nodes.forEach(n => visibleNodeIds.add(n.id));
+  } else {
+    visibleLinks.forEach(l => { visibleNodeIds.add(l.source); visibleNodeIds.add(l.target); });
+  }
+
+  // Draw nodes
   nodes.forEach(node => {
-    const colors = tierColors[node.type];
-    const g = createSVG('g', { class: 'node', transform: `translate(${node.x},${node.y})` });
+    if (!visibleNodeIds.has(node.id)) return;
+    const colors = typeColors[node.type];
+    const g = createSVG('g', { transform: `translate(${node.x},${node.y})`, style: 'cursor:pointer' });
 
     const rect = createSVG('rect', {
       width: node.w, height: node.h, rx: 3,
@@ -487,37 +531,33 @@ function render() {
     const text = createSVG('text', {
       x: node.w / 2, y: node.h / 2 + 1,
       'text-anchor': 'middle', 'dominant-baseline': 'middle',
-      'font-size': '10px', fill: colors.text
+      'font-family': 'DM Mono, monospace',
+      'font-size': node.type === 'bank' ? '8px' : '9px',
+      fill: colors.fill
     });
     text.textContent = node.short;
 
-    // Victim doc badge for shells
-    if (node.victimDocs > 0) {
-      const badge = createSVG('circle', {
-        cx: node.w - 4, cy: 4, r: 7,
-        fill: '#c86464', stroke: '#0a0a0c', 'stroke-width': 2
+    // Not-in-wire-ledger indicator for shells
+    if (node.type === 'shell' && node.inWireLedger === false) {
+      const badge = createSVG('rect', {
+        x: node.w - 8, y: -4, width: 8, height: 8, rx: 1,
+        fill: 'rgba(200,100,100,0.6)', stroke: '#0a0a0c', 'stroke-width': 1
       });
-      const badgeText = createSVG('text', {
-        x: node.w - 4, y: 5, 'text-anchor': 'middle', 'dominant-baseline': 'middle',
-        'font-size': '7px', fill: '#fff', 'font-weight': '600'
-      });
-      badgeText.textContent = node.victimDocs;
       g.appendChild(badge);
-      g.appendChild(badgeText);
     }
 
     g.appendChild(rect);
     g.appendChild(text);
 
     g.addEventListener('mouseenter', (e) => showNodeTooltip(e, node));
-    g.addEventListener('mouseleave', hideTooltip);
+    g.addEventListener('mouseleave', () => tooltip.style.display = 'none');
+    g.addEventListener('mousemove', positionTooltip);
     g.addEventListener('click', () => showNodeDetail(node));
-
     svg.appendChild(g);
   });
 }
 
-// ─── SVG HELPERS ───────────────────────────────────────────
+// ═══ HELPERS ════════════════════════════════════════════
 function createSVG(tag, attrs) {
   const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
   Object.entries(attrs).forEach(([k, v]) => el.setAttribute(k, v));
@@ -525,90 +565,66 @@ function createSVG(tag, attrs) {
 }
 
 function fmt(n) {
-  if (n >= 1e9) return '$' + (n / 1e9).toFixed(1) + 'B';
-  if (n >= 1e6) return '$' + (n / 1e6).toFixed(1) + 'M';
-  if (n >= 1e3) return '$' + (n / 1e3).toFixed(0) + 'K';
-  return '$' + n.toLocaleString();
-}
-
-// ─── TOOLTIPS ──────────────────────────────────────────────
-function showNodeTooltip(e, node) {
-  const amount = node.totalOut || node.totalFlow || node.totalIn || 0;
-  let html = `<div class="tt-name">${node.name}</div>`;
-  html += `<div class="tt-amount" style="color:${tierColors[node.type].text}">${fmt(amount)}</div>`;
-  if (node.victimDocs) html += `<div class="tt-detail" style="color:#c86464">⚠ ${node.victimDocs} victim-related documents</div>`;
-  html += `<div class="tt-detail">Click for details</div>`;
-  tooltip.innerHTML = html;
-  tooltip.style.display = 'block';
-  positionTooltip(e);
-}
-
-function showLinkTooltip(e, link, s, t) {
-  let html = `<div class="tt-name">${s.short} → ${t.short}</div>`;
-  html += `<div class="tt-amount" style="color:${tierColors[s.type].text}">${fmt(link.amount)}</div>`;
-  html += `<div class="tt-detail">${link.wires} wire${link.wires > 1 ? 's' : ''} · Exhibit ${link.exhibit}</div>`;
-  html += `<div class="tt-detail">${link.label}</div>`;
-  tooltip.innerHTML = html;
-  tooltip.style.display = 'block';
-  positionTooltip(e);
+  if (n >= 1e6) return (n / 1e6).toFixed(1) + 'M';
+  if (n >= 1e3) return (n / 1e3).toFixed(0) + 'K';
+  return n.toLocaleString();
 }
 
 function positionTooltip(e) {
-  const x = e.clientX + 16;
-  const y = e.clientY - 10;
-  tooltip.style.left = Math.min(x, window.innerWidth - 400) + 'px';
-  tooltip.style.top = Math.min(y, window.innerHeight - 120) + 'px';
+  tooltip.style.left = Math.min(e.clientX + 14, window.innerWidth - 440) + 'px';
+  tooltip.style.top = Math.min(e.clientY - 10, window.innerHeight - 100) + 'px';
 }
 
-function hideTooltip() {
-  tooltip.style.display = 'none';
+function showNodeTooltip(e, node) {
+  let html = `<div class="tt-name">${node.name}</div>`;
+  if (node.type === 'shell') {
+    html += `<div class="tt-amount" style="color:${typeColors.shell.fill}">${node.totalFiles.toLocaleString()} files · ${node.financial} financial</div>`;
+    if (node.money) html += `<div class="tt-detail">${fmt(node.money)} money mentions</div>`;
+    if (node.emails) html += `<div class="tt-detail">${fmt(node.emails)} emails</div>`;
+    html += `<div class="tt-detail">Wire ledger: ${node.inWireLedger ? node.wireVolume : '❌ Not in production'}</div>`;
+  } else if (node.type === 'bank') {
+    html += `<div class="tt-amount" style="color:${typeColors.bank.fill}">${fmt(node.moneyMentions || 0)} money mentions</div>`;
+    html += `<div class="tt-detail">${node.financialFiles} financial files</div>`;
+    if (node.note) html += `<div class="tt-detail">${node.note}</div>`;
+  } else {
+    html += `<div class="tt-detail">${node.wireVolume || ''}</div>`;
+  }
+  html += `<div class="tt-detail" style="margin-top:4px">Click for details</div>`;
+  tooltip.innerHTML = html;
+  tooltip.style.display = 'block';
 }
 
-document.addEventListener('mousemove', (e) => {
-  if (tooltip.style.display === 'block') positionTooltip(e);
-});
-
-// ─── DETAIL PANEL ──────────────────────────────────────────
 function showNodeDetail(node) {
   const panel = document.getElementById('detail-panel');
   const content = document.getElementById('panel-content');
-  const colors = tierColors[node.type];
-
-  const inflows = links.filter(l => l.target === node.id);
-  const outflows = links.filter(l => l.source === node.id);
+  const colors = typeColors[node.type];
 
   let html = `<h2>${node.name}</h2>`;
-  html += `<div class="tier-badge" style="background:${colors.bg};color:${colors.text};border:1px solid ${colors.border}">${tierLabels[node.tier]}</div>`;
+  html += `<div class="tier-badge" style="background:${colors.bg};color:${colors.fill};border:1px solid ${colors.border}">${node.type.toUpperCase()}</div>`;
 
-  if (node.victimDocs) {
-    html += `<div style="background:rgba(200,100,100,0.1);border:1px solid rgba(200,100,100,0.2);padding:10px;margin-bottom:16px;font-size:11px;color:#c86464">
-      ⚠ This entity appears in ${node.victimDocs} victim-related court filings in the EFTA corpus</div>`;
+  if (node.type === 'shell') {
+    html += `<div class="stat-row"><span class="stat-label">Total files</span><span class="stat-value">${node.totalFiles.toLocaleString()}</span></div>`;
+    html += `<div class="stat-row"><span class="stat-label">Financial docs</span><span class="stat-value">${node.financial}</span></div>`;
+    if (node.money) html += `<div class="stat-row"><span class="stat-label">Money mentions</span><span class="stat-value">${fmt(node.money)}</span></div>`;
+    if (node.emails) html += `<div class="stat-row"><span class="stat-label">Emails</span><span class="stat-value">${fmt(node.emails)}</span></div>`;
+    html += `<div class="stat-row"><span class="stat-label">Wire ledger</span><span class="stat-value">${node.inWireLedger ? node.wireVolume : '❌ Not in production'}</span></div>`;
+  } else if (node.type === 'bank') {
+    html += `<div class="stat-row"><span class="stat-label">Money mentions</span><span class="stat-value">${fmt(node.moneyMentions || 0)}</span></div>`;
+    html += `<div class="stat-row"><span class="stat-label">Financial files</span><span class="stat-value">${node.financialFiles}</span></div>`;
+    if (node.note) html += `<div class="stat-row"><span class="stat-label">Note</span><span class="stat-value">${node.note}</span></div>`;
   }
 
-  const amount = node.totalOut || node.totalFlow || node.totalIn || 0;
-  html += `<div class="stat-row"><span class="stat-label">Total volume</span><span class="stat-value">${fmt(amount)}</span></div>`;
-  html += `<div class="stat-row"><span class="stat-label">Inbound connections</span><span class="stat-value">${inflows.length}</span></div>`;
-  html += `<div class="stat-row"><span class="stat-label">Outbound connections</span><span class="stat-value">${outflows.length}</span></div>`;
-
-  if (inflows.length > 0) {
-    html += `<div class="flow-section"><h3>Inflows</h3>`;
-    inflows.sort((a, b) => b.amount - a.amount).forEach(l => {
-      const src = nodes.find(n => n.id === l.source);
+  // Connected entities
+  const allLinks = [...cooccurrenceLinks, ...bankLinks, ...wireLinks];
+  const connections = allLinks.filter(l => l.source === node.id || l.target === node.id);
+  if (connections.length > 0) {
+    html += `<div class="flow-section"><h3>Connections (${connections.length})</h3>`;
+    connections.sort((a, b) => b.weight - a.weight).forEach(l => {
+      const otherId = l.source === node.id ? l.target : l.source;
+      const other = nodeMap[otherId];
       html += `<div class="flow-item">
-        <span class="flow-name">${src ? src.short : l.source}<br><span style="color:#5a5a68;font-size:9px">${l.wires} wire${l.wires > 1 ? 's' : ''} · Ex. ${l.exhibit}</span></span>
-        <span class="flow-amount">${fmt(l.amount)}</span>
-      </div>`;
-    });
-    html += `</div>`;
-  }
-
-  if (outflows.length > 0) {
-    html += `<div class="flow-section"><h3>Outflows</h3>`;
-    outflows.sort((a, b) => b.amount - a.amount).forEach(l => {
-      const tgt = nodes.find(n => n.id === l.target);
-      html += `<div class="flow-item">
-        <span class="flow-name">${tgt ? tgt.short : l.target}<br><span style="color:#5a5a68;font-size:9px">${l.wires} wire${l.wires > 1 ? 's' : ''} · Ex. ${l.exhibit}</span></span>
-        <span class="flow-amount">${fmt(l.amount)}</span>
+        <span class="flow-name">${other ? other.short : otherId}</span>
+        <span class="flow-amount">${l.label}</span>
       </div>`;
     });
     html += `</div>`;
@@ -618,50 +634,19 @@ function showNodeDetail(node) {
   panel.classList.add('open');
 }
 
-function showLinkDetail(link, s, t) {
-  const panel = document.getElementById('detail-panel');
-  const content = document.getElementById('panel-content');
+function closePanel() { document.getElementById('detail-panel').classList.remove('open'); }
 
-  let html = `<h2>${s.short} → ${t.short}</h2>`;
-  html += `<div class="tier-badge" style="background:rgba(255,255,255,0.05);color:#8888a0;border:1px solid rgba(255,255,255,0.1)">EXHIBIT ${link.exhibit}</div>`;
-  html += `<div class="stat-row"><span class="stat-label">Total amount</span><span class="stat-value" style="color:#c8a064">${fmt(link.amount)}</span></div>`;
-  html += `<div class="stat-row"><span class="stat-label">Wire count</span><span class="stat-value">${link.wires}</span></div>`;
-  html += `<div class="stat-row"><span class="stat-label">Exhibit</span><span class="stat-value">${link.exhibit}</span></div>`;
-  html += `<div style="margin-top:16px;padding:12px;background:rgba(255,255,255,0.03);font-size:11px;color:#8888a0;line-height:1.7">${link.label}</div>`;
-
-  content.innerHTML = html;
-  panel.classList.add('open');
-}
-
-function closePanel() {
-  document.getElementById('detail-panel').classList.remove('open');
-}
-
-// ─── EXHIBIT FILTER ────────────────────────────────────────
-function highlightExhibit(exhibit) {
+function showView(view) {
+  currentView = view;
   document.querySelectorAll('.controls button').forEach(b => b.classList.remove('active'));
   event.target.classList.add('active');
-  document.querySelectorAll('.link').forEach(link => {
-    link.style.strokeOpacity = link.dataset.exhibit === exhibit ? '0.6' : '0.05';
-  });
+  render();
 }
 
-function showAll() {
-  document.querySelectorAll('.controls button').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
-  document.querySelectorAll('.link').forEach(link => {
-    link.style.strokeOpacity = '0.25';
-  });
-}
-
-// ─── INIT ──────────────────────────────────────────────────
+// ═══ INIT ═══════════════════════════════════════════════
 render();
 window.addEventListener('resize', render);
-
-// Close panel on escape
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') closePanel();
-});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closePanel(); });
 </script>
 </body>
 </html>
