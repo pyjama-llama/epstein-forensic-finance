@@ -2,10 +2,10 @@
 // Right-side detail panel shown on double-click of a node
 
 const TIER_COLORS = {
-  verified_wires: '#00d4ff',
-  audited_PROVEN: '#00e87a',
-  audited_STRONG: '#ffd026',
-  audited_MODERATE: '#ff6b35',
+  verified_wires: '#56b4e9',
+  audited_PROVEN: '#009e73',
+  audited_STRONG: '#e69f00',
+  audited_MODERATE: '#cc79a7',
 };
 
 function fmtAmt(n) {

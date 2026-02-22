@@ -15,11 +15,11 @@
   --border: #1c2140;
   --border-light: #242848;
 
-  /* Source tier colors */
-  --tier-verified: #00d4ff;
-  --tier-proven: #00e87a;
-  --tier-strong: #ffd026;
-  --tier-moderate: #ff6b35;
+  /* Source tier colors — Wong colorblind-safe palette */
+  --tier-verified: #56b4e9;
+  --tier-proven: #009e73;
+  --tier-strong: #e69f00;
+  --tier-moderate: #cc79a7;
 
   /* Accent */
   --accent: #00d4ff;
@@ -446,6 +446,12 @@ body {
   height: 8px;
   border-radius: 50%;
   flex-shrink: 0;
+  opacity: 0.6;
+}
+
+.filter-check:hover .check-dot,
+.filter-check input:checked~.check-dot {
+  opacity: 1;
 }
 
 /* Pills */
@@ -541,6 +547,7 @@ body {
   padding: 7px 6px;
   text-align: center;
   transition: border-color var(--t-fast);
+  appearance: textfield;
   -moz-appearance: textfield;
   /* Hides Firefox spinner */
 }

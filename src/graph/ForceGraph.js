@@ -5,10 +5,10 @@
 import * as d3 from 'd3';
 
 const TIER_COLORS = {
-    verified_wires: '#00d4ff',
-    audited_PROVEN: '#00e87a',
-    audited_STRONG: '#ffd026',
-    audited_MODERATE: '#ff6b35',
+    verified_wires: '#56b4e9',
+    audited_PROVEN: '#009e73',
+    audited_STRONG: '#e69f00',
+    audited_MODERATE: '#cc79a7',
 };
 
 const TIER_DASH = {
@@ -260,10 +260,10 @@ export class ForceGraph {
             .attr('class', 'node-circle')
             .attr('r', d => d.r)
             .attr('fill', d => {
-                const tierColor = TIER_COLORS[d.sourceTiers?.[0]] || '#00d4ff';
+                const tierColor = TIER_COLORS[d.sourceTiers?.[0]] || '#56b4e9';
                 return tierColor + '22'; // very transparent fill
             })
-            .attr('stroke', d => TIER_COLORS[d.sourceTiers?.[0]] || '#00d4ff')
+            .attr('stroke', d => TIER_COLORS[d.sourceTiers?.[0]] || '#56b4e9')
             .attr('stroke-width', 1.5);
 
         // ── Labels ─────────────────────────────────────────────────────────────

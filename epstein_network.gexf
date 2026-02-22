@@ -1,0 +1,2421 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gexf xmlns="http://www.gexf.net/1.2draft" version="1.2">
+  <meta lastmodifieddate="2026-02-22">
+    <creator>Epstein Network Exporter</creator>
+    <description>Total Flow: $557.95M</description>
+  </meta>
+  <graph defaultedgetype="directed" mode="static">
+    <attributes class="node">
+      <attribute id="totalIn" title="Total In" type="float" />
+      <attribute id="totalOut" title="Total Out" type="float" />
+      <attribute id="transactionCount" title="Transaction Count" type="integer" />
+      <attribute id="bankInvolved" title="Bank Involved" type="boolean" />
+      <attribute id="degree" title="Local Degree" type="integer" />
+    </attributes>
+    <attributes class="edge">
+      <attribute id="totalAmount" title="Total Amount" type="float" />
+      <attribute id="transactionCount" title="Transaction Count" type="integer" />
+      <attribute id="dominantTier" title="Dominant Tier" type="string" />
+    </attributes>
+    <nodes>
+      <node id="Jeepers Inc. (DB Brokerage)" label="Jeepers Inc. (DB Brokerage)">
+        <attvalues>
+          <attvalue for="totalIn" value="6000000" />
+          <attvalue for="totalOut" value="51876640" />
+          <attvalue for="transactionCount" value="24" />
+          <attvalue for="bankInvolved" value="true" />
+          <attvalue for="degree" value="2" />
+        </attvalues>
+      </node>
+      <node id="Jeffrey Epstein" label="Jeffrey Epstein">
+        <attvalues>
+          <attvalue for="totalIn" value="83657470" />
+          <attvalue for="totalOut" value="921831" />
+          <attvalue for="transactionCount" value="72" />
+          <attvalue for="bankInvolved" value="true" />
+          <attvalue for="degree" value="23" />
+        </attvalues>
+      </node>
+      <node id="Leon Black" label="Leon Black">
+        <attvalues>
+          <attvalue for="totalIn" value="51528518.49" />
+          <attvalue for="totalOut" value="66159478.49" />
+          <attvalue for="transactionCount" value="30" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="12" />
+        </attvalues>
+      </node>
+      <node id="Southern Trust Company" label="Southern Trust Company">
+        <attvalues>
+          <attvalue for="totalIn" value="160396559.14" />
+          <attvalue for="totalOut" value="30165000" />
+          <attvalue for="transactionCount" value="30" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="12" />
+        </attvalues>
+      </node>
+      <node id="Barry Jay Josephson" label="Barry Jay Josephson">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="200000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="Black Family Partners" label="Black Family Partners">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="46000000" />
+          <attvalue for="transactionCount" value="6" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="Jeepers Inc." label="Jeepers Inc.">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="6000000" />
+          <attvalue for="transactionCount" value="3" />
+          <attvalue for="bankInvolved" value="true" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="UNKNOWN" label="UNKNOWN">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="404000" />
+          <attvalue for="transactionCount" value="3" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="Adam Bly" label="Adam Bly">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="145468" />
+          <attvalue for="transactionCount" value="8" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="Southern Financial" label="Southern Financial">
+        <attvalues>
+          <attvalue for="totalIn" value="14348348.56" />
+          <attvalue for="totalOut" value="4100000" />
+          <attvalue for="transactionCount" value="17" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="9" />
+        </attvalues>
+      </node>
+      <node id="Barack Ferrazzano Kirschbaum &amp; Nagelberg Client Fund" label="Barack Ferrazzano Kirschbaum &amp; Nagelberg Client Fund">
+        <attvalues>
+          <attvalue for="totalIn" value="99999" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="Island Global Yachting Ltd." label="Island Global Yachting Ltd.">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="292655" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="Joichi Ito" label="Joichi Ito">
+        <attvalues>
+          <attvalue for="totalIn" value="11260001" />
+          <attvalue for="totalOut" value="483915" />
+          <attvalue for="transactionCount" value="9" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="3" />
+        </attvalues>
+      </node>
+      <node id="Narrow Holdings" label="Narrow Holdings">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="20000000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="Tudor Futures Fund" label="Tudor Futures Fund">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="13503941" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="Neoteny 3 LP" label="Neoteny 3 LP">
+        <attvalues>
+          <attvalue for="totalIn" value="1000000" />
+          <attvalue for="totalOut" value="30000" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="2" />
+        </attvalues>
+      </node>
+      <node id="AIC Title Agency" label="AIC Title Agency">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="2000000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="Seed Media Group" label="Seed Media Group">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="170000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="Stone &amp; Magnanini LLP" label="Stone &amp; Magnanini LLP">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="1000000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="Kellerhals Ferguson Kroblin PLLC" label="Kellerhals Ferguson Kroblin PLLC">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="23075000" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="Edmond de Rothschild (Suisse) SA" label="Edmond de Rothschild (Suisse) SA">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="10000000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="Benjamin Edmond de Rothschild" label="Benjamin Edmond de Rothschild">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="14999980" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="Gratitude America" label="Gratitude America">
+        <attvalues>
+          <attvalue for="totalIn" value="6677025.34" />
+          <attvalue for="totalOut" value="12203493" />
+          <attvalue for="transactionCount" value="24" />
+          <attvalue for="bankInvolved" value="true" />
+          <attvalue for="degree" value="9" />
+        </attvalues>
+      </node>
+      <node id="Bruce &amp; Marsha Moskowitz Foundation" label="Bruce &amp; Marsha Moskowitz Foundation">
+        <attvalues>
+          <attvalue for="totalIn" value="150000" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="3" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="Melanoma Research Alliance Foundation" label="Melanoma Research Alliance Foundation">
+        <attvalues>
+          <attvalue for="totalIn" value="225000" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="Gol Muchnik" label="Gol Muchnik">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="500000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="Delson International Inc." label="Delson International Inc.">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="100574" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="Kyara Investments I" label="Kyara Investments I">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="21392" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="Coatue Enterprises LLC" label="Coatue Enterprises LLC">
+        <attvalues>
+          <attvalue for="totalIn" value="2000000" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="4" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="Christie&apos;s Inc." label="Christie&apos;s Inc.">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="7725000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="The Haze Trust (Checking)" label="The Haze Trust (Checking)">
+        <attvalues>
+          <attvalue for="totalIn" value="21760686" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="4" />
+          <attvalue for="bankInvolved" value="true" />
+          <attvalue for="degree" value="4" />
+        </attvalues>
+      </node>
+      <node id="Sultan Bin Sulayem" label="Sultan Bin Sulayem">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="6200" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="Cancer Research Wellness Institute" label="Cancer Research Wellness Institute">
+        <attvalues>
+          <attvalue for="totalIn" value="50000" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="Sotheby&apos;s" label="Sotheby&apos;s">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="11249417" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="Jamie Mitchell" label="Jamie Mitchell">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="100000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="NLR Resorts International LLC" label="NLR Resorts International LLC">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="100000" />
+          <attvalue for="transactionCount" value="3" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="Blockchain Capital IV LP" label="Blockchain Capital IV LP">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="10500000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="The 2017 Caterpillar Trust" label="The 2017 Caterpillar Trust">
+        <attvalues>
+          <attvalue for="totalIn" value="15000000" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="3" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="3" />
+        </attvalues>
+      </node>
+      <node id="Blockchain Capital III Digital Liquid Venture Fund LP" label="Blockchain Capital III Digital Liquid Venture Fund LP">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="2625000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="Blockchain Capital Parallel Fund IV LP" label="Blockchain Capital Parallel Fund IV LP">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="1875000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="David J Mitchell" label="David J Mitchell">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="401500" />
+          <attvalue for="transactionCount" value="13" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="NPO Baleto Teatras" label="NPO Baleto Teatras">
+        <attvalues>
+          <attvalue for="totalIn" value="18493" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="The Haze Trust" label="The Haze Trust">
+        <attvalues>
+          <attvalue for="totalIn" value="31287087" />
+          <attvalue for="totalOut" value="53466641" />
+          <attvalue for="transactionCount" value="17" />
+          <attvalue for="bankInvolved" value="true" />
+          <attvalue for="degree" value="6" />
+        </attvalues>
+      </node>
+      <node id="Southern Financial LLC (Checking)" label="Southern Financial LLC (Checking)">
+        <attvalues>
+          <attvalue for="totalIn" value="32000000" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="5" />
+          <attvalue for="bankInvolved" value="true" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="Southern Financial LLC (DBAGNY)" label="Southern Financial LLC (DBAGNY)">
+        <attvalues>
+          <attvalue for="totalIn" value="5000000" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="true" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="VSJ Baleto Teatras" label="VSJ Baleto Teatras">
+        <attvalues>
+          <attvalue for="totalIn" value="10000" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="Southern Trust Company Inc. (Checking)" label="Southern Trust Company Inc. (Checking)">
+        <attvalues>
+          <attvalue for="totalIn" value="10000000" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="true" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="Link Rockenbach P.A." label="Link Rockenbach P.A.">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="3000000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="HSBC Bank Bermuda Limited" label="HSBC Bank Bermuda Limited">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="58328" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="true" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="Deutsche Bank" label="Deutsche Bank">
+        <attvalues>
+          <attvalue for="totalIn" value="2000000" />
+          <attvalue for="totalOut" value="54792936.1" />
+          <attvalue for="transactionCount" value="38" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="14" />
+        </attvalues>
+      </node>
+      <node id="Darren Indyke" label="Darren Indyke">
+        <attvalues>
+          <attvalue for="totalIn" value="6394282.38" />
+          <attvalue for="totalOut" value="312936" />
+          <attvalue for="transactionCount" value="20" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="11" />
+        </attvalues>
+      </node>
+      <node id="GROFF" label="GROFF">
+        <attvalues>
+          <attvalue for="totalIn" value="3663.57" />
+          <attvalue for="totalOut" value="6272.42" />
+          <attvalue for="transactionCount" value="10" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="3" />
+        </attvalues>
+      </node>
+      <node id="MOBILE APP" label="MOBILE APP">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="231589.34" />
+          <attvalue for="transactionCount" value="3" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="2" />
+        </attvalues>
+      </node>
+      <node id="APP STORE" label="APP STORE">
+        <attvalues>
+          <attvalue for="totalIn" value="230703.6" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="BELLA_KLEIN" label="BELLA_KLEIN">
+        <attvalues>
+          <attvalue for="totalIn" value="2934.1" />
+          <attvalue for="totalOut" value="44263.59" />
+          <attvalue for="transactionCount" value="7" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="5" />
+        </attvalues>
+      </node>
+      <node id="KAHN" label="KAHN">
+        <attvalues>
+          <attvalue for="totalIn" value="1429728.5899999999" />
+          <attvalue for="totalOut" value="9326384" />
+          <attvalue for="transactionCount" value="18" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="9" />
+        </attvalues>
+      </node>
+      <node id="JPMorgan" label="JPMorgan">
+        <attvalues>
+          <attvalue for="totalIn" value="2240038.5300000003" />
+          <attvalue for="totalOut" value="6240000" />
+          <attvalue for="transactionCount" value="16" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="9" />
+        </attvalues>
+      </node>
+      <node id="BRICE GORDON" label="BRICE GORDON">
+        <attvalues>
+          <attvalue for="totalIn" value="1250" />
+          <attvalue for="totalOut" value="1000" />
+          <attvalue for="transactionCount" value="3" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="2" />
+        </attvalues>
+      </node>
+      <node id="LEXINGTON" label="LEXINGTON">
+        <attvalues>
+          <attvalue for="totalIn" value="196553.35" />
+          <attvalue for="totalOut" value="270378.76" />
+          <attvalue for="transactionCount" value="10" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="5" />
+        </attvalues>
+      </node>
+      <node id="BOFA" label="BOFA">
+        <attvalues>
+          <attvalue for="totalIn" value="9949529.030000001" />
+          <attvalue for="totalOut" value="612" />
+          <attvalue for="transactionCount" value="10" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="7" />
+        </attvalues>
+      </node>
+      <node id="CASRIEL" label="CASRIEL">
+        <attvalues>
+          <attvalue for="totalIn" value="23964.619999999995" />
+          <attvalue for="totalOut" value="1615371.73" />
+          <attvalue for="transactionCount" value="48" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="6" />
+        </attvalues>
+      </node>
+      <node id="Ghislaine Maxwell" label="Ghislaine Maxwell">
+        <attvalues>
+          <attvalue for="totalIn" value="1530803.8599999999" />
+          <attvalue for="totalOut" value="32356.53" />
+          <attvalue for="transactionCount" value="25" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="3" />
+        </attvalues>
+      </node>
+      <node id="STACKMAN" label="STACKMAN">
+        <attvalues>
+          <attvalue for="totalIn" value="282773.54000000004" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="6" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="MONIQUE HARRY" label="MONIQUE HARRY">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="62271.78" />
+          <attvalue for="transactionCount" value="4" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="EMAD HANNA" label="EMAD HANNA">
+        <attvalues>
+          <attvalue for="totalIn" value="70701.78" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="5" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="2" />
+        </attvalues>
+      </node>
+      <node id="REMITTANCE ADVICE" label="REMITTANCE ADVICE">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="6955.08" />
+          <attvalue for="transactionCount" value="6" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="3" />
+        </attvalues>
+      </node>
+      <node id="BOX 371461" label="BOX 371461">
+        <attvalues>
+          <attvalue for="totalIn" value="1968.38" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="3" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="Citibank" label="Citibank">
+        <attvalues>
+          <attvalue for="totalIn" value="6141655.92" />
+          <attvalue for="totalOut" value="194775.66999999998" />
+          <attvalue for="transactionCount" value="14" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="7" />
+        </attvalues>
+      </node>
+      <node id="YELLOW CAB" label="YELLOW CAB">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="111883.75" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="ROBERT CRITTON" label="ROBERT CRITTON">
+        <attvalues>
+          <attvalue for="totalIn" value="111883.75" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="D. CRITTON" label="D. CRITTON">
+        <attvalues>
+          <attvalue for="totalIn" value="3250000" />
+          <attvalue for="totalOut" value="887.95" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="2" />
+        </attvalues>
+      </node>
+      <node id="ROBERT D. CRITTON" label="ROBERT D. CRITTON">
+        <attvalues>
+          <attvalue for="totalIn" value="887.95" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="ORDER STATUS" label="ORDER STATUS">
+        <attvalues>
+          <attvalue for="totalIn" value="2922.16" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="BNY Mellon" label="BNY Mellon">
+        <attvalues>
+          <attvalue for="totalIn" value="170030.81" />
+          <attvalue for="totalOut" value="103199.38" />
+          <attvalue for="transactionCount" value="5" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="3" />
+        </attvalues>
+      </node>
+      <node id="NEED HELP" label="NEED HELP">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="23964.619999999995" />
+          <attvalue for="transactionCount" value="14" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="PAUL_MORRIS" label="PAUL_MORRIS">
+        <attvalues>
+          <attvalue for="totalIn" value="8500000" />
+          <attvalue for="totalOut" value="497360" />
+          <attvalue for="transactionCount" value="5" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="3" />
+        </attvalues>
+      </node>
+      <node id="JUN 30" label="JUN 30">
+        <attvalues>
+          <attvalue for="totalIn" value="121092.47" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="SIOUX FALLS" label="SIOUX FALLS">
+        <attvalues>
+          <attvalue for="totalIn" value="29563.87" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="NES LLC" label="NES LLC">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="553535.8400000001" />
+          <attvalue for="transactionCount" value="6" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="3" />
+        </attvalues>
+      </node>
+      <node id="Financial Trust" label="Financial Trust">
+        <attvalues>
+          <attvalue for="totalIn" value="4138700" />
+          <attvalue for="totalOut" value="96655.92" />
+          <attvalue for="transactionCount" value="4" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="4" />
+        </attvalues>
+      </node>
+      <node id="ALFREDO RODRIGUEZ" label="ALFREDO RODRIGUEZ">
+        <attvalues>
+          <attvalue for="totalIn" value="50000" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="PRIMARY MODERATE" label="PRIMARY MODERATE">
+        <attvalues>
+          <attvalue for="totalIn" value="182096.65" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="6" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="EXHIBIT C" label="EXHIBIT C">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="115000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="HYPERION AIR INC" label="HYPERION AIR INC">
+        <attvalues>
+          <attvalue for="totalIn" value="196255.37" />
+          <attvalue for="totalOut" value="500000" />
+          <attvalue for="transactionCount" value="3" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="3" />
+        </attvalues>
+      </node>
+      <node id="JULIANA SHKRELI" label="JULIANA SHKRELI">
+        <attvalues>
+          <attvalue for="totalIn" value="240000" />
+          <attvalue for="totalOut" value="2250" />
+          <attvalue for="transactionCount" value="3" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="2" />
+        </attvalues>
+      </node>
+      <node id="MOLLY LADD" label="MOLLY LADD">
+        <attvalues>
+          <attvalue for="totalIn" value="2250" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="KATHY RUEMMLER" label="KATHY RUEMMLER">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="1399.1" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="VISOSKI" label="VISOSKI">
+        <attvalues>
+          <attvalue for="totalIn" value="80000" />
+          <attvalue for="totalOut" value="453774.27" />
+          <attvalue for="transactionCount" value="11" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="4" />
+        </attvalues>
+      </node>
+      <node id="JEGE LLC" label="JEGE LLC">
+        <attvalues>
+          <attvalue for="totalIn" value="27932.9" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="CHELSEY DEVON" label="CHELSEY DEVON">
+        <attvalues>
+          <attvalue for="totalIn" value="14751.39" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="2" />
+        </attvalues>
+      </node>
+      <node id="HALPERIN" label="HALPERIN">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="3200000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="ACCT NAME" label="ACCT NAME">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="166560.5" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="POTTERY BARN" label="POTTERY BARN">
+        <attvalues>
+          <attvalue for="totalIn" value="13940.04" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="VISA CARD" label="VISA CARD">
+        <attvalues>
+          <attvalue for="totalIn" value="979" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="M. ARDA BESKARDES" label="M. ARDA BESKARDES">
+        <attvalues>
+          <attvalue for="totalIn" value="23264.8" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="4" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="ALEXANDERSON" label="ALEXANDERSON">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="16167000" />
+          <attvalue for="transactionCount" value="6" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="4" />
+        </attvalues>
+      </node>
+      <node id="WECHSLER" label="WECHSLER">
+        <attvalues>
+          <attvalue for="totalIn" value="4600000" />
+          <attvalue for="totalOut" value="38342500" />
+          <attvalue for="transactionCount" value="10" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="4" />
+        </attvalues>
+      </node>
+      <node id="KATHERINE W. EZELL" label="KATHERINE W. EZELL">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="16572.75" />
+          <attvalue for="transactionCount" value="3" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="ROBERT C. JOSEFSBERG" label="ROBERT C. JOSEFSBERG">
+        <attvalues>
+          <attvalue for="totalIn" value="16572.75" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="3" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="BISCAYNE BLVD" label="BISCAYNE BLVD">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="3250000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="ADAM BLY" label="ADAM BLY">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="19000" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="ROY BLACK" label="ROY BLACK">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="4676.3" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="JACKIE PERCZEK" label="JACKIE PERCZEK">
+        <attvalues>
+          <attvalue for="totalIn" value="4676.3" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="DAPHNE WALLACE" label="DAPHNE WALLACE">
+        <attvalues>
+          <attvalue for="totalIn" value="5000" />
+          <attvalue for="totalOut" value="1362.47" />
+          <attvalue for="transactionCount" value="3" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="2" />
+        </attvalues>
+      </node>
+      <node id="Butterfly Trust" label="Butterfly Trust">
+        <attvalues>
+          <attvalue for="totalIn" value="6350000" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="4" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="PEGGY SIEGAL" label="PEGGY SIEGAL">
+        <attvalues>
+          <attvalue for="totalIn" value="33000" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="JEAN-LUC BRUNEL" label="JEAN-LUC BRUNEL">
+        <attvalues>
+          <attvalue for="totalIn" value="344586" />
+          <attvalue for="totalOut" value="344586" />
+          <attvalue for="transactionCount" value="12" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="2" />
+        </attvalues>
+      </node>
+      <node id="BENEFICIARY NAME" label="BENEFICIARY NAME">
+        <attvalues>
+          <attvalue for="totalIn" value="409092" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="7" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="2" />
+        </attvalues>
+      </node>
+      <node id="STEPHANIE REMINGTON" label="STEPHANIE REMINGTON">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="27956.5" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="FLAGPOLE POOL" label="FLAGPOLE POOL">
+        <attvalues>
+          <attvalue for="totalIn" value="27956.5" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="SHULIAK" label="SHULIAK">
+        <attvalues>
+          <attvalue for="totalIn" value="42166.22" />
+          <attvalue for="totalOut" value="50000" />
+          <attvalue for="transactionCount" value="3" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="2" />
+        </attvalues>
+      </node>
+      <node id="PAUL V" label="PAUL V">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="156408.11" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="WARWICK WICKSMAN" label="WARWICK WICKSMAN">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="117500" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="DAVID STERN" label="DAVID STERN">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="59933" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="RICHARD RESSLER" label="RICHARD RESSLER">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="3000000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="RICHARD_JOSLIN" label="RICHARD_JOSLIN">
+        <attvalues>
+          <attvalue for="totalIn" value="3567000" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="3" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="2" />
+        </attvalues>
+      </node>
+      <node id="BEN GOERTZEL" label="BEN GOERTZEL">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="300000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="HEATHER_GRAY" label="HEATHER_GRAY">
+        <attvalues>
+          <attvalue for="totalIn" value="17637750" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="3" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="SPINELLA" label="SPINELLA">
+        <attvalues>
+          <attvalue for="totalIn" value="17637750" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="3" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="HARRY BELLER" label="HARRY BELLER">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="800000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="HANNAN" label="HANNAN">
+        <attvalues>
+          <attvalue for="totalIn" value="5000000" />
+          <attvalue for="totalOut" value="1770000" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="2" />
+        </attvalues>
+      </node>
+      <node id="PLAN D LLC" label="PLAN D LLC">
+        <attvalues>
+          <attvalue for="totalIn" value="1125.03" />
+          <attvalue for="totalOut" value="18000000" />
+          <attvalue for="transactionCount" value="5" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="2" />
+        </attvalues>
+      </node>
+      <node id="AT&amp;T WIRELESS" label="AT&amp;T WIRELESS">
+        <attvalues>
+          <attvalue for="totalIn" value="935.27" />
+          <attvalue for="totalOut" value="779.96" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="2" />
+        </attvalues>
+      </node>
+      <node id="WIRELESS NUMBER" label="WIRELESS NUMBER">
+        <attvalues>
+          <attvalue for="totalIn" value="2833.65" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="4" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="3" />
+        </attvalues>
+      </node>
+      <node id="STEPANIAN" label="STEPANIAN">
+        <attvalues>
+          <attvalue for="totalIn" value="412260" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="3" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="JUN 14" label="JUN 14">
+        <attvalues>
+          <attvalue for="totalIn" value="140000" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="PAY ONLINE" label="PAY ONLINE">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="935.27" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="AMY CASSELL" label="AMY CASSELL">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="15000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="RODRIGUEZ" label="RODRIGUEZ">
+        <attvalues>
+          <attvalue for="totalIn" value="15000" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="FOWLER WHITE" label="FOWLER WHITE">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="125000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="FOWLER WHITE BURNETT" label="FOWLER WHITE BURNETT">
+        <attvalues>
+          <attvalue for="totalIn" value="125000" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="BORGERSON" label="BORGERSON">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="240000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="JOE PAGANO" label="JOE PAGANO">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="500000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="CINGULAR WIRELESS" label="CINGULAR WIRELESS">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="691.22" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="JAMES CE" label="JAMES CE">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="1250" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="MICHAEL GLIDDEN" label="MICHAEL GLIDDEN">
+        <attvalues>
+          <attvalue for="totalIn" value="885.74" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="SUITE B3" label="SUITE B3">
+        <attvalues>
+          <attvalue for="totalIn" value="5000" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="DETAIL SUBTOTAL USD" label="DETAIL SUBTOTAL USD">
+        <attvalues>
+          <attvalue for="totalIn" value="0" />
+          <attvalue for="totalOut" value="216801.73" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="WIRE REMITTANCE" label="WIRE REMITTANCE">
+        <attvalues>
+          <attvalue for="totalIn" value="216801.73" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+      <node id="TAZIA SMITH" label="TAZIA SMITH">
+        <attvalues>
+          <attvalue for="totalIn" value="1071300" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="5" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="2" />
+        </attvalues>
+      </node>
+      <node id="JACK GOLDBER" label="JACK GOLDBER">
+        <attvalues>
+          <attvalue for="totalIn" value="160000" />
+          <attvalue for="totalOut" value="0" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="bankInvolved" value="false" />
+          <attvalue for="degree" value="1" />
+        </attvalues>
+      </node>
+    </nodes>
+    <edges>
+      <edge id="e0" source="Jeepers Inc. (DB Brokerage)" target="Jeffrey Epstein" weight="7.71">
+        <attvalues>
+          <attvalue for="totalAmount" value="51876640" />
+          <attvalue for="transactionCount" value="21" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e1" source="Leon Black" target="Southern Trust Company" weight="7.78">
+        <attvalues>
+          <attvalue for="totalAmount" value="60500000" />
+          <attvalue for="transactionCount" value="8" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e2" source="Barry Jay Josephson" target="Jeffrey Epstein" weight="5.30">
+        <attvalues>
+          <attvalue for="totalAmount" value="200000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e3" source="Black Family Partners" target="Southern Trust Company" weight="7.66">
+        <attvalues>
+          <attvalue for="totalAmount" value="46000000" />
+          <attvalue for="transactionCount" value="6" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e4" source="Jeepers Inc." target="Jeepers Inc. (DB Brokerage)" weight="6.78">
+        <attvalues>
+          <attvalue for="totalAmount" value="6000000" />
+          <attvalue for="transactionCount" value="3" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e5" source="UNKNOWN" target="Jeffrey Epstein" weight="5.61">
+        <attvalues>
+          <attvalue for="totalAmount" value="404000" />
+          <attvalue for="transactionCount" value="3" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e6" source="Adam Bly" target="Jeffrey Epstein" weight="5.16">
+        <attvalues>
+          <attvalue for="totalAmount" value="145468" />
+          <attvalue for="transactionCount" value="8" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e7" source="Southern Financial" target="Barack Ferrazzano Kirschbaum &amp; Nagelberg Client Fund" weight="5.00">
+        <attvalues>
+          <attvalue for="totalAmount" value="99999" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e8" source="Island Global Yachting Ltd." target="Jeffrey Epstein" weight="5.47">
+        <attvalues>
+          <attvalue for="totalAmount" value="292655" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e9" source="Southern Financial" target="Joichi Ito" weight="6.00">
+        <attvalues>
+          <attvalue for="totalAmount" value="1000001" />
+          <attvalue for="transactionCount" value="3" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e10" source="Narrow Holdings" target="Southern Trust Company" weight="7.30">
+        <attvalues>
+          <attvalue for="totalAmount" value="20000000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e11" source="Tudor Futures Fund" target="Southern Financial" weight="7.13">
+        <attvalues>
+          <attvalue for="totalAmount" value="13503941" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e12" source="Southern Financial" target="Neoteny 3 LP" weight="6.00">
+        <attvalues>
+          <attvalue for="totalAmount" value="1000000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e13" source="AIC Title Agency" target="Jeffrey Epstein" weight="6.30">
+        <attvalues>
+          <attvalue for="totalAmount" value="2000000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e14" source="Joichi Ito" target="Southern Financial" weight="5.68">
+        <attvalues>
+          <attvalue for="totalAmount" value="483915" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e15" source="Seed Media Group" target="Jeffrey Epstein" weight="5.23">
+        <attvalues>
+          <attvalue for="totalAmount" value="170000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e16" source="Stone &amp; Magnanini LLP" target="Jeffrey Epstein" weight="6.00">
+        <attvalues>
+          <attvalue for="totalAmount" value="1000000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e17" source="Kellerhals Ferguson Kroblin PLLC" target="Jeffrey Epstein" weight="7.36">
+        <attvalues>
+          <attvalue for="totalAmount" value="23075000" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e18" source="Edmond de Rothschild (Suisse) SA" target="Southern Trust Company" weight="7.00">
+        <attvalues>
+          <attvalue for="totalAmount" value="10000000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e19" source="Benjamin Edmond de Rothschild" target="Southern Trust Company" weight="7.18">
+        <attvalues>
+          <attvalue for="totalAmount" value="14999980" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e20" source="Gratitude America" target="Bruce &amp; Marsha Moskowitz Foundation" weight="5.18">
+        <attvalues>
+          <attvalue for="totalAmount" value="150000" />
+          <attvalue for="transactionCount" value="3" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e21" source="Gratitude America" target="Gratitude America" weight="6.76">
+        <attvalues>
+          <attvalue for="totalAmount" value="5800000" />
+          <attvalue for="transactionCount" value="4" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e22" source="Gratitude America" target="Melanoma Research Alliance Foundation" weight="5.35">
+        <attvalues>
+          <attvalue for="totalAmount" value="225000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e23" source="Gol Muchnik" target="Jeffrey Epstein" weight="5.70">
+        <attvalues>
+          <attvalue for="totalAmount" value="500000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e24" source="Delson International Inc." target="Jeffrey Epstein" weight="5.00">
+        <attvalues>
+          <attvalue for="totalAmount" value="100574" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e25" source="Kyara Investments I" target="Southern Financial" weight="4.33">
+        <attvalues>
+          <attvalue for="totalAmount" value="21392" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e26" source="Southern Financial" target="Coatue Enterprises LLC" weight="6.30">
+        <attvalues>
+          <attvalue for="totalAmount" value="2000000" />
+          <attvalue for="transactionCount" value="4" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e27" source="Christie&apos;s Inc." target="The Haze Trust (Checking)" weight="6.89">
+        <attvalues>
+          <attvalue for="totalAmount" value="7725000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e28" source="Sultan Bin Sulayem" target="Jeffrey Epstein" weight="3.79">
+        <attvalues>
+          <attvalue for="totalAmount" value="6200" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e29" source="Gratitude America" target="Cancer Research Wellness Institute" weight="4.70">
+        <attvalues>
+          <attvalue for="totalAmount" value="50000" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e30" source="Sotheby&apos;s" target="The Haze Trust (Checking)" weight="7.05">
+        <attvalues>
+          <attvalue for="totalAmount" value="11249417" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e31" source="Jamie Mitchell" target="Jeffrey Epstein" weight="5.00">
+        <attvalues>
+          <attvalue for="totalAmount" value="100000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e32" source="NLR Resorts International LLC" target="Jeffrey Epstein" weight="5.00">
+        <attvalues>
+          <attvalue for="totalAmount" value="100000" />
+          <attvalue for="transactionCount" value="3" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e33" source="Blockchain Capital IV LP" target="The 2017 Caterpillar Trust" weight="7.02">
+        <attvalues>
+          <attvalue for="totalAmount" value="10500000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e34" source="Blockchain Capital III Digital Liquid Venture Fund LP" target="The 2017 Caterpillar Trust" weight="6.42">
+        <attvalues>
+          <attvalue for="totalAmount" value="2625000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e35" source="Blockchain Capital Parallel Fund IV LP" target="The 2017 Caterpillar Trust" weight="6.27">
+        <attvalues>
+          <attvalue for="totalAmount" value="1875000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e36" source="David J Mitchell" target="Jeffrey Epstein" weight="5.60">
+        <attvalues>
+          <attvalue for="totalAmount" value="401500" />
+          <attvalue for="transactionCount" value="13" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e37" source="Gratitude America" target="NPO Baleto Teatras" weight="4.27">
+        <attvalues>
+          <attvalue for="totalAmount" value="18493" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e38" source="Neoteny 3 LP" target="Southern Financial" weight="4.48">
+        <attvalues>
+          <attvalue for="totalAmount" value="30000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e39" source="The Haze Trust" target="Southern Financial LLC (Checking)" weight="7.51">
+        <attvalues>
+          <attvalue for="totalAmount" value="32000000" />
+          <attvalue for="transactionCount" value="5" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e40" source="The Haze Trust" target="Southern Financial LLC (DBAGNY)" weight="6.70">
+        <attvalues>
+          <attvalue for="totalAmount" value="5000000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e41" source="Gratitude America" target="VSJ Baleto Teatras" weight="4.00">
+        <attvalues>
+          <attvalue for="totalAmount" value="10000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e42" source="The Haze Trust" target="Southern Trust Company Inc. (Checking)" weight="7.00">
+        <attvalues>
+          <attvalue for="totalAmount" value="10000000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e43" source="Link Rockenbach P.A." target="Jeffrey Epstein" weight="6.48">
+        <attvalues>
+          <attvalue for="totalAmount" value="3000000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e44" source="HSBC Bank Bermuda Limited" target="The Haze Trust (Checking)" weight="4.77">
+        <attvalues>
+          <attvalue for="totalAmount" value="58328" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e45" source="The Haze Trust" target="The Haze Trust (Checking)" weight="6.44">
+        <attvalues>
+          <attvalue for="totalAmount" value="2727941" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="verified_wires" />
+        </attvalues>
+      </edge>
+      <edge id="e46" source="Deutsche Bank" target="Darren Indyke" weight="6.76">
+        <attvalues>
+          <attvalue for="totalAmount" value="5798525" />
+          <attvalue for="transactionCount" value="5" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e47" source="Deutsche Bank" target="Southern Trust Company" weight="6.95">
+        <attvalues>
+          <attvalue for="totalAmount" value="8896579.14" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e48" source="Deutsche Bank" target="The Haze Trust" weight="7.50">
+        <attvalues>
+          <attvalue for="totalAmount" value="31287087" />
+          <attvalue for="transactionCount" value="8" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e49" source="GROFF" target="GROFF" weight="3.56">
+        <attvalues>
+          <attvalue for="totalAmount" value="3663.57" />
+          <attvalue for="transactionCount" value="4" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e50" source="MOBILE APP" target="APP STORE" weight="5.36">
+        <attvalues>
+          <attvalue for="totalAmount" value="230703.6" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e51" source="BELLA_KLEIN" target="BELLA_KLEIN" weight="2.92">
+        <attvalues>
+          <attvalue for="totalAmount" value="835" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e52" source="BELLA_KLEIN" target="KAHN" weight="4.64">
+        <attvalues>
+          <attvalue for="totalAmount" value="43428.59" />
+          <attvalue for="transactionCount" value="3" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e53" source="Leon Black" target="Leon Black" weight="5.77">
+        <attvalues>
+          <attvalue for="totalAmount" value="591518.49" />
+          <attvalue for="transactionCount" value="3" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e54" source="Southern Trust Company" target="JPMorgan" weight="6.00">
+        <attvalues>
+          <attvalue for="totalAmount" value="1000000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e55" source="BRICE GORDON" target="KAHN" weight="3.00">
+        <attvalues>
+          <attvalue for="totalAmount" value="1000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e56" source="KAHN" target="LEXINGTON" weight="4.44">
+        <attvalues>
+          <attvalue for="totalAmount" value="27384" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e57" source="Deutsche Bank" target="BOFA" weight="5.44">
+        <attvalues>
+          <attvalue for="totalAmount" value="272622.03" />
+          <attvalue for="transactionCount" value="3" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e58" source="Deutsche Bank" target="Southern Financial" weight="5.49">
+        <attvalues>
+          <attvalue for="totalAmount" value="309100.56" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e59" source="Deutsche Bank" target="JPMorgan" weight="5.44">
+        <attvalues>
+          <attvalue for="totalAmount" value="276400" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e60" source="CASRIEL" target="Ghislaine Maxwell" weight="6.00">
+        <attvalues>
+          <attvalue for="totalAmount" value="992187.06" />
+          <attvalue for="transactionCount" value="19" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e61" source="CASRIEL" target="STACKMAN" weight="5.45">
+        <attvalues>
+          <attvalue for="totalAmount" value="282773.54000000004" />
+          <attvalue for="transactionCount" value="6" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e62" source="CASRIEL" target="JPMorgan" weight="4.57">
+        <attvalues>
+          <attvalue for="totalAmount" value="37222.01" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e63" source="MONIQUE HARRY" target="EMAD HANNA" weight="4.79">
+        <attvalues>
+          <attvalue for="totalAmount" value="62271.78" />
+          <attvalue for="transactionCount" value="4" />
+          <attvalue for="dominantTier" value="audited_STRONG" />
+        </attvalues>
+      </edge>
+      <edge id="e64" source="REMITTANCE ADVICE" target="BOX 371461" weight="3.29">
+        <attvalues>
+          <attvalue for="totalAmount" value="1968.38" />
+          <attvalue for="transactionCount" value="3" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e65" source="JPMorgan" target="Leon Black" weight="6.79">
+        <attvalues>
+          <attvalue for="totalAmount" value="6100000" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e66" source="GROFF" target="LEXINGTON" weight="3.42">
+        <attvalues>
+          <attvalue for="totalAmount" value="2608.85" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e67" source="Deutsche Bank" target="Citibank" weight="5.00">
+        <attvalues>
+          <attvalue for="totalAmount" value="100000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e68" source="YELLOW CAB" target="ROBERT CRITTON" weight="5.05">
+        <attvalues>
+          <attvalue for="totalAmount" value="111883.75" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e69" source="D. CRITTON" target="ROBERT D. CRITTON" weight="2.95">
+        <attvalues>
+          <attvalue for="totalAmount" value="887.95" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e70" source="LEXINGTON" target="ORDER STATUS" weight="3.47">
+        <attvalues>
+          <attvalue for="totalAmount" value="2922.16" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e71" source="Deutsche Bank" target="BNY Mellon" weight="5.23">
+        <attvalues>
+          <attvalue for="totalAmount" value="170030.81" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e72" source="NEED HELP" target="CASRIEL" weight="4.38">
+        <attvalues>
+          <attvalue for="totalAmount" value="23964.619999999995" />
+          <attvalue for="transactionCount" value="14" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e73" source="KAHN" target="PAUL_MORRIS" weight="6.93">
+        <attvalues>
+          <attvalue for="totalAmount" value="8500000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e74" source="CASRIEL" target="JUN 30" weight="5.08">
+        <attvalues>
+          <attvalue for="totalAmount" value="121092.47" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e75" source="Leon Black" target="BOFA" weight="4.83">
+        <attvalues>
+          <attvalue for="totalAmount" value="67960" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e76" source="Deutsche Bank" target="Gratitude America" weight="5.94">
+        <attvalues>
+          <attvalue for="totalAmount" value="877025.34" />
+          <attvalue for="transactionCount" value="4" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e77" source="LEXINGTON" target="Darren Indyke" weight="5.43">
+        <attvalues>
+          <attvalue for="totalAmount" value="267456.6" />
+          <attvalue for="transactionCount" value="3" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e78" source="Citibank" target="SIOUX FALLS" weight="4.47">
+        <attvalues>
+          <attvalue for="totalAmount" value="29563.87" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e79" source="NES LLC" target="Ghislaine Maxwell" weight="5.73">
+        <attvalues>
+          <attvalue for="totalAmount" value="538616.8" />
+          <attvalue for="transactionCount" value="4" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e80" source="Ghislaine Maxwell" target="JPMorgan" weight="4.51">
+        <attvalues>
+          <attvalue for="totalAmount" value="32356.53" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e81" source="Gratitude America" target="Citibank" weight="6.77">
+        <attvalues>
+          <attvalue for="totalAmount" value="5950000" />
+          <attvalue for="transactionCount" value="4" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e82" source="The Haze Trust" target="Financial Trust" weight="6.57">
+        <attvalues>
+          <attvalue for="totalAmount" value="3738700" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e83" source="Jeffrey Epstein" target="ALFREDO RODRIGUEZ" weight="4.70">
+        <attvalues>
+          <attvalue for="totalAmount" value="50000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e84" source="KAHN" target="BELLA_KLEIN" weight="2.85">
+        <attvalues>
+          <attvalue for="totalAmount" value="700" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e85" source="CASRIEL" target="PRIMARY MODERATE" weight="5.26">
+        <attvalues>
+          <attvalue for="totalAmount" value="182096.65" />
+          <attvalue for="transactionCount" value="6" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e86" source="EXHIBIT C" target="HYPERION AIR INC" weight="5.06">
+        <attvalues>
+          <attvalue for="totalAmount" value="115000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e87" source="JULIANA SHKRELI" target="MOLLY LADD" weight="3.35">
+        <attvalues>
+          <attvalue for="totalAmount" value="2250" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e88" source="KATHY RUEMMLER" target="BELLA_KLEIN" weight="3.15">
+        <attvalues>
+          <attvalue for="totalAmount" value="1399.1" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e89" source="VISOSKI" target="JEGE LLC" weight="4.45">
+        <attvalues>
+          <attvalue for="totalAmount" value="27932.9" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e90" source="BNY Mellon" target="JPMorgan" weight="4.95">
+        <attvalues>
+          <attvalue for="totalAmount" value="89059.99" />
+          <attvalue for="transactionCount" value="3" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e91" source="Jeffrey Epstein" target="Darren Indyke" weight="2.73">
+        <attvalues>
+          <attvalue for="totalAmount" value="531" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e92" source="BOFA" target="CHELSEY DEVON" weight="2.79">
+        <attvalues>
+          <attvalue for="totalAmount" value="612" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e93" source="HALPERIN" target="Leon Black" weight="6.51">
+        <attvalues>
+          <attvalue for="totalAmount" value="3200000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e94" source="Darren Indyke" target="EMAD HANNA" weight="3.93">
+        <attvalues>
+          <attvalue for="totalAmount" value="8430" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e95" source="HYPERION AIR INC" target="BOFA" weight="5.70">
+        <attvalues>
+          <attvalue for="totalAmount" value="500000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e96" source="ACCT NAME" target="LEXINGTON" weight="5.22">
+        <attvalues>
+          <attvalue for="totalAmount" value="166560.5" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e97" source="NES LLC" target="POTTERY BARN" weight="4.14">
+        <attvalues>
+          <attvalue for="totalAmount" value="13940.04" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e98" source="NES LLC" target="VISA CARD" weight="2.99">
+        <attvalues>
+          <attvalue for="totalAmount" value="979" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e99" source="Citibank" target="M. ARDA BESKARDES" weight="4.37">
+        <attvalues>
+          <attvalue for="totalAmount" value="23264.8" />
+          <attvalue for="transactionCount" value="4" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e100" source="ALEXANDERSON" target="WECHSLER" weight="6.66">
+        <attvalues>
+          <attvalue for="totalAmount" value="4600000" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e101" source="KATHERINE W. EZELL" target="ROBERT C. JOSEFSBERG" weight="4.22">
+        <attvalues>
+          <attvalue for="totalAmount" value="16572.75" />
+          <attvalue for="transactionCount" value="3" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e102" source="BISCAYNE BLVD" target="D. CRITTON" weight="6.51">
+        <attvalues>
+          <attvalue for="totalAmount" value="3250000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e103" source="ADAM BLY" target="KAHN" weight="4.28">
+        <attvalues>
+          <attvalue for="totalAmount" value="19000" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e104" source="Citibank" target="BOFA" weight="5.04">
+        <attvalues>
+          <attvalue for="totalAmount" value="108947" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e105" source="ROY BLACK" target="JACKIE PERCZEK" weight="3.67">
+        <attvalues>
+          <attvalue for="totalAmount" value="4676.3" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e106" source="Southern Trust Company" target="DAPHNE WALLACE" weight="3.70">
+        <attvalues>
+          <attvalue for="totalAmount" value="5000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e107" source="Southern Trust Company" target="Financial Trust" weight="5.60">
+        <attvalues>
+          <attvalue for="totalAmount" value="400000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e108" source="Deutsche Bank" target="Butterfly Trust" weight="6.80">
+        <attvalues>
+          <attvalue for="totalAmount" value="6350000" />
+          <attvalue for="transactionCount" value="4" />
+          <attvalue for="dominantTier" value="audited_MODERATE" />
+        </attvalues>
+      </edge>
+      <edge id="e109" source="Citibank" target="PEGGY SIEGAL" weight="4.52">
+        <attvalues>
+          <attvalue for="totalAmount" value="33000" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e110" source="Southern Trust Company" target="Joichi Ito" weight="7.01">
+        <attvalues>
+          <attvalue for="totalAmount" value="10260000" />
+          <attvalue for="transactionCount" value="5" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e111" source="VISOSKI" target="JEAN-LUC BRUNEL" weight="5.54">
+        <attvalues>
+          <attvalue for="totalAmount" value="344586" />
+          <attvalue for="transactionCount" value="6" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e112" source="JEAN-LUC BRUNEL" target="BENEFICIARY NAME" weight="5.54">
+        <attvalues>
+          <attvalue for="totalAmount" value="344586" />
+          <attvalue for="transactionCount" value="6" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e113" source="STEPHANIE REMINGTON" target="FLAGPOLE POOL" weight="4.45">
+        <attvalues>
+          <attvalue for="totalAmount" value="27956.5" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e114" source="Deutsche Bank" target="SHULIAK" weight="4.62">
+        <attvalues>
+          <attvalue for="totalAmount" value="42166.22" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e115" source="PAUL V" target="Darren Indyke" weight="5.19">
+        <attvalues>
+          <attvalue for="totalAmount" value="156408.11" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e116" source="BNY Mellon" target="CHELSEY DEVON" weight="4.15">
+        <attvalues>
+          <attvalue for="totalAmount" value="14139.39" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e117" source="WARWICK WICKSMAN" target="Darren Indyke" weight="5.07">
+        <attvalues>
+          <attvalue for="totalAmount" value="117500" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e118" source="SHULIAK" target="Darren Indyke" weight="4.70">
+        <attvalues>
+          <attvalue for="totalAmount" value="50000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e119" source="DAVID STERN" target="Jeffrey Epstein" weight="4.78">
+        <attvalues>
+          <attvalue for="totalAmount" value="59933" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e120" source="RICHARD RESSLER" target="BOFA" weight="6.48">
+        <attvalues>
+          <attvalue for="totalAmount" value="3000000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e121" source="Darren Indyke" target="BENEFICIARY NAME" weight="4.81">
+        <attvalues>
+          <attvalue for="totalAmount" value="64506" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e122" source="ALEXANDERSON" target="Leon Black" weight="6.70">
+        <attvalues>
+          <attvalue for="totalAmount" value="5067000" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e123" source="WECHSLER" target="RICHARD_JOSLIN" weight="6.49">
+        <attvalues>
+          <attvalue for="totalAmount" value="3067000" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e124" source="Financial Trust" target="Citibank" weight="4.96">
+        <attvalues>
+          <attvalue for="totalAmount" value="91655.92" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e125" source="ALEXANDERSON" target="RICHARD_JOSLIN" weight="5.70">
+        <attvalues>
+          <attvalue for="totalAmount" value="500000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e126" source="Southern Trust Company" target="Deutsche Bank" weight="6.30">
+        <attvalues>
+          <attvalue for="totalAmount" value="2000000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e127" source="BEN GOERTZEL" target="Leon Black" weight="5.48">
+        <attvalues>
+          <attvalue for="totalAmount" value="300000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e128" source="WECHSLER" target="HEATHER_GRAY" weight="7.25">
+        <attvalues>
+          <attvalue for="totalAmount" value="17637750" />
+          <attvalue for="transactionCount" value="3" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e129" source="WECHSLER" target="SPINELLA" weight="7.25">
+        <attvalues>
+          <attvalue for="totalAmount" value="17637750" />
+          <attvalue for="transactionCount" value="3" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e130" source="HARRY BELLER" target="JPMorgan" weight="5.90">
+        <attvalues>
+          <attvalue for="totalAmount" value="800000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e131" source="HANNAN" target="Leon Black" weight="6.25">
+        <attvalues>
+          <attvalue for="totalAmount" value="1770000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e132" source="PLAN D LLC" target="Leon Black" weight="7.26">
+        <attvalues>
+          <attvalue for="totalAmount" value="18000000" />
+          <attvalue for="transactionCount" value="4" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e133" source="ALEXANDERSON" target="BOFA" weight="6.78">
+        <attvalues>
+          <attvalue for="totalAmount" value="6000000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e134" source="Leon Black" target="HANNAN" weight="6.70">
+        <attvalues>
+          <attvalue for="totalAmount" value="5000000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e135" source="Southern Trust Company" target="Leon Black" weight="7.22">
+        <attvalues>
+          <attvalue for="totalAmount" value="16500000" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="dominantTier" value="audited_PROVEN" />
+        </attvalues>
+      </edge>
+      <edge id="e136" source="AT&amp;T WIRELESS" target="WIRELESS NUMBER" weight="2.89">
+        <attvalues>
+          <attvalue for="totalAmount" value="779.96" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_STRONG" />
+        </attvalues>
+      </edge>
+      <edge id="e137" source="PAUL_MORRIS" target="STEPANIAN" weight="5.62">
+        <attvalues>
+          <attvalue for="totalAmount" value="412260" />
+          <attvalue for="transactionCount" value="3" />
+          <attvalue for="dominantTier" value="audited_STRONG" />
+        </attvalues>
+      </edge>
+      <edge id="e138" source="VISOSKI" target="HYPERION AIR INC" weight="4.91">
+        <attvalues>
+          <attvalue for="totalAmount" value="81255.37" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_STRONG" />
+        </attvalues>
+      </edge>
+      <edge id="e139" source="Deutsche Bank" target="Jeffrey Epstein" weight="5.15">
+        <attvalues>
+          <attvalue for="totalAmount" value="140400" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_STRONG" />
+        </attvalues>
+      </edge>
+      <edge id="e140" source="JPMorgan" target="JUN 14" weight="5.15">
+        <attvalues>
+          <attvalue for="totalAmount" value="140000" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="dominantTier" value="audited_STRONG" />
+        </attvalues>
+      </edge>
+      <edge id="e141" source="REMITTANCE ADVICE" target="Darren Indyke" weight="3.59">
+        <attvalues>
+          <attvalue for="totalAmount" value="3861.67" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="dominantTier" value="audited_STRONG" />
+        </attvalues>
+      </edge>
+      <edge id="e142" source="Jeffrey Epstein" target="JPMorgan" weight="3.70">
+        <attvalues>
+          <attvalue for="totalAmount" value="5000" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="dominantTier" value="audited_STRONG" />
+        </attvalues>
+      </edge>
+      <edge id="e143" source="PAY ONLINE" target="AT&amp;T WIRELESS" weight="2.97">
+        <attvalues>
+          <attvalue for="totalAmount" value="935.27" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_STRONG" />
+        </attvalues>
+      </edge>
+      <edge id="e144" source="AMY CASSELL" target="RODRIGUEZ" weight="4.18">
+        <attvalues>
+          <attvalue for="totalAmount" value="15000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_STRONG" />
+        </attvalues>
+      </edge>
+      <edge id="e145" source="FOWLER WHITE" target="FOWLER WHITE BURNETT" weight="5.10">
+        <attvalues>
+          <attvalue for="totalAmount" value="125000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_STRONG" />
+        </attvalues>
+      </edge>
+      <edge id="e146" source="BORGERSON" target="JULIANA SHKRELI" weight="5.38">
+        <attvalues>
+          <attvalue for="totalAmount" value="240000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_STRONG" />
+        </attvalues>
+      </edge>
+      <edge id="e147" source="JOE PAGANO" target="KAHN" weight="5.70">
+        <attvalues>
+          <attvalue for="totalAmount" value="500000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_STRONG" />
+        </attvalues>
+      </edge>
+      <edge id="e148" source="PAUL_MORRIS" target="Jeffrey Epstein" weight="4.93">
+        <attvalues>
+          <attvalue for="totalAmount" value="85100" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_MODERATE" />
+        </attvalues>
+      </edge>
+      <edge id="e149" source="CINGULAR WIRELESS" target="WIRELESS NUMBER" weight="2.84">
+        <attvalues>
+          <attvalue for="totalAmount" value="691.22" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_MODERATE" />
+        </attvalues>
+      </edge>
+      <edge id="e150" source="REMITTANCE ADVICE" target="PLAN D LLC" weight="3.05">
+        <attvalues>
+          <attvalue for="totalAmount" value="1125.03" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_MODERATE" />
+        </attvalues>
+      </edge>
+      <edge id="e151" source="JAMES CE" target="BRICE GORDON" weight="3.10">
+        <attvalues>
+          <attvalue for="totalAmount" value="1250" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="dominantTier" value="audited_MODERATE" />
+        </attvalues>
+      </edge>
+      <edge id="e152" source="DAPHNE WALLACE" target="WIRELESS NUMBER" weight="3.13">
+        <attvalues>
+          <attvalue for="totalAmount" value="1362.47" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="dominantTier" value="audited_MODERATE" />
+        </attvalues>
+      </edge>
+      <edge id="e153" source="MOBILE APP" target="MICHAEL GLIDDEN" weight="2.95">
+        <attvalues>
+          <attvalue for="totalAmount" value="885.74" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_MODERATE" />
+        </attvalues>
+      </edge>
+      <edge id="e154" source="Darren Indyke" target="VISOSKI" weight="4.90">
+        <attvalues>
+          <attvalue for="totalAmount" value="80000" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="dominantTier" value="audited_MODERATE" />
+        </attvalues>
+      </edge>
+      <edge id="e155" source="Financial Trust" target="SUITE B3" weight="3.70">
+        <attvalues>
+          <attvalue for="totalAmount" value="5000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_MODERATE" />
+        </attvalues>
+      </edge>
+      <edge id="e156" source="DETAIL SUBTOTAL USD" target="WIRE REMITTANCE" weight="5.34">
+        <attvalues>
+          <attvalue for="totalAmount" value="216801.73" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="dominantTier" value="audited_MODERATE" />
+        </attvalues>
+      </edge>
+      <edge id="e157" source="Jeffrey Epstein" target="KAHN" weight="5.94">
+        <attvalues>
+          <attvalue for="totalAmount" value="866300" />
+          <attvalue for="transactionCount" value="4" />
+          <attvalue for="dominantTier" value="audited_MODERATE" />
+        </attvalues>
+      </edge>
+      <edge id="e158" source="Deutsche Bank" target="TAZIA SMITH" weight="5.44">
+        <attvalues>
+          <attvalue for="totalAmount" value="273000" />
+          <attvalue for="transactionCount" value="2" />
+          <attvalue for="dominantTier" value="audited_MODERATE" />
+        </attvalues>
+      </edge>
+      <edge id="e159" source="Darren Indyke" target="JACK GOLDBER" weight="5.20">
+        <attvalues>
+          <attvalue for="totalAmount" value="160000" />
+          <attvalue for="transactionCount" value="1" />
+          <attvalue for="dominantTier" value="audited_MODERATE" />
+        </attvalues>
+      </edge>
+      <edge id="e160" source="KAHN" target="TAZIA SMITH" weight="5.90">
+        <attvalues>
+          <attvalue for="totalAmount" value="798300" />
+          <attvalue for="transactionCount" value="3" />
+          <attvalue for="dominantTier" value="audited_MODERATE" />
+        </attvalues>
+      </edge>
+    </edges>
+  </graph>
+</gexf>
