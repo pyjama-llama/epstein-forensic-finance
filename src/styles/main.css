@@ -336,7 +336,7 @@ body {
 }
 
 /* ── Filter Panel ────────────────────────────────────────────────────────── */
-#filters {
+#filter-panel {
   grid-area: filters;
   background: var(--bg-surface);
   border-right: 1px solid var(--border);
@@ -347,7 +347,8 @@ body {
   scrollbar-color: var(--border) transparent;
   position: relative;
   z-index: 300;
-  /* Ensure it stays above the SVG canvas in all browsers */
+  transform: translateZ(0);
+  /* Hardware isolation to fix SVG occlusion in Brave */
 }
 
 .panel-header {
@@ -515,11 +516,10 @@ body {
   display: flex;
   justify-content: space-between;
   font-family: var(--font-mono);
-  /* Force consistent number rendering */
-  font-size: 11px;
-  /* Increased from 9px for readability */
+  font-size: 12px;
+  /* Increased from 11px for readability */
   color: var(--text-muted);
-  margin-top: 4px;
+  margin-top: 5px;
 }
 
 /* Date inputs */
@@ -568,8 +568,9 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 6px;
-  font-size: 11px;
+  margin-bottom: 8px;
+  font-size: 12px;
+  /* Increased from 11px */
   color: var(--text-secondary);
 }
 
@@ -668,7 +669,7 @@ body {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
-/* ── Detail Panel ─────────────────────────────────────────────────────────── */
+/* ── Entity Detail Panel ─────────────────────────────────────────────────── */
 #detail-panel {
   grid-area: detail;
   background: var(--bg-surface);
@@ -679,10 +680,10 @@ body {
   scrollbar-color: var(--border) transparent;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
   position: relative;
   z-index: 300;
-  /* Force above graph SVG completely */
+  transform: translateZ(0);
+  /* Force hardware stacking context for Brave */
   box-shadow: -4px 0 24px rgba(0, 0, 0, 0.4);
 }
 
