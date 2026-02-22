@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "preprocess": "node scripts/preprocess.js",
-    "validate": "node scripts/validate.js"
+    "validate": "node scripts/validate.js",
+    "export:gexf": "node scripts/export_gexf.js"
   },
   "devDependencies": {
     "vite": "^5.4.0"
