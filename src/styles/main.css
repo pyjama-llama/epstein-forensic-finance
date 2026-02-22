@@ -336,7 +336,7 @@ body {
 }
 
 /* ── Filter Panel ────────────────────────────────────────────────────────── */
-#filter-panel {
+#filters {
   grid-area: filters;
   background: var(--bg-surface);
   border-right: 1px solid var(--border);
@@ -345,6 +345,9 @@ body {
   padding: 0 0 24px;
   scrollbar-width: thin;
   scrollbar-color: var(--border) transparent;
+  position: relative;
+  z-index: 300;
+  /* Ensure it stays above the SVG canvas in all browsers */
 }
 
 .panel-header {
@@ -384,12 +387,13 @@ body {
   justify-content: space-between;
 }
 
-.filter-value-display {
+.filter-value-disp.val-amount {
   font-family: var(--font-mono);
-  font-size: 9px;
-  color: var(--accent);
-  font-weight: 400;
-  letter-spacing: 0;
+  /* Style Guide: all numbers must be mono */
+  font-size: 22px;
+  color: var(--text-bright);
+  font-weight: 600;
+  letter-spacing: -0.02em;
 }
 
 /* Checkboxes */
@@ -511,9 +515,11 @@ body {
   display: flex;
   justify-content: space-between;
   font-family: var(--font-mono);
-  font-size: 9px;
+  /* Force consistent number rendering */
+  font-size: 11px;
+  /* Increased from 9px for readability */
   color: var(--text-muted);
-  margin-top: 2px;
+  margin-top: 4px;
 }
 
 /* Date inputs */
@@ -671,6 +677,13 @@ body {
   overflow-x: hidden;
   scrollbar-width: thin;
   scrollbar-color: var(--border) transparent;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  z-index: 300;
+  /* Force above graph SVG completely */
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.4);
 }
 
 #detail-content {
@@ -800,9 +813,11 @@ body {
 
 .tx-amount {
   font-family: var(--font-mono);
-  font-size: 12px;
+  /* Force consistent number rendering */
+  color: var(--text-bright);
+  font-size: 14px;
+  /* Increased for readability */
   font-weight: 500;
-  color: var(--text-secondary);
   white-space: nowrap;
 }
 
@@ -1130,7 +1145,8 @@ body {
   }
 
   .kpi-value {
-    font-size: 18px !important;
+    font-size: 26px !important;
+    /* Scales up total detail flow */
     font-weight: 600 !important;
   }
 
@@ -1138,7 +1154,7 @@ body {
     font-size: 11px !important;
   }
 
-  .filter-panel {
+  #filters {
     width: 340px !important;
   }
 
@@ -1163,7 +1179,13 @@ body {
   }
 
   .tx-amount {
-    font-size: 15px !important;
+    font-size: 16px !important;
+    /* Scales up monetary amounts */
+  }
+
+  .filter-value-disp.val-amount {
+    font-size: 26px !important;
+    /* Scales up total detail flow */
   }
 
   .detail-entity-name {
@@ -1198,5 +1220,10 @@ body {
 
   .logo-text {
     font-size: 18px !important;
+  }
+
+  .range-labels {
+    font-size: 12px !important;
+    /* Scales up tiny filter numbers */
   }
 }
