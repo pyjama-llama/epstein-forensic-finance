@@ -32,8 +32,9 @@ from pathlib import Path
 
 # Match markdown links: [text](url)
 # But only external ones (http:// or https://)
+# EXCLUDES image syntax: ![alt](url) and badge links: [![badge](img)](url)
 MD_LINK_RE = re.compile(
-    r'\[([^\]]+)\]\((https?://[^)]+)\)'
+    r'(?<!!)\[([^\]]+)\]\((https?://[^)]+)\)'
 )
 
 

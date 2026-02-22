@@ -2,8 +2,8 @@
 
 **Automated forensic financial reconstruction from 1.48 million DOJ EFTA documents + 503K cataloged media items**
 
-!<a href="https://komarev.com/ghpvc/?username=randallscott25-star&label=visitors&color=555555&style=flat" target="_blank">Visitors</a>
-<a href="https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg" target="_blank">![License: CC BY 4.0</a>](https://creativecommons.org/licenses/by/4.0/)
+![Visitors](https://komarev.com/ghpvc/?username=randallscott25-star&label=visitors&color=555555&style=flat)
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 
 ---
 
