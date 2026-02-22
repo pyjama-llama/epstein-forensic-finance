@@ -79,7 +79,11 @@ function generateGexf() {
         const id = `e${index}`;
         const source = escapeXml(edge.source);
         const target = escapeXml(edge.target);
-        const weight = edge.totalAmount || 1; // Native gephi edge weight
+
+        // Gephi physics engines explode if edge weights are $150,000,000
+        // We use a base-10 logarithmic scale for the structural gravity weight
+        const rawAmt = Math.max(1, edge.totalAmount || 1);
+        const weight = Math.max(1, Math.log10(rawAmt)).toFixed(2);
 
         gexf += `      <edge id="${id}" source="${source}" target="${target}" weight="${weight}">\n`;
         gexf += `        <attvalues>\n`;
