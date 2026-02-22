@@ -347,8 +347,8 @@ body {
   scrollbar-color: var(--border) transparent;
   position: relative;
   z-index: 300;
-  transform: translateZ(0);
-  /* Hardware isolation to fix SVG occlusion in Brave */
+  isolation: isolate;
+  /* Native stacking context boundary to fix SVG rendering bugs in Brave */
 }
 
 .panel-header {
@@ -532,19 +532,25 @@ body {
 .date-input {
   flex: 1;
   min-width: 52px;
-  /* ensures 4-digit year never truncates */
   width: 0;
-  /* override flex sizing so both halves share equally */
   background: var(--bg-elevated);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   color: var(--text-primary);
   font-family: var(--font-mono);
-  font-size: 13px;
-  /* slightly larger for readability */
+  font-size: 14px;
   padding: 7px 6px;
   text-align: center;
   transition: border-color var(--t-fast);
+  -moz-appearance: textfield;
+  /* Hides Firefox spinner */
+}
+
+/* Hides Chrome/Safari spinner */
+.date-input::-webkit-outer-spin-button,
+.date-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .date-input:focus {
@@ -682,8 +688,8 @@ body {
   flex-direction: column;
   position: relative;
   z-index: 300;
-  transform: translateZ(0);
-  /* Force hardware stacking context for Brave */
+  isolation: isolate;
+  /* Native stacking context boundary for Brave */
   box-shadow: -4px 0 24px rgba(0, 0, 0, 0.4);
 }
 
