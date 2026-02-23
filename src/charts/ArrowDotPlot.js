@@ -118,19 +118,22 @@ export function renderArrowDotPlot(selector, nodes) {
         .attr('opacity', 0);
 
     // --- Animation Setup ---
-    // 1. Set initial state synchronously (hidden and at top)
+    // Calculate the distance from the top of the SVG to the top of the viewport
+    const containerTopOffset = -container.getBoundingClientRect().top;
+
+    // 1. Set initial state synchronously (hidden and at the absolute top of the document)
     const lines = rows.append('line')
         .attr('x1', d => x(d.totalOut))
         .attr('x2', d => x(d.totalIn))
-        .attr('y1', 0)
-        .attr('y2', 0)
+        .attr('y1', containerTopOffset)
+        .attr('y2', containerTopOffset)
         .attr('stroke', 'var(--border-light)')
         .attr('stroke-width', 2)
         .attr('opacity', 0);
 
     const outDots = rows.append('circle')
         .attr('cx', d => x(d.totalOut))
-        .attr('cy', 0)
+        .attr('cy', containerTopOffset)
         .attr('r', 5)
         .attr('fill', 'var(--bg-base)')
         .attr('stroke', 'var(--text-muted)')
@@ -139,7 +142,7 @@ export function renderArrowDotPlot(selector, nodes) {
 
     const inDots = rows.append('circle')
         .attr('cx', d => x(d.totalIn))
-        .attr('cy', 0)
+        .attr('cy', containerTopOffset)
         .attr('r', 5)
         .attr('fill', 'var(--text-primary)')
         .attr('opacity', 0);
