@@ -117,47 +117,68 @@ export function renderArrowDotPlot(selector, nodes) {
         .attr('fill', 'var(--bg-elevated)')
         .attr('opacity', 0);
 
-    // D3 Transition for the falling animation requested by user
-    const t = svg.transition().duration(900).ease(d3.easeCubicOut);
-
-    // Connecting Lines
-    rows.append('line')
+    // --- Animation Setup ---
+    // 1. Set initial state synchronously (hidden and at top)
+    const lines = rows.append('line')
         .attr('x1', d => x(d.totalOut))
         .attr('x2', d => x(d.totalIn))
         .attr('y1', 0)
         .attr('y2', 0)
         .attr('stroke', 'var(--border-light)')
         .attr('stroke-width', 2)
-        .attr('opacity', 0)
-        .transition(t)
-        .delay((d, i) => i * 40)
-        .attr('y1', d => y(d.label))
-        .attr('y2', d => y(d.label))
-        .attr('opacity', 1);
+        .attr('opacity', 0);
 
-    // OUT Dots (Hollow, represented with stroke)
-    rows.append('circle')
+    const outDots = rows.append('circle')
         .attr('cx', d => x(d.totalOut))
         .attr('cy', 0)
         .attr('r', 5)
         .attr('fill', 'var(--bg-base)')
         .attr('stroke', 'var(--text-muted)')
         .attr('stroke-width', 1.5)
-        .attr('opacity', 0)
-        .transition(t)
-        .delay((d, i) => i * 40)
-        .attr('cy', d => y(d.label))
-        .attr('opacity', 1);
+        .attr('opacity', 0);
 
-    // IN Dots (Solid)
-    rows.append('circle')
+    const inDots = rows.append('circle')
         .attr('cx', d => x(d.totalIn))
         .attr('cy', 0)
         .attr('r', 5)
         .attr('fill', 'var(--text-primary)')
-        .attr('opacity', 0)
-        .transition(t)
-        .delay((d, i) => i * 40)
-        .attr('cy', d => y(d.label))
-        .attr('opacity', 1);
+        .attr('opacity', 0);
+
+    // 2. Define the animation function
+    const playAnimation = () => {
+        const t = svg.transition().duration(900).ease(d3.easeCubicOut);
+
+        lines.transition(t)
+            .delay((d, i) => i * 40)
+            .attr('y1', d => y(d.label))
+            .attr('y2', d => y(d.label))
+            .attr('opacity', 1);
+
+        outDots.transition(t)
+            .delay((d, i) => i * 40)
+            .attr('cy', d => y(d.label))
+            .attr('opacity', 1);
+
+        inDots.transition(t)
+            .delay((d, i) => i * 40)
+            .attr('cy', d => y(d.label))
+            .attr('opacity', 1);
+    };
+
+    // 3. Trigger via IntersectionObserver
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    playAnimation();
+                    observer.disconnect(); // Only play once
+                }
+            });
+        }, { threshold: 0.2 }); // Trigger when 20% visible
+
+        observer.observe(container);
+    } else {
+        // Fallback for ancient browsers
+        playAnimation();
+    }
 }
