@@ -63,13 +63,18 @@ async function main() {
 
     // ── Chart 4 Orchestration (Toggle + Details Pane) ────────────────────────
     let smallMultiplesMode = 'month';
+    let smallMultiplesYMode = 'shared'; // 'shared' or 'independent'
+
     const btnMonth = document.getElementById('btn-group-month');
     const btnYear = document.getElementById('btn-group-year');
+    const btnSharedY = document.getElementById('btn-group-shared-y');
+    const btnIndepY = document.getElementById('btn-group-indep-y');
     const detailsPane = document.getElementById('entity-details-pane');
 
     const renderMultiples = () => {
         safeRender(renderEntitySmallMultiples, '#chart-small-multiples', graph, {
             mode: smallMultiplesMode,
+            independentY: smallMultiplesYMode === 'independent',
             onEntityClick: (entityName) => {
                 detailsPane.style.display = 'block';
                 safeRender(renderEntityDetails, '#entity-details-content', entityName, graph);
@@ -78,6 +83,32 @@ async function main() {
     };
 
     renderMultiples();
+
+    if (btnSharedY && btnIndepY) {
+        btnSharedY.addEventListener('click', () => {
+            if (smallMultiplesYMode === 'shared') return;
+            smallMultiplesYMode = 'shared';
+            btnSharedY.style.background = 'var(--border)';
+            btnSharedY.style.color = 'var(--text-bright)';
+            btnSharedY.style.fontWeight = '500';
+            btnIndepY.style.background = 'transparent';
+            btnIndepY.style.color = 'var(--text-secondary)';
+            btnIndepY.style.fontWeight = '400';
+            renderMultiples();
+        });
+
+        btnIndepY.addEventListener('click', () => {
+            if (smallMultiplesYMode === 'independent') return;
+            smallMultiplesYMode = 'independent';
+            btnIndepY.style.background = 'var(--border)';
+            btnIndepY.style.color = 'var(--text-bright)';
+            btnIndepY.style.fontWeight = '500';
+            btnSharedY.style.background = 'transparent';
+            btnSharedY.style.color = 'var(--text-secondary)';
+            btnSharedY.style.fontWeight = '400';
+            renderMultiples();
+        });
+    }
 
     if (btnMonth && btnYear) {
         btnMonth.addEventListener('click', () => {

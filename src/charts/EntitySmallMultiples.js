@@ -118,6 +118,9 @@ export function renderEntitySmallMultiples(selector, data, options = {}) {
 
     const multiplesData = topEntities.map(entity => {
         let runningBalance = 0;
+        let localMaxBalance = -Infinity;
+        let localMinBalance = Infinity;
+
         const paddedTimeline = timelineDomain.map(timeStr => {
             let netChange = 0;
             if (mode === 'month') {
@@ -134,6 +137,9 @@ export function renderEntitySmallMultiples(selector, data, options = {}) {
             globalMaxBalance = Math.max(globalMaxBalance, runningBalance);
             globalMinBalance = Math.min(globalMinBalance, runningBalance);
 
+            localMaxBalance = Math.max(localMaxBalance, runningBalance);
+            localMinBalance = Math.min(localMinBalance, runningBalance);
+
             return {
                 dateStr: timeStr,
                 date: mode === 'month' ? parseDateMonth(timeStr) : parseDateYear(timeStr),
@@ -144,6 +150,8 @@ export function renderEntitySmallMultiples(selector, data, options = {}) {
         return {
             label: entity.label,
             grossVolume: entity.grossVolume,
+            localMinBalance,
+            localMaxBalance,
             timeline: paddedTimeline
         };
     });
@@ -190,30 +198,10 @@ export function renderEntitySmallMultiples(selector, data, options = {}) {
         .domain([xDomainStart, xDomainEnd])
         .range([0, innerWidth]);
 
-    // Pad domains to not clip exactly at the edge
-    const yPad = (globalMaxBalance - globalMinBalance) * 0.1;
-    // ensure 0 is in domain
-    const yMin = Math.min(0, globalMinBalance - yPad);
-    const yMax = Math.max(0, globalMaxBalance + yPad);
-
-    const y = d3.scaleLinear()
-        .domain([yMin, yMax])
-        .range([innerHeight, 0])
-        .nice();
+    const isIndependent = options.independentY === true;
 
     // Generators
     const activeCurve = mode === 'month' ? d3.curveStep : d3.curveMonotoneX;
-
-    const area = d3.area()
-        .x(d => x(d.date))
-        .y0(y(0)) // Baseline is explicitly zero, rather than innerHeight
-        .y1(d => y(d.balance))
-        .curve(activeCurve);
-
-    const line = d3.line()
-        .x(d => x(d.date))
-        .y(d => y(d.balance))
-        .curve(activeCurve);
 
     // 4. Draw Individual Charts
     const svgs = multiplesContainers.append('svg')
@@ -222,209 +210,269 @@ export function renderEntitySmallMultiples(selector, data, options = {}) {
         .attr('viewBox', `0 0 ${width} ${height}`)
         .style('overflow', 'visible'); // Allow tooltips/y-axis to spill safely
 
-    const g = svgs.append('g')
-        .attr('transform', `translate(${margin.left},${margin.top})`);
+    // Loop through each small multiple container to render its unique local data mapping
+    svgs.each(function (activeData, i) {
+        const svg = d3.select(this);
+        const g = svg.append('g')
+            .attr('transform', `translate(${margin.left},${margin.top})`);
 
-    // Draw Title (Entity Name) & Total Volume
-    svgs.append('text')
-        .attr('x', 0)
-        .attr('y', 14)
-        .attr('fill', 'var(--text-bright)')
-        .attr('font-size', '13px')
-        .attr('font-weight', '600')
-        .text(d => d.label.length > 28 ? d.label.slice(0, 26) + '…' : d.label);
+        // Local Y-Scale Resolution
+        let yDomainMin = globalMinBalance;
+        let yDomainMax = globalMaxBalance;
 
-    svgs.append('text')
-        .attr('x', width)
-        .attr('y', 14)
-        .attr('text-anchor', 'end')
-        .attr('fill', 'var(--text-secondary)')
-        .attr('font-size', '12px')
-        .attr('font-family', 'var(--font-mono)')
-        .text(d => `Gross Flow: ${fmtAmount(d.grossVolume)}`);
+        if (isIndependent) {
+            yDomainMin = activeData.localMinBalance;
+            yDomainMax = activeData.localMaxBalance;
+        }
 
-    // Draw Axes
-    // X-axis (only show min and max bounds to keep it clean, but use scaleTime)
-    g.append('g')
-        .attr('transform', `translate(0,${innerHeight})`)
-        .call(d3.axisBottom(x).tickValues([xDomainStart, xDomainEnd]).tickFormat(d3.timeFormat('%Y')))
-        .call(axis => axis.select('.domain').attr('stroke', 'var(--border)'))
-        .call(axis => axis.selectAll('line').remove()) // remove ticks
-        .call(axis => axis.selectAll('text').style('fill', 'var(--text-secondary)').attr('font-size', 11));
+        const yPad = (yDomainMax - yDomainMin) * 0.1;
+        // ensure 0 is solidly in the domain
+        const yMin = Math.min(0, yDomainMin - yPad);
+        const yMax = Math.max(0, yDomainMax + yPad);
 
-    // Y-axis (only show 3 ticks max)
-    g.append('g')
-        .call(d3.axisLeft(y).ticks(3).tickFormat(d => `$${d / 1e6}M`))
-        .call(axis => axis.select('.domain').remove())
-        .call(axis => axis.selectAll('line')
-            .attr('x2', innerWidth)
-            .attr('stroke', 'var(--border)')
-            .attr('stroke-dasharray', '2,2')
-        )
-        .call(axis => axis.selectAll('text')
-            .style('fill', 'var(--text-secondary)')
-            .attr('font-size', 11)
+        const y = d3.scaleLinear()
+            .domain([yMin, yMax])
+            .range([innerHeight, 0])
+            .nice();
+
+        // Local Area and Line Generators bound to this specific y scale
+        const area = d3.area()
+            .x(d => x(d.date))
+            .y0(y(0))
+            .y1(d => y(d.balance))
+            .curve(activeCurve);
+
+        const line = d3.line()
+            .x(d => x(d.date))
+            .y(d => y(d.balance))
+            .curve(activeCurve);
+
+        // Draw Title (Entity Name) & Total Volume
+        svg.append('text')
+            .attr('x', margin.left)
+            .attr('y', 14)
+            .attr('fill', 'var(--text-bright)')
+            .attr('font-size', '13px')
+            .attr('font-weight', '600')
+            .text(d => d.label.length > 28 ? d.label.slice(0, 26) + '…' : d.label);
+
+        svg.append('text')
+            .attr('x', width - margin.right)
+            .attr('y', 14)
+            .attr('text-anchor', 'end')
+            .attr('fill', 'var(--text-secondary)')
+            .attr('font-size', '12px')
             .attr('font-family', 'var(--font-mono)')
-        );
+            .text(d => `Gross Flow: ${fmtAmount(d.grossVolume)}`);
 
-    // Setup an SVG clipPath for the sweeping animation
-    const clipId = (d, i) => `clip-sweep-${i}`;
-    g.append('clipPath')
-        .attr('id', (d, i) => clipId(d, i))
-        .append('rect')
-        .attr('width', 0) // Start closed
-        .attr('height', innerHeight)
-        .attr('x', 0)
-        .attr('y', 0);
+        // Draw Axes
+        // X-axis: Dynamic formatting. Outer bounds get 4 digits (e.g. 2012), internal ticks get 2 digits (e.g. '14)
+        g.append('g')
+            .attr('transform', `translate(0,${innerHeight})`)
+            .call(d3.axisBottom(x)
+                .ticks(d3.timeYear.every(1)) // explicitly tick every year
+                .tickFormat(d => {
+                    const year = d.getFullYear();
+                    if (year === startYear || year === endYear) {
+                        return d3.timeFormat('%Y')(d);
+                    }
+                    return d3.timeFormat("'%y")(d);
+                })
+            )
+            .call(axis => axis.select('.domain').attr('stroke', 'var(--border)'))
+            .call(axis => axis.selectAll('line').remove()) // remove ticks
+            .call(axis => axis.selectAll('text').style('fill', 'var(--text-secondary)').attr('font-size', 11));
 
-    // Draw Zero-Line Reference
-    g.append('line')
-        .attr('x1', 0)
-        .attr('x2', innerWidth)
-        .attr('y1', y(0))
-        .attr('y2', y(0))
-        .attr('stroke', 'var(--text-muted)')
-        .attr('stroke-width', 1)
-        .attr('stroke-dasharray', '4,4')
-        .attr('opacity', 0.5);
+        // Y-axis (only show 3 ticks max)
+        g.append('g')
+            .call(d3.axisLeft(y).ticks(3).tickFormat(d => `$${d / 1e6}M`))
+            .call(axis => axis.select('.domain').remove())
+            .call(axis => axis.selectAll('line')
+                .attr('x2', innerWidth)
+                .attr('stroke', 'var(--border)')
+                .attr('stroke-dasharray', '2,2')
+            )
+            .call(axis => axis.selectAll('text')
+                .style('fill', 'var(--text-secondary)')
+                .attr('font-size', 11)
+                .attr('font-family', 'var(--font-mono)')
+            );
 
-    // Draw Area (Shaded Fill)
-    g.append('path')
-        .attr('d', d => area(d.timeline))
-        .attr('fill', 'var(--text-muted)')
-        .attr('opacity', 0.2)
-        .attr('clip-path', (d, i) => `url(#${clipId(d, i)})`);
+        // Setup an SVG clipPath for the sweeping animation
+        const clipId = `clip-sweep-${i}`;
+        g.append('clipPath')
+            .attr('id', clipId)
+            .append('rect')
+            .attr('width', 0) // Start closed
+            .attr('height', innerHeight)
+            .attr('x', 0)
+            .attr('y', 0);
 
-    // Draw Line (Bold Top Stroke)
-    g.append('path')
-        .attr('d', d => line(d.timeline))
-        .attr('fill', 'none')
-        .attr('stroke', 'var(--text-bright)')
-        .attr('stroke-width', 2)
-        .attr('clip-path', (d, i) => `url(#${clipId(d, i)})`);
+        // Draw Zero-Line Reference
+        g.append('line')
+            .attr('x1', 0)
+            .attr('x2', innerWidth)
+            .attr('y1', y(0))
+            .attr('y2', y(0))
+            .attr('stroke', 'var(--text-muted)')
+            .attr('stroke-width', 1)
+            .attr('stroke-dasharray', '4,4')
+            .attr('opacity', 0.5);
 
-    // 5. Hover Interactions (Crosshair / Point highlighting)
-    g.append('line')
-        .attr('class', 'hover-line')
-        .attr('y1', 0)
-        .attr('y2', innerHeight)
-        .attr('stroke', 'var(--text-secondary)')
-        .attr('stroke-width', 1)
-        .attr('stroke-dasharray', '3,3')
-        .style('opacity', 0)
-        .style('pointer-events', 'none');
+        // Draw Area (Shaded Fill)
+        g.append('path')
+            .attr('d', area(activeData.timeline))
+            .attr('fill', 'var(--text-muted)')
+            .attr('opacity', 0.2)
+            .attr('clip-path', `url(#${clipId})`);
 
-    g.append('circle')
-        .attr('class', 'hover-dot')
-        .attr('r', 4)
-        .attr('fill', 'var(--bg-base)')
-        .attr('stroke', 'var(--text-bright)')
-        .attr('stroke-width', 2)
-        .style('opacity', 0)
-        .style('pointer-events', 'none');
+        // Draw Line (Bold Top Stroke)
+        g.append('path')
+            .attr('d', line(activeData.timeline))
+            .attr('fill', 'none')
+            .attr('stroke', 'var(--text-bright)')
+            .attr('stroke-width', 2)
+            .attr('clip-path', `url(#${clipId})`);
 
-    g.append('text')
-        .attr('class', 'hover-label')
-        .attr('fill', 'var(--text-bright)')
-        .attr('font-size', 12)
-        .attr('font-family', 'var(--font-mono)')
-        .attr('font-weight', 500)
-        .style('opacity', 0)
-        .style('pointer-events', 'none');
+        // 5. Hover Interactions (Crosshair / Point highlighting)
+        g.append('line')
+            .attr('class', 'hover-line')
+            .attr('y1', 0)
+            .attr('y2', innerHeight)
+            .attr('stroke', 'var(--text-secondary)')
+            .attr('stroke-width', 1)
+            .attr('stroke-dasharray', '3,3')
+            .style('opacity', 0)
+            .style('pointer-events', 'none');
 
-    // Invisible overlay for catching mouse events
-    g.append('rect')
-        .attr('class', 'overlay')
-        .attr('width', innerWidth)
-        .attr('height', innerHeight)
-        .attr('fill', 'transparent')
-        .style('cursor', 'pointer')
-        .on('click', function (event, d) {
-            onEntityClick(d.label);
-        })
-        .on('mousemove', function (event, d) {
-            // Find closest date
-            const [mouseX] = d3.pointer(event);
-            const activeDate = x.invert(mouseX);
+        g.append('circle')
+            .attr('class', 'hover-dot')
+            .attr('r', 4)
+            .attr('fill', 'var(--bg-base)')
+            .attr('stroke', 'var(--text-bright)')
+            .attr('stroke-width', 2)
+            .style('opacity', 0)
+            .style('pointer-events', 'none');
 
-            // Snap to closest month in our timeline
-            const bisectDate = d3.bisector(d => d.date).left;
+        g.append('text')
+            .attr('class', 'hover-label')
+            .attr('fill', 'var(--text-bright)')
+            .attr('font-size', 12)
+            .attr('font-family', 'var(--font-mono)')
+            .attr('font-weight', 500)
+            .style('opacity', 0)
+            .style('pointer-events', 'none');
 
-            // Map the parsed Date to the closest 'YYYY-MM' matching object in `timeline`
-            // d in this context is the overlay. We need the actual multiple data to find the nearest point
-            svgs.each(function (parentD) {
-                // The exact same operation handles the hover state globally to sync all SVGs
-                const i = bisectDate(parentD.timeline, activeDate, 1);
-                const d0 = parentD.timeline[i - 1];
-                const d1 = parentD.timeline[i];
-                let activeData = d0;
-                if (d1 && (activeDate - d0.date > d1.date - activeDate)) {
-                    activeData = d1;
-                }
+        // Invisible overlay for catching mouse events
+        g.append('rect')
+            .attr('class', 'overlay')
+            .attr('width', innerWidth)
+            .attr('height', innerHeight)
+            .attr('fill', 'transparent')
+            .style('cursor', 'pointer')
+            .on('click', function (event) {
+                onEntityClick(activeData.label);
+            })
+            .on('mousemove', function (event) {
+                // Find closest date
+                const [mouseX] = d3.pointer(event);
+                const activeDate = x.invert(mouseX);
 
-                const snapDate = activeData.date;
-                const snapStr = activeData.dateStr; // For label YYYY-MM
-                const vol = activeData.volume;
+                // Snap to closest month in our timeline
+                const bisectDate = d3.bisector(d => d.date).left;
 
-                const currentSvgNode = this;
-                const isHoveredSvg = (currentSvgNode === event.currentTarget.parentNode.parentNode);
+                // Fire event globally across all SVG siblings to sync crosshairs
+                svgs.each(function (parentD) {
+                    const siblingG = d3.select(this).select('g');
 
-                // Handle Crosshair
-                d3.select(this).selectAll('line.hover-line')
-                    // Just selecting the existing hover line (which we need to add class 'hover-line' to below!)
-                    .attr('x1', x(snapDate))
-                    .attr('x2', x(snapDate))
-                    .style('opacity', 0.6);
+                    // Recompute sibling's local Y-scale to place dot correctly
+                    let sibYDomainMin = globalMinBalance;
+                    let sibYDomainMax = globalMaxBalance;
+                    if (isIndependent) {
+                        sibYDomainMin = parentD.localMinBalance;
+                        sibYDomainMax = parentD.localMaxBalance;
+                    }
 
-                const runningBal = activeData.balance;
+                    const sibYPad = (sibYDomainMax - sibYDomainMin) * 0.1;
+                    const sibYMin = Math.min(0, sibYDomainMin - sibYPad);
+                    const sibYMax = Math.max(0, sibYDomainMax + sibYPad);
 
-                d3.select(this).selectAll('circle.hover-dot')
-                    .attr('cx', x(snapDate))
-                    .attr('cy', y(runningBal))
-                    .style('opacity', 1);
+                    const sibY = d3.scaleLinear()
+                        .domain([sibYMin, sibYMax])
+                        .range([innerHeight, 0])
+                        .nice();
+                    const i = bisectDate(parentD.timeline, activeDate, 1);
+                    const d0 = parentD.timeline[i - 1];
+                    const d1 = parentD.timeline[i];
+                    let activeData = d0;
+                    if (d1 && (activeDate - d0.date > d1.date - activeDate)) {
+                        activeData = d1;
+                    }
 
-                d3.select(this).selectAll('text.hover-label')
-                    .text(`${snapStr}: ${fmtAmount(runningBal)}`)
-                    .attr('x', x(snapDate))
-                    .attr('y', y(runningBal) - 10)
-                    .attr('text-anchor', snapDate.getFullYear() > maxYear - 2 ? 'end' : 'start')
-                    .style('fill', runningBal < 0 ? '#F44336' : 'var(--text-bright)')
-                    .style('opacity', 1);
+                    const snapDate = activeData.date;
+                    const snapStr = activeData.dateStr; // For label YYYY-MM
+                    const vol = activeData.volume;
 
-                d3.select(this).style('opacity', isHoveredSvg ? 1 : 0.4);
+                    const currentSvgNode = this;
+                    const isHoveredSvg = (currentSvgNode === event.currentTarget.parentNode.parentNode);
+
+                    // Handle Crosshair
+                    d3.select(this).selectAll('line.hover-line')
+                        // Just selecting the existing hover line (which we need to add class 'hover-line' to below!)
+                        .attr('x1', x(snapDate))
+                        .attr('x2', x(snapDate))
+                        .style('opacity', 0.6);
+
+                    const runningBal = activeData.balance;
+
+                    d3.select(this).selectAll('circle.hover-dot')
+                        .attr('cx', x(snapDate))
+                        .attr('cy', y(runningBal))
+                        .style('opacity', 1);
+
+                    d3.select(this).selectAll('text.hover-label')
+                        .text(`${snapStr}: ${fmtAmount(runningBal)}`)
+                        .attr('x', x(snapDate))
+                        .attr('y', y(runningBal) - 10)
+                        .attr('text-anchor', snapDate.getFullYear() > maxYear - 2 ? 'end' : 'start')
+                        .style('fill', runningBal < 0 ? '#F44336' : 'var(--text-bright)')
+                        .style('opacity', 1);
+
+                    d3.select(this).style('opacity', isHoveredSvg ? 1 : 0.4);
+                });
+            })
+            .on('mouseleave', function () {
+                svgs.selectAll('.hover-line').style('opacity', 0);
+                svgs.selectAll('.hover-dot').style('opacity', 0);
+                svgs.selectAll('.hover-label').style('opacity', 0);
+                svgs.style('opacity', 1);
             });
-        })
-        .on('mouseleave', function () {
-            svgs.selectAll('.hover-line').style('opacity', 0);
-            svgs.selectAll('.hover-dot').style('opacity', 0);
-            svgs.selectAll('.hover-label').style('opacity', 0);
-            svgs.style('opacity', 1);
-        });
 
-    // 6. Animation Sequence Setup
-    const playAnimation = () => {
-        g.selectAll('clipPath rect')
-            .transition()
-            .duration(1200)
-            .ease(d3.easeCubicOut)
-            // Stagger multiple appearance slightly
-            .delay((d, i) => i * 100)
-            .attr('width', innerWidth);
-    };
+        // 6. Animation Sequence Setup
+        const playAnimation = () => {
+            g.selectAll('clipPath rect')
+                .transition()
+                .duration(1200)
+                .ease(d3.easeCubicOut)
+                // Stagger multiple appearance slightly
+                .delay((_, i) => i * 100)
+                .attr('width', innerWidth);
+        };
 
-    // 7. Intersection Observer for Scroll Trigger
-    if ('IntersectionObserver' in window) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    playAnimation();
-                    observer.disconnect();
-                }
-            });
-        }, { threshold: 0.15 }); // Trigger when 15% visible
+        // 7. Intersection Observer for Scroll Trigger
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        playAnimation();
+                        observer.disconnect();
+                    }
+                });
+            }, { threshold: 0.15 }); // Trigger when 15% visible
 
-        observer.observe(container);
-    } else {
-        playAnimation();
-    }
+            observer.observe(container);
+        } else {
+            playAnimation();
+        }
+    });
 }
