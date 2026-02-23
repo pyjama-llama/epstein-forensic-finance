@@ -10,7 +10,7 @@ export class FilterPanel {
         this._graph = graph;
         this._bindTierCheckboxes();
         this._bindExhibitPills();
-        this._bindBrushComponents(graph.data);
+        this._bindBrushComponents(graph);
         this._bindBankFilter();
         this._bindClearAll();
     }

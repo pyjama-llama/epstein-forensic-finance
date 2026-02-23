@@ -114,7 +114,7 @@ export class TimelineBrush {
             .call(g => g.selectAll('text')
                 .attr('fill', 'var(--text-muted)')
                 .style('font-family', 'var(--font-mono)')
-                .style('font-size', '10px')
+                .style('font-size', '13px')
             );
 
         // Setup Brush
