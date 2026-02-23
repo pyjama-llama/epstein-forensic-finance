@@ -58,7 +58,7 @@ export function renderArrowDotPlot(selector, nodes) {
         .attr('y', d => y(d.label))
         .attr('dy', '0.32em')
         .attr('text-anchor', 'end')
-        .attr('fill', 'var(--text-primary)')
+        .style('fill', 'var(--text-bright)')
         .attr('font-size', 13)
         .text(d => d.label.length > 28 ? d.label.slice(0, 26) + '…' : d.label);
 
@@ -68,7 +68,7 @@ export function renderArrowDotPlot(selector, nodes) {
         .call(d3.axisBottom(x).ticks(6).tickFormat(d => `$${d / 1e6}M`))
         .call(g => g.select('.domain').remove())
         .call(g => g.selectAll('line').attr('stroke', 'var(--border)'))
-        .call(g => g.selectAll('text').attr('fill', 'var(--text-muted)').attr('font-size', 13));
+        .call(g => g.selectAll('text').style('fill', 'var(--text-secondary)').attr('font-size', 13));
 
     // Legend
     const legend = svg.append('g')
@@ -76,11 +76,11 @@ export function renderArrowDotPlot(selector, nodes) {
 
     // In
     legend.append('circle').attr('cx', 0).attr('cy', 8).attr('r', 5).attr('fill', 'var(--text-primary)');
-    legend.append('text').attr('x', 14).attr('y', 12).text('Total In').attr('fill', 'var(--text-secondary)').attr('font-size', 13);
+    legend.append('text').attr('x', 14).attr('y', 12).text('Total In').style('fill', 'var(--text-primary)').attr('font-size', 13);
 
     // Out
     legend.append('circle').attr('cx', 90).attr('cy', 8).attr('r', 5).attr('fill', 'var(--bg-base)').attr('stroke', 'var(--text-muted)').attr('stroke-width', 1.5);
-    legend.append('text').attr('x', 104).attr('y', 12).text('Total Out').attr('fill', 'var(--text-secondary)').attr('font-size', 13);
+    legend.append('text').attr('x', 104).attr('y', 12).text('Total Out').style('fill', 'var(--text-primary)').attr('font-size', 13);
 
     // Group for the animated elements
     const plotArea = svg.append('g');
