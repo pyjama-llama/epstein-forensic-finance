@@ -92,13 +92,34 @@
 
                     <!-- Chart 4: Entity Small Multiples -->
                     <article class="chart-panel" id="panel-small-multiples">
-                        <h2 class="chart-title">Key entities exhibit explosive spikes rather than sustained accumulation
-                        </h2>
-                        <p class="chart-subtitle">Individual transaction volume timelines for the top 9 network
-                            participants</p>
-                        <!-- We use CSS grid to hold the 9 individual small multiple SVGs -->
-                        <div id="chart-small-multiples" class="chart-container"
-                            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px 24px; min-height: 480px">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
+                            <div class="chart-header" style="flex: 1;">
+                                <h2 class="chart-title">Key entities exhibit explosive spikes rather than sustained
+                                    accumulation</h2>
+                                <p class="chart-subtitle" style="margin-bottom: 0;">Individual transaction volume
+                                    timelines for the top 12 network participants</p>
+                            </div>
+                            <div class="chart-controls"
+                                style="display: flex; gap: 4px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 6px; padding: 2px;">
+                                <button id="btn-group-month"
+                                    style="background: var(--border); color: var(--text-bright); border: none; padding: 6px 12px; border-radius: 4px; font-size: 13px; cursor: pointer; font-weight: 500;">Month</button>
+                                <button id="btn-group-year"
+                                    style="background: transparent; color: var(--text-secondary); border: none; padding: 6px 12px; border-radius: 4px; font-size: 13px; cursor: pointer;">Year</button>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 24px; align-items: flex-start;">
+                            <!-- We use CSS grid to hold the individual small multiple SVGs -->
+                            <div id="chart-small-multiples" class="chart-container" style="flex: 1; min-height: 480px;">
+                            </div>
+
+                            <!-- Side Pane for details -->
+                            <aside id="entity-details-pane"
+                                style="width: 320px; display: none; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 8px; padding: 20px; flex-shrink: 0; position: sticky; top: 24px; max-height: calc(100vh - 48px); overflow-y: auto;">
+                                <div id="entity-details-content">
+                                    <!-- Populated dynamically -->
+                                </div>
+                            </aside>
                         </div>
                     </article>
 

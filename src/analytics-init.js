@@ -10,6 +10,7 @@ import { renderTopEntitiesBar } from './charts/TopEntitiesBar.js';
 import { renderArrowDotPlot } from './charts/ArrowDotPlot.js';
 import { renderFlowByYear } from './charts/FlowByYear.js';
 import { renderEntitySmallMultiples } from './charts/EntitySmallMultiples.js';
+import { renderEntityDetails } from './charts/EntityDetailsPane.js';
 
 async function main() {
     console.log('[Analytics] main() started');
@@ -59,7 +60,50 @@ async function main() {
     safeRender(renderTopEntitiesBar, '#chart-top-entities', nodes);
     safeRender(renderArrowDotPlot, '#chart-arrow-dot', nodes);
     safeRender(renderFlowByYear, '#chart-flow-year', graph);
-    safeRender(renderEntitySmallMultiples, '#chart-small-multiples', graph);
+
+    // ── Chart 4 Orchestration (Toggle + Details Pane) ────────────────────────
+    let smallMultiplesMode = 'month';
+    const btnMonth = document.getElementById('btn-group-month');
+    const btnYear = document.getElementById('btn-group-year');
+    const detailsPane = document.getElementById('entity-details-pane');
+
+    const renderMultiples = () => {
+        safeRender(renderEntitySmallMultiples, '#chart-small-multiples', graph, {
+            mode: smallMultiplesMode,
+            onEntityClick: (entityName) => {
+                detailsPane.style.display = 'block';
+                safeRender(renderEntityDetails, '#entity-details-content', entityName, graph);
+            }
+        });
+    };
+
+    renderMultiples();
+
+    if (btnMonth && btnYear) {
+        btnMonth.addEventListener('click', () => {
+            if (smallMultiplesMode === 'month') return;
+            smallMultiplesMode = 'month';
+            btnMonth.style.background = 'var(--border)';
+            btnMonth.style.color = 'var(--text-bright)';
+            btnMonth.style.fontWeight = '500';
+            btnYear.style.background = 'transparent';
+            btnYear.style.color = 'var(--text-secondary)';
+            btnYear.style.fontWeight = '400';
+            renderMultiples();
+        });
+
+        btnYear.addEventListener('click', () => {
+            if (smallMultiplesMode === 'year') return;
+            smallMultiplesMode = 'year';
+            btnYear.style.background = 'var(--border)';
+            btnYear.style.color = 'var(--text-bright)';
+            btnYear.style.fontWeight = '500';
+            btnMonth.style.background = 'transparent';
+            btnMonth.style.color = 'var(--text-secondary)';
+            btnMonth.style.fontWeight = '400';
+            renderMultiples();
+        });
+    }
 
     console.log('[Analytics] ✅ All charts rendered.');
 }

@@ -3,10 +3,12 @@ import { fmtAmount } from './chartUtils.js';
 
 /**
  * Chart 4: Entity Small Multiples (Shaded Area Charts)
- * Shows the individual volume timelines for the top 9 entities, revealing
- * how they build up and disperse funds without visual overlapping.
+ * Shows the individual volume timelines for the top network entities.
  */
-export function renderEntitySmallMultiples(selector, data) {
+export function renderEntitySmallMultiples(selector, data, options = {}) {
+    const mode = options.mode || 'month';
+    const onEntityClick = options.onEntityClick || (() => { });
+
     const container = document.querySelector(selector);
     if (!container) return;
 
@@ -59,33 +61,71 @@ export function renderEntitySmallMultiples(selector, data) {
         .sort((a, b) => b.totalVolume - a.totalVolume)
         .slice(0, 12);
 
-    // Ensure our global scale covers 2008 (NPA event) if possible, but match FlowByYear bounds
-    minYear = Math.min(minYear, 2008);
+    // Find precise bounds strictly based on top 12 entities' actual transactions
+    // This removes the massive 2008 empty-space gap by snapping to the exact network activity.
+    let minDate = new Date('2030-01-01');
+    let maxDate = new Date('1990-01-01');
 
-    // Define the full continuous monthly timeline array for padding
+    topEntities.forEach(entity => {
+        for (const monthStr of entity.months.keys()) {
+            const [y, m] = monthStr.split('-');
+            const d = new Date(parseInt(y), parseInt(m) - 1, 1);
+            if (d < minDate) minDate = d;
+            if (d > maxDate) maxDate = d;
+        }
+    });
+
+    const startYear = minDate.getFullYear();
+    const endYear = maxDate.getFullYear();
+
+    // Define the full continuous timeline array for padding
     const timelineDomain = [];
-    for (let y = minYear; y <= maxYear; y++) {
-        for (let m = 1; m <= 12; m++) {
+    if (mode === 'month') {
+        let current = new Date(startYear, minDate.getMonth(), 1);
+        const end = new Date(endYear, maxDate.getMonth(), 1);
+        while (current <= end) {
+            const y = current.getFullYear();
+            const m = current.getMonth() + 1;
             const mm = m < 10 ? `0${m}` : `${m}`;
             timelineDomain.push(`${y}-${mm}`);
+            current.setMonth(current.getMonth() + 1);
+        }
+    } else {
+        // year mode
+        for (let y = startYear; y <= endYear; y++) {
+            timelineDomain.push(y.toString()); // 'YYYY'
         }
     }
 
-    // Format data for D3: pad missing months with 0
+    // Format data for D3: pad missing periods with 0
     let globalMaxVolume = 0;
 
-    const parseDate = d3.timeParse('%Y-%m');
+    const parseDateMonth = d3.timeParse('%Y-%m');
+    const parseDateYear = d3.timeParse('%Y');
 
     const multiplesData = topEntities.map(entity => {
-        const paddedMonths = timelineDomain.map(monthStr => {
-            const vol = entity.months.get(monthStr) || 0;
+        const paddedTimeline = timelineDomain.map(timeStr => {
+            let vol = 0;
+            if (mode === 'month') {
+                vol = entity.months.get(timeStr) || 0;
+            } else {
+                // In year mode, timeStr is 'YYYY'. We sum all 12 months in that year.
+                for (let m = 1; m <= 12; m++) {
+                    const mm = m < 10 ? `0${m}` : `${m}`;
+                    vol += entity.months.get(`${timeStr}-${mm}`) || 0;
+                }
+            }
             globalMaxVolume = Math.max(globalMaxVolume, vol);
-            return { dateStr: monthStr, date: parseDate(monthStr), volume: vol };
+            return {
+                dateStr: timeStr,
+                date: mode === 'month' ? parseDateMonth(timeStr) : parseDateYear(timeStr),
+                volume: vol
+            };
         });
         return {
             label: entity.label,
             totalVolume: entity.totalVolume,
-            timeline: paddedMonths
+            timeline: paddedTimeline
         };
     });
 
@@ -119,8 +159,16 @@ export function renderEntitySmallMultiples(selector, data) {
     const width = firstNode ? firstNode.clientWidth : 300;
     const innerWidth = Math.max(width - margin.left - margin.right, 100);
 
+    const xDomainStart = mode === 'month'
+        ? new Date(startYear, minDate.getMonth(), 1)
+        : new Date(startYear, 0, 1);
+
+    const xDomainEnd = mode === 'month'
+        ? new Date(endYear, maxDate.getMonth(), 1)
+        : new Date(endYear, 0, 1);
+
     const x = d3.scaleTime()
-        .domain([new Date(minYear, 0, 1), new Date(maxYear, 11, 31)])
+        .domain([xDomainStart, xDomainEnd])
         .range([0, innerWidth]);
 
     const y = d3.scaleLinear()
@@ -131,16 +179,18 @@ export function renderEntitySmallMultiples(selector, data) {
         .nice();
 
     // Generators
+    const activeCurve = mode === 'month' ? d3.curveStep : d3.curveMonotoneX;
+
     const area = d3.area()
         .x(d => x(d.date))
         .y0(innerHeight)
         .y1(d => y(d.volume))
-        .curve(d3.curveStep); // Use Step for monthly financial data to indicate harsh discrete transfers
+        .curve(activeCurve);
 
     const line = d3.line()
         .x(d => x(d.date))
         .y(d => y(d.volume))
-        .curve(d3.curveStep);
+        .curve(activeCurve);
 
     // 4. Draw Individual Charts
     const svgs = multiplesContainers.append('svg')
@@ -171,10 +221,10 @@ export function renderEntitySmallMultiples(selector, data) {
         .text(d => `Total: ${fmtAmount(d.totalVolume)}`);
 
     // Draw Axes
-    // X-axis (only show min and max year to keep it clean, but use scaleTime)
+    // X-axis (only show min and max bounds to keep it clean, but use scaleTime)
     g.append('g')
         .attr('transform', `translate(0,${innerHeight})`)
-        .call(d3.axisBottom(x).tickValues([new Date(minYear, 0, 1), new Date(maxYear, 0, 1)]).tickFormat(d3.timeFormat('%Y')))
+        .call(d3.axisBottom(x).tickValues([xDomainStart, xDomainEnd]).tickFormat(d3.timeFormat('%Y')))
         .call(axis => axis.select('.domain').attr('stroke', 'var(--border)'))
         .call(axis => axis.selectAll('line').remove()) // remove ticks
         .call(axis => axis.selectAll('text').style('fill', 'var(--text-secondary)').attr('font-size', 11));
@@ -254,6 +304,10 @@ export function renderEntitySmallMultiples(selector, data) {
         .attr('width', innerWidth)
         .attr('height', innerHeight)
         .attr('fill', 'transparent')
+        .style('cursor', 'pointer')
+        .on('click', function (event, d) {
+            onEntityClick(d.label);
+        })
         .on('mousemove', function (event, d) {
             // Find closest date
             const [mouseX] = d3.pointer(event);
