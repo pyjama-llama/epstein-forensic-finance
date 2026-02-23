@@ -80,8 +80,12 @@ export function renderEntitySmallMultiples(selector, data, options = {}) {
     let globalMinBalance = Infinity;
 
     const multiplesData = topEntities.map(entity => {
-        // Sort chronologically
-        entity.transactions.sort((a, b) => a.date - b.date);
+        // Sort chronologically. If identical date, put positive amounts (inflows) first to ensure the peak renders before the drop.
+        entity.transactions.sort((a, b) => {
+            const dateDiff = a.date - b.date;
+            if (dateDiff !== 0) return dateDiff;
+            return b.amount - a.amount;
+        });
 
         let runningBalance = 0;
         let localMaxBalance = -Infinity;
@@ -90,10 +94,20 @@ export function renderEntitySmallMultiples(selector, data, options = {}) {
         const timeline = [];
 
         // Prepend starting point so graph extends to left bound
-        timeline.push({ date: globalDomainMinDate, balance: 0, volume: 0 });
+        timeline.push({ date: globalDomainMinDate, originalDate: globalDomainMinDate, balance: 0, volume: 0 });
+
+        let lastPlotDate = new Date(globalDomainMinDate);
 
         entity.transactions.forEach(tx => {
             runningBalance += tx.amount;
+
+            // Enforce minimum visual width (14 days) from the last plotted point so same-day spikes are visible
+            let plotDate = new Date(tx.date);
+            const minDaysDelay = 14 * 86400000;
+            if (plotDate.getTime() <= lastPlotDate.getTime() + minDaysDelay) {
+                plotDate = new Date(lastPlotDate.getTime() + minDaysDelay);
+            }
+            lastPlotDate = plotDate;
 
             globalMaxBalance = Math.max(globalMaxBalance, runningBalance);
             globalMinBalance = Math.min(globalMinBalance, runningBalance);
@@ -101,14 +115,16 @@ export function renderEntitySmallMultiples(selector, data, options = {}) {
             localMinBalance = Math.min(localMinBalance, runningBalance);
 
             timeline.push({
-                date: tx.date,
+                date: plotDate,
+                originalDate: tx.date,
                 balance: runningBalance,
                 volume: tx.amount
             });
         });
 
         // Append ending point so graph extends to right bound
-        timeline.push({ date: globalDomainMaxDate, balance: runningBalance, volume: 0 });
+        const finalPlotDate = new Date(Math.max(globalDomainMaxDate.getTime(), lastPlotDate.getTime()));
+        timeline.push({ date: finalPlotDate, originalDate: globalDomainMaxDate, balance: runningBalance, volume: 0 });
 
         if (localMinBalance === Infinity) localMinBalance = 0;
         if (localMaxBalance === -Infinity) localMaxBalance = 0;
