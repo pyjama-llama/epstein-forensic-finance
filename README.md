@@ -261,30 +261,45 @@ Only one gap ($5-15M excluded tiers) has a credible dollar estimate. The others 
 
 ## Data Narratives
 
-The financial data tells stories that numbers alone cannot convey. As I complete deeper analysis of specific fund flow patterns, entity relationships, and temporal correlations, I will publish detailed narrative reports in this section — connecting the quantitative forensic findings to the broader picture of how this financial infrastructure operated.
+### 🔺 Original Finding: One-Way Money
+
+> **The banks documented every dollar going in and almost none of it coming out.**
+>
+> I ran a balance sheet on the nine shell entities at the center of this network — across eight banking institutions, 382 wires, $558 million. **$272 million entered from the outside. $63 million is visible leaving. The other $209 million has no documented exit in any production from any institution.**
+>
+> This is the first complete multi-institution balance sheet ever published on the Epstein shell network. Nobody else has run one.
+>
+> **→ [Read Narrative 17: One-Way Money](narratives/17_the_architecture.md)** · [Interactive Visualization](https://randallscott25-star.github.io/epstein-forensic-finance/visualizations/17_one_way_money.html)
+
+---
+
+### All 17 Published Narratives
 
 **→ [Read all Data Narratives](narratives/)**
 
 | # | Title | Key Finding | Data Scope |
 |---|-------|-------------|------------|
+| **17** | **[One-Way Money](narratives/17_the_architecture.md)** | **$272M in. $63M out. $209M gap. First complete balance sheet.** | **382 wires · 158 entities · $558M** |
 | 1 | [The Jeepers Pipeline](narratives/01_jeepers_pipeline.md) | $57.9M brokerage shell → personal checking, all dated, all on Exhibit C | 24 wires · $57,876,640 |
 | 2 | [Art Market as Liquidity Channel](narratives/02_art_market.md) | Sotheby's + Christie's proceeds entered the shell network through Haze Trust | 20 wires · $103,786,473 |
 | 3 | [The Plan D Question](narratives/03_plan_d_question.md) | $18M out to Leon Black, near-zero inflow — where did Plan D get its money? | 34 wires · $163,097,604 |
 | 4 | [Chain-Hop Anatomy](narratives/04_chain_hop_anatomy.md) | 4-tier shell network mapped — and $311M in double-counting removed | 67 wires · $312,796,381 |
 | 5 | [Deutsche Bank's Role](narratives/05_deutsche_bank.md) | 38 wires across every major Epstein entity, 75% of volume in last 6 months | 38 wires · $56,792,936 |
 | 6 | [Gratitude America](narratives/06_gratitude_america.md) | 88% of outflows to investment accounts, 7% to charitable purposes | 20 wires · $13,080,518 |
-| 12 | [The Bank Nobody Prosecuted](narratives/12_the_bank_nobody_prosecuted.md) | Bear Stearns had 2.4M money mentions (5.7× Deutsche Bank) but faced zero fines, zero settlements, zero investigation | 2.4M money refs · 66 shared files |
-| 13 | [Seven Banks, One Trust](narratives/13_seven_banks_one_trust.md) | Outgoing Money Trust disbursed through Deutsche Bank, Wells Fargo, BofA, TD, JPMorgan, PNC, Sabadell — textbook structuring pattern | 180 financial docs · 7 banks |
-| 14 | [Where Leon Black's Money Went](narratives/14_where_leon_blacks_money_went.md) | 1,600 files, every shell, "Black Family Partners LP c/o Apollo Management" on Southern Trust records — the round trip | 1,600 files · $60.5M · 7 shells |
-| 15 | [Gratitude America: The Charity That Invested](narratives/15_gratitude_america.md) | Tax-exempt charity routing $2–20M to Boothbay, Honeycomb, Valar, Coatue. Karyna Shuliak on 8 files. 990s are public | 89 financial · $45M wires |
-| 16 | [The Accountant](narratives/16_the_accountant.md) | Richard Kahn / HBRK Associates: 18,833 emails, 11,153 files, touches every shell. Modest fees, $1.964B coordinated | 18,833 emails · 11,153 files |
 | 7 | [Follow the Money, Follow the Plane](narratives/07_follow_the_money_follow_the_plane.md) | Wire-flight temporal correlation at 4.3× random chance; $169M near St. Thomas flights | 185 wires · 321 flights · $575M |
 | 8 | [The Infrastructure of Access](narratives/08_infrastructure_of_access.md) | The people who moved the money are the same people victims named — Maxwell in 204 financial docs and 1,312 victim docs | 11.4M entities · 1.48M files |
-| 9 | [734,122 Names](narratives/09_734122_names.md) | Asked every person in 1.48M files who bridges financial and victim docs. 57 real names. 10 operational staff. No one hiding who hasn't been found | 734,122 persons · 57 bridgers |
-| 10 | [The Round Number Problem](narratives/10_the_round_number_problem.md) | Benford's Law fails: digits 2 and 5 at 29.7% and 18.4%. 84.3% of wires are exact round numbers. One decision-maker, not a market | 185 wires · $557M |
-| 11 | [The Shell Map](narratives/11_the_shell_map.md) | Wire ledger captured 7 entities. The corpus contains 14 — with 178K money references. Four shells never appeared in a wire transfer | 14 shells · 178K money refs |
+| 9 | [734,122 Names](narratives/09_734122_names.md) | Asked every person in 1.48M files who bridges financial and victim docs. 57 real names. 10 operational staff | 734,122 persons · 57 bridgers |
+| 10 | [The Round Number Problem](narratives/10_the_round_number_problem.md) | Benford's Law fails: digits 2 and 5 at 29.7% and 18.4%. 84.3% of wires are exact round numbers | 185 wires · $557M |
+| 11 | [The Shell Map](narratives/11_the_shell_map.md) | Wire ledger captured 7 entities. The corpus contains 14 — with 178K money references | 14 shells · 178K money refs |
+| 12 | [The Bank Nobody Prosecuted](narratives/12_the_bank_nobody_prosecuted.md) | Bear Stearns had 2.4M money mentions (5.7× Deutsche Bank) — zero fines, zero investigation | 2.4M money refs · 66 shared files |
+| 13 | [Seven Banks, One Trust](narratives/13_seven_banks_one_trust.md) | Outgoing Money Trust disbursed through DB, Wells Fargo, BofA, TD, JPMorgan, PNC, Sabadell | 180 financial docs · 7 banks |
+| 14 | [Where Leon Black's Money Went](narratives/14_where_leon_blacks_money_went.md) | 1,600 files, every shell, "Black Family Partners LP c/o Apollo Management" — the round trip | 1,600 files · $60.5M · 7 shells |
+| 15 | [Gratitude America: The Charity That Invested](narratives/15_gratitude_america.md) | Tax-exempt charity routing $2–20M to Boothbay, Honeycomb, Valar, Coatue | 89 financial · $45M wires |
+| 16 | [The Accountant](narratives/16_the_accountant.md) | Richard Kahn / HBRK Associates: 18,833 emails, 11,153 files, touches every shell | 18,833 emails · 11,153 files |
 
-*These narratives will be data-driven — every claim anchored to specific wire transfers, entity classifications, and court exhibit references from the master ledger.*
+Source workbook: **[Forensic Workbook](https://docs.google.com/spreadsheets/d/11lw0QjMZ-rYIjWesv5VG1YKts57ahPEm/edit?usp=sharing&ouid=103970896670138914877&rtpof=true&sd=true)** · [Interactive Shell Network](https://randallscott25-star.github.io/epstein-forensic-finance/visualizations/shell_network.html)
+
+*Every claim anchored to specific wire transfers, entity classifications, and court exhibit references from the master ledger.*
 
 ---
 
