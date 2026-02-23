@@ -2,14 +2,15 @@
 // Wires all filter UI controls to the shared store
 
 import { store, computeVisibleGraph } from '../state/store.js';
+import { TimelineBrush } from './TimelineBrush.js';
+import { AmountBrush } from './AmountBrush.js';
 
 export class FilterPanel {
     constructor(graph) {
         this._graph = graph;
         this._bindTierCheckboxes();
         this._bindExhibitPills();
-        this._bindAmountSlider();
-        this._bindDateInputs();
+        this._bindBrushComponents(graph.data);
         this._bindBankFilter();
         this._bindClearAll();
     }
@@ -45,12 +46,11 @@ export class FilterPanel {
         });
     }
 
-    _bindAmountSlider() {
-        const minSlider = document.getElementById('amount-min');
-        const maxSlider = document.getElementById('amount-max');
+    _bindBrushComponents(data) {
+        // --- Amount Brush ---
+        const amountDisplay = document.getElementById('amount-display');
         const labelMin = document.getElementById('amount-label-min');
         const labelMax = document.getElementById('amount-label-max');
-        const display = document.getElementById('amount-display');
 
         const { meta } = this._graph;
         const logMin = Math.log10(Math.max(meta.minEdgeAmount, 1));
@@ -59,38 +59,28 @@ export class FilterPanel {
         const toAmt = pct => Math.pow(10, logMin + (pct / 100) * (logMax - logMin));
         const fmtAmt = n => n >= 1e6 ? `$${(n / 1e6).toFixed(1)}M` : n >= 1000 ? `$${(n / 1000).toFixed(0)}K` : `$${n.toFixed(0)}`;
 
-        const update = () => {
-            let minV = parseInt(minSlider.value);
-            let maxV = parseInt(maxSlider.value);
-            if (minV > maxV) { minSlider.value = maxV; minV = maxV; }
+        this.amountBrush = new AmountBrush('amount-brush-container', data, (minPct, maxPct) => {
+            if (minPct === 0 && maxPct === 100) {
+                amountDisplay.textContent = 'All';
+                labelMin.textContent = '$0';
+                labelMax.textContent = '$23M+';
+            } else {
+                amountDisplay.textContent = `${fmtAmt(toAmt(minPct))} – ${fmtAmt(toAmt(maxPct))}`;
+                labelMin.textContent = fmtAmt(toAmt(minPct));
+                labelMax.textContent = fmtAmt(toAmt(maxPct));
+            }
 
-            labelMin.textContent = fmtAmt(toAmt(minV));
-            labelMax.textContent = maxV === 100 ? `$${fmtAmt(toAmt(100))}+` : fmtAmt(toAmt(maxV));
-            display.textContent = minV === 0 && maxV === 100 ? 'All' : `${fmtAmt(toAmt(minV))} – ${fmtAmt(toAmt(maxV))}`;
-
-            store.set({ amountMin: minV, amountMax: maxV });
+            store.set({ amountMin: minPct, amountMax: maxPct });
             this._dispatch();
-        };
+        });
 
-        minSlider.addEventListener('input', update);
-        maxSlider.addEventListener('input', update);
-    }
-
-    _bindDateInputs() {
-        const fromInput = document.getElementById('date-from');
-        const toInput = document.getElementById('date-to');
-        const display = document.getElementById('date-display');
-
-        const update = () => {
-            const from = fromInput.value.trim() || null;
-            const to = toInput.value.trim() || null;
-            display.textContent = from || to ? `${from || '?'} – ${to || '?'}` : 'All';
+        // --- Timeline Brush ---
+        const dateDisplay = document.getElementById('date-display');
+        this.timelineBrush = new TimelineBrush('date-brush-container', data, (from, to) => {
+            dateDisplay.textContent = from || to ? `${from || '?'} – ${to || '?'}` : 'All';
             store.set({ dateFrom: from, dateTo: to });
             this._dispatch();
-        };
-
-        fromInput.addEventListener('input', update);
-        toInput.addEventListener('input', update);
+        });
     }
 
     _bindBankFilter() {
@@ -110,15 +100,13 @@ export class FilterPanel {
             document.querySelectorAll('.filter-check input[type="checkbox"]').forEach(cb => cb.checked = true);
             // Reset exhibit pills
             document.querySelectorAll('#exhibit-pills .pill').forEach(p => p.classList.add('active'));
-            // Reset sliders
-            document.getElementById('amount-min').value = 0;
-            document.getElementById('amount-max').value = 100;
+            // Reset brushes
+            if (this.amountBrush) this.amountBrush.reset();
+            if (this.timelineBrush) this.timelineBrush.reset();
+
             document.getElementById('amount-label-min').textContent = '$0';
             document.getElementById('amount-label-max').textContent = '$23M+';
             document.getElementById('amount-display').textContent = 'All';
-            // Reset date
-            document.getElementById('date-from').value = '';
-            document.getElementById('date-to').value = '';
             document.getElementById('date-display').textContent = 'All';
             // Reset bank
             document.querySelectorAll('[data-bank]').forEach(b => b.classList.remove('active'));
