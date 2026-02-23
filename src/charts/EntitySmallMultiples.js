@@ -308,6 +308,30 @@ export function renderEntitySmallMultiples(selector, data, options = {}) {
             .attr('x', 0)
             .attr('y', 0);
 
+        // Calculate the exact pixel horizontal line representing $0
+        const y0Clip = Math.max(0, Math.min(innerHeight, y(0)));
+
+        // Clip Above (Positive)
+        const clipAboveId = `clip-above-${i}`;
+        g.append('clipPath')
+            .attr('id', clipAboveId)
+            .append('rect')
+            .attr('width', innerWidth)
+            .attr('height', y0Clip)
+            .attr('x', 0)
+            .attr('y', 0);
+
+        // Clip Below (Negative)
+        const clipBelowId = `clip-below-${i}`;
+        g.append('clipPath')
+            .attr('id', clipBelowId)
+            .append('rect')
+            .attr('width', innerWidth)
+            // The height of the below-box is everything from y0Clip to the bottom
+            .attr('height', innerHeight - y0Clip)
+            .attr('x', 0)
+            .attr('y', y0Clip);
+
         // Draw Zero-Line Reference
         g.append('line')
             .attr('x1', 0)
@@ -319,20 +343,36 @@ export function renderEntitySmallMultiples(selector, data, options = {}) {
             .attr('stroke-dasharray', '4,4')
             .attr('opacity', 0.5);
 
-        // Draw Area (Shaded Fill)
-        g.append('path')
+        // Wrap both regions in the sweeping animation clip
+        const gSweep = g.append('g').attr('clip-path', `url(#${clipId})`);
+
+        // Region: Above Zero (Positive)
+        const gAbove = gSweep.append('g').attr('clip-path', `url(#${clipAboveId})`);
+
+        gAbove.append('path') // Area
             .attr('d', area(activeData.timeline))
             .attr('fill', 'var(--text-muted)')
-            .attr('opacity', 0.2)
-            .attr('clip-path', `url(#${clipId})`);
+            .attr('opacity', 0.2);
 
-        // Draw Line (Bold Top Stroke)
-        g.append('path')
+        gAbove.append('path') // Line
             .attr('d', line(activeData.timeline))
             .attr('fill', 'none')
             .attr('stroke', 'var(--text-bright)')
-            .attr('stroke-width', 2)
-            .attr('clip-path', `url(#${clipId})`);
+            .attr('stroke-width', 2);
+
+        // Region: Below Zero (Negative)
+        const gBelow = gSweep.append('g').attr('clip-path', `url(#${clipBelowId})`);
+
+        gBelow.append('path') // Area
+            .attr('d', area(activeData.timeline))
+            .attr('fill', '#f44336') // Material Red
+            .attr('opacity', 0.2);
+
+        gBelow.append('path') // Line
+            .attr('d', line(activeData.timeline))
+            .attr('fill', 'none')
+            .attr('stroke', '#f44336')
+            .attr('stroke-width', 2);
 
         // 5. Hover Interactions (Crosshair / Point highlighting)
         g.append('line')
