@@ -117,14 +117,17 @@ export function renderArrowDotPlot(selector, nodes) {
         .attr('fill', 'var(--bg-elevated)')
         .attr('opacity', 0);
 
+    // Must allow overflow so dots are visible outside the SVG bounds when falling
+    svg.style('overflow', 'visible');
+
     // --- Animation Setup ---
     // Calculate the distance from the top of the SVG to the top of the viewport
     const containerTopOffset = -container.getBoundingClientRect().top;
 
-    // 1. Set initial state synchronously (hidden and at the absolute top of the document)
+    // 1. Set initial state synchronously (hidden, at the absolute top of the document, and aligned to the left margin)
     const lines = rows.append('line')
-        .attr('x1', d => x(d.totalOut))
-        .attr('x2', d => x(d.totalIn))
+        .attr('x1', margin.left)
+        .attr('x2', margin.left)
         .attr('y1', containerTopOffset)
         .attr('y2', containerTopOffset)
         .attr('stroke', 'var(--border-light)')
@@ -132,7 +135,7 @@ export function renderArrowDotPlot(selector, nodes) {
         .attr('opacity', 0);
 
     const outDots = rows.append('circle')
-        .attr('cx', d => x(d.totalOut))
+        .attr('cx', margin.left)
         .attr('cy', containerTopOffset)
         .attr('r', 5)
         .attr('fill', 'var(--bg-base)')
@@ -141,31 +144,45 @@ export function renderArrowDotPlot(selector, nodes) {
         .attr('opacity', 0);
 
     const inDots = rows.append('circle')
-        .attr('cx', d => x(d.totalIn))
+        .attr('cx', margin.left)
         .attr('cy', containerTopOffset)
         .attr('r', 5)
         .attr('fill', 'var(--text-primary)')
         .attr('opacity', 0);
 
-    // 2. Define the animation function
+    // 2. Define the two-phase animation function
     const playAnimation = () => {
-        const t = svg.transition().duration(900).ease(d3.easeCubicOut);
+        // Phase 1: Fall and bounce to the row
+        const tDrop = svg.transition().duration(1000).ease(d3.easeBounceOut);
 
-        lines.transition(t)
-            .delay((d, i) => i * 40)
+        const linesDrop = lines.transition(tDrop)
+            .delay((d, i) => i * 60)
             .attr('y1', d => y(d.label))
             .attr('y2', d => y(d.label))
             .attr('opacity', 1);
 
-        outDots.transition(t)
-            .delay((d, i) => i * 40)
+        const outDotsDrop = outDots.transition(tDrop)
+            .delay((d, i) => i * 60)
             .attr('cy', d => y(d.label))
             .attr('opacity', 1);
 
-        inDots.transition(t)
-            .delay((d, i) => i * 40)
+        const inDotsDrop = inDots.transition(tDrop)
+            .delay((d, i) => i * 60)
             .attr('cy', d => y(d.label))
             .attr('opacity', 1);
+
+        // Phase 2: Spread horizontally to their final values
+        const tSpread = svg.transition().duration(800).ease(d3.easeCubicInOut);
+
+        linesDrop.transition(tSpread)
+            .attr('x1', d => x(d.totalOut))
+            .attr('x2', d => x(d.totalIn));
+
+        outDotsDrop.transition(tSpread)
+            .attr('cx', d => x(d.totalOut));
+
+        inDotsDrop.transition(tSpread)
+            .attr('cx', d => x(d.totalIn));
     };
 
     // 3. Trigger via IntersectionObserver
