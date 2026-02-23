@@ -2,48 +2,41 @@
 
 This document explains the recent changes to how transaction dates are sorted and rendered in the small multiples chart (Chart 4), addressing questions about chronology, missing spikes, and sorting bugs.
 
-## 1. Why Dates Were Not in Chronological Order
+## 1. Why Dates Appear "Out of Order" in the Ledger/CSV
 
-In the Details Pane ledger on the right side of the screen, you noticed that transactions (like a $5M incoming wire on 2018-08-20) were severely out of chronological order. 
+You noticed that in the Details Pane ledger (and the CSV), a `$5M` Outflow on `2018-08-20` is listed *above* the `$5M` Inflow on `2018-08-20`. "How can it go out before it comes in?"
 
-**The Cause:**
-The underlying `graph.json` data contains a few transactions where the exact date is unknown or recorded as `null` in the database. When the JavaScript code attempted to sort the ledger chronologically, it hit these `null` dates and produced a `NaN` (Not A Number) error. In JavaScript, sorting an array with `NaN` mathematically breaks the entire sorting algorithm, resulting in a seemingly randomized order for the rest of the valid dates.
+**The Answer:** 
+The CSV and the Details Pane are currently sorted in **Descending Order** (Newest transactions at the top, Oldest at the bottom). 
+On August 20, The Haze Trust received $5M in the morning (Event 1), and wired $5M out in the afternoon (Event 2). Because Event 2 is the *newer* transaction, it naturally sits *higher* on a descending list. 
 
-**The Fix:**
-The code has been updated to explicitly catch invalid or `null` dates during the chronological sort. Now, all valid dates are perfectly sorted in descending chronological order, and any "Unknown Date" transactions are safely appended to the very bottom of the ledger.
+**Recommendation:** 
+While most financial databases export ledgers descending, this can be confusing for narrative analysis. I highly recommend **flipping the Details Pane and CSV export to Ascending Order** (Oldest at the top). This way, the story reads chronologically from top to bottom, and same-day Inflows will correctly appear above Outflows.
 
-## 2. Visualizing "The Haze Trust" (Same-Day Spikes)
+## 2. Visually Fixing "The Haze Trust" Spikes & Broken Crosshairs
 
-Previously, you asked why the $31M inflow for "The Haze Trust" was not visible on its chart. My initial attempt to fix this involved "changing the chronological order and visually staggering dates."
+When we plot transactions faithfully on a rigid chronological timeline, we encounter a visualization geometry problem with **same-day wash trades**.
 
-Here is why that happened and what we are doing instead:
+If $31M enters The Haze Trust and $31M leaves The Haze Trust on the **exact same day**, the math algorithm draws a line straight up, and then straight back down on the **exact same horizontal pixel**. 
+A polygon chart with a width of 0 pixels is physically invisible, and the peak disappears.
 
-**The Challenge of Overlapping X-Coordinates:**
-In data visualization, an Area Chart is drawn from left to right across time (the X-axis).
-If The Haze Trust receives a massive inflow of $10M on `2018-08-20` in the morning, and then sends exactly $10M out on `2018-08-20` in the afternoon, both events have the exact same timestamp. 
-When D3 (our charting engine) connects those two points, it draws a straight vertical line straight up, and then straight back down on the exact same pixel. A polygon with a width of 0 pixels is invisible on the screen. The $31M peak existed mathematically, but it was visually crushed into a zero-width vertical sliver.
+Furthermore, when you try to hover your mouse over that pixel, the tooltip engine has to guess whether you are looking at the $31M peak (morning) or the $0 trough (afternoon) because they share the same pixel line. It defaults to the latter ($0), which makes the crosshairs feel "partially functioning" or missing.
 
-**My Previous (Flawed) Attempt:**
-To make the spike visible, I wrote a script that forcefully added 14 days of "fake" time between same-day transactions so the peak would have physical width on the screen. As you correctly pointed out, this is bad practice because users expect raw chronological data to be displayed without artificial distortion.
+**To solve this, we have three architectural paths for the visualization:**
 
-**The New (Correct) Fix:**
-1. **Removed Artificial Staggering:** All dates are now plotted exactly on the timestamp they actually occurred.
-2. **Intra-Day Sorting Hierarchy:** If two transactions happen on the exact same date, the system now prioritizes **inflows first**, then outflows. This guarantees the mathematical path always climbs to its true maximum peak *before* dropping back down.
-3. **Interpolation:** By ensuring inflows are calculated first on overlapping dates, D3 can now correctly render the spike as a vertical cliff face on that exact date, rather than skipping over it.
+### Option A (Data Integrity): The "Y-Axis Snap"
+We keep true chronological time in the data exactly as it is. We fix the crosshair by upgrading its logic: when you hover over a 0-width spike, it calculates whether your mouse is closer to the top of the spike or the bottom, and snaps to the correct balancing act.
+* **Pro:** 100% data integrity. Zero time falsification.
+* **Con:** The spikes remain 1-pixel-thin "needles" on the chart because they enter and exit instantly.
 
-## 3. Partially Functioning Crosshairs
+### Option B (Visual Clarity): The "24-Hour Clearing Offset"
+We introduce a microscopic rule to the visual engine: "All outgoing transfers visually take 24 hours to clear." 
+* **Pro:** This gives the same-day wash trades a physical 1-day width on the exact time-axis, creating thick, highly visible "plateaus". The crosshairs will work flawlessly because the Peak and the Drop no longer share the same vertical column.
+* **Con:** We technically bend the visual timeline by 1 day.
 
-You reported that the interactive crosshairs/tooltips were clipping or partially broken. 
+### Option C: Ordinal Sequence Chart
+Instead of Time (Years) on the bottom, the X-axis becomes an "Event Sequence" (`1st tx, 2nd tx, 3rd tx`). 
+* **Pro:** Every single transaction gets an equally massive, highly visible horizontal block to hover over, regardless of the date.
+* **Con:** We lose the visual representation of "time gaps". A 3-year dormant gap looks exactly the same as a 1-day gap.
 
-**The Cause:**
-To prevent the crosshairs from bleeding all the way up into Chart 3, I constrained the hover interaction inside an SVG `<clipPath>` box. However, the box was cut too tight—it stopped exactly at `$0` (the top of the chart limits). If you hovered over a massive peak (like The Haze Trust) that reached the very top of the box, the tooltip text (which is drawn slightly *above* the cursor) was being sliced off by the invisible ceiling.
-
-**The Fix:**
-I have extended the ceiling of the `<clipPath>` by 40 pixels vertically. It still prevents the dashed line from bleeding into the entirely different charts above it, but it now affords enough headroom for the text tooltip to render safely.
-
-## 4. Downloading the Data
-
-You asked if you could download the raw transaction ledger to analyze it yourself. 
-
-**The Feature:**
-I have added a **"Download CSV"** button to the top-right of the Entity Details Pane. When you click on any entity (e.g., The Haze Trust), simply click this button and your browser will instantly generate and download a clean CSV file containing that specific entity's total sorted chronological ledger (Date, Type, Amount, Counterparty, and Purpose).
+**My Recommendation:** I suggest we implement **Option A** for the small multiples to preserve exact data integrity, and immediately switch the Details Pane/CSV to **Ascending Order** so the chronological flow is readable.
