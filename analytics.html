@@ -90,6 +90,18 @@
                         <div id="chart-flow-year" class="chart-container chart-tall"></div>
                     </article>
 
+                    <!-- Chart 4: Entity Small Multiples -->
+                    <article class="chart-panel" id="panel-small-multiples">
+                        <h2 class="chart-title">Key entities exhibit explosive spikes rather than sustained accumulation
+                        </h2>
+                        <p class="chart-subtitle">Individual transaction volume timelines for the top 9 network
+                            participants</p>
+                        <!-- We use CSS grid to hold the 9 individual small multiple SVGs -->
+                        <div id="chart-small-multiples" class="chart-container"
+                            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px 24px; min-height: 480px">
+                        </div>
+                    </article>
+
                 </section>
 
             </main>
