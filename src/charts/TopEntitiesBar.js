@@ -81,7 +81,7 @@ export function renderTopEntitiesBar(selector, nodes) {
         .attr('y', d => y(d.label) + y.bandwidth() / 2)
         .attr('dy', '0.35em')
         .attr('text-anchor', 'end')
-        .attr('fill', 'var(--text-primary)')
+        .style('fill', 'var(--text-secondary)')
         .attr('font-size', 13)
         .text(d => d.label.length > 28 ? d.label.slice(0, 26) + '…' : d.label);
 
@@ -94,7 +94,7 @@ export function renderTopEntitiesBar(selector, nodes) {
         .attr('y', d => y(d.label) + y.bandwidth() / 2)
         .attr('dy', '0.35em')
         .attr('text-anchor', 'start')
-        .attr('fill', 'var(--text-muted)')
+        .style('fill', 'var(--text-secondary)')
         .attr('font-family', 'var(--font-mono)')
         .attr('font-size', 13)
         .text(d => fmtAmount(d.totalFlow));
@@ -103,5 +103,6 @@ export function renderTopEntitiesBar(selector, nodes) {
     svg.append('g')
         .attr('transform', `translate(0,${totalHeight - margin.bottom})`)
         .call(d3.axisBottom(x).ticks(5).tickFormat(d => `$${d / 1e6}M`))
-        .call(g => g.select('.domain').remove());
+        .call(g => g.select('.domain').remove())
+        .call(g => g.selectAll('text').style('fill', 'var(--text-secondary)').attr('font-size', 13));
 }
