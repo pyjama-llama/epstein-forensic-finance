@@ -10,6 +10,18 @@ All amounts are **(Unverified)** automated extractions. These are not audit find
 
 ## Published Narratives
 
+### 🔺 Original Finding
+
+| # | Title | Key Finding | Data Scope |
+|---|-------|-------------|------------|
+| 17 | [One-Way Money](17_the_architecture.md) | The banks documented every dollar going in and almost none of it coming out. $272M entered nine shells across eight banking institutions. $63M is visible leaving. The other $209M has no documented exit in any production from any institution. | 382 wires · 158 entities · 8 banks · $558M |
+
+This is the first complete balance sheet ever run on the Epstein shell network — not institution by institution, but across the full multi-bank production. Nobody else has published one.
+
+---
+
+### Deep Dives
+
 | # | Title | Key Finding | Data Scope |
 |---|-------|-------------|------------|
 | 1 | [The Jeepers Pipeline](01_jeepers_pipeline.md) | $57.9M brokerage shell → personal checking, all dated, all on Exhibit C | 24 wires · $57,876,640 |
@@ -23,6 +35,12 @@ All amounts are **(Unverified)** automated extractions. These are not audit find
 | 9 | [734,122 Names](09_734122_names.md) | Asked every person in 1.48M files who bridges financial and victim docs. 57 real names. 10 operational staff. No one hiding who hasn't been found | 734,122 persons · 57 bridgers |
 | 10 | [The Round Number Problem](10_the_round_number_problem.md) | Benford's Law fails: digits 2 and 5 at 29.7% and 18.4%. 84.3% of wires are exact round numbers. One decision-maker, not a market | 185 wires · $557M |
 | 11 | [The Shell Map](11_the_shell_map.md) | Wire ledger captured 7 entities. The corpus contains 14 — with 178,000 money references. Four shells with 23,922 money mentions never appeared in a single wire | 14 shells · 178K money refs |
+| 12 | [The Bank Nobody Prosecuted](12_the_bank_nobody_prosecuted.md) | Bear Stearns banked Epstein 1986–2008, JPMorgan 1998–2013, Deutsche Bank 2013–2018. The enforcement void during the Bear Stearns years has never been examined | 3 banks · 25 years |
+| 13 | [Seven Banks, One Trust](13_seven_banks_one_trust.md) | Financial Trust Company touched seven banking institutions simultaneously. The trust structure created jurisdictional fragmentation by design | 7 banks · 1 trust · 325 records |
+| 14 | [Where Leon Black's Money Went](14_where_leon_blacks_money_went.md) | Black's entities paid Epstein $158–170M. Our wire ledger verified $60.5M. Downstream flow traced through every shell in the network | 1,600 files · $60.5M verified |
+| 15 | [Gratitude America (Expanded)](15_gratitude_america.md) | Karyna Shuliak biographical corrections. Estate bequest $50–100M. Charitable entity as beneficiary designation vehicle | 20 wires · estate records |
+| 16 | [The Accountant](16_the_accountant.md) | The financial professionals who maintained the architecture — trustees, estate counsel, and compliance gatekeepers | 29 corpus appearances · 5 key figures |
+| 17 | [One-Way Money](17_the_architecture.md) | ⬆️ Featured above — the full multi-institution balance sheet | 382 wires · 158 entities · $558M |
 
 ---
 
@@ -32,6 +50,7 @@ All amounts are **(Unverified)** automated extractions. These are not audit find
 | Visualization | Description |
 |--------------|-------------|
 | <a href="https://randallscott25-star.github.io/epstein-forensic-finance/visualizations/shell_network.html" target="_blank">Shell Network — Full Architecture</a> | Interactive map of all 14 shell entities and 12 banking institutions. Click nodes for detail. Filter by co-occurrence, bank relationships, or wire ledger. |
+| <a href="https://randallscott25-star.github.io/epstein-forensic-finance/visualizations/17_one_way_money.html" target="_blank">One-Way Money — Five-Layer System</a> | Interactive breakdown of the five exhibit layers, the $209M balance-sheet gap, and the December 2015 convergence timeline. |
 
 ---
 

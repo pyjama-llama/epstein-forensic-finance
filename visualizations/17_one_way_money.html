@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Architecture — Five-Layer Shell Network</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Instrument+Serif:ital@0;1&display=swap');
+
+  :root {
+    --bg: #0a0a0c;
+    --surface: #111116;
+    --border: #1e1e28;
+    --text: #c8c8d0;
+    --text-dim: #6a6a78;
+    --accent-red: #d4344a;
+    --accent-gold: #c9a84c;
+    --accent-blue: #3a7bd5;
+    --accent-green: #2d8659;
+    --accent-purple: #7c4dbd;
+    --accent-teal: #2d9e8e;
+    --layer1: #d4344a;
+    --layer2: #3a7bd5;
+    --layer3: #c9a84c;
+    --layer4: #7c4dbd;
+    --layer5: #2d8659;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 24px;
+  }
+
+  header {
+    margin-bottom: 60px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 40px;
+  }
+
+  header .label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent-red);
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 48px;
+    font-weight: 400;
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+
+  h1 em {
+    color: var(--accent-red);
+    font-style: italic;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    color: var(--text-dim);
+    max-width: 700px;
+    line-height: 1.8;
+  }
+
+  /* STATS BAR */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-bottom: 60px;
+  }
+
+  .stat {
+    background: var(--surface);
+    padding: 24px;
+    text-align: center;
+  }
+
+  .stat .number {
+    font-family: 'Instrument Serif', serif;
+    font-size: 32px;
+    color: #fff;
+  }
+
+  .stat .label {
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-top: 6px;
+  }
+
+  .stat.gap .number { color: var(--accent-red); }
+
+  /* LAYER SECTIONS */
+  .layer {
+    margin-bottom: 48px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    overflow: hidden;
+  }
+
+  .layer-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .layer-header:hover { background: #161620; }
+
+  .layer-num {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  .layer[data-layer="1"] .layer-num { background: var(--layer1); }
+  .layer[data-layer="2"] .layer-num { background: var(--layer2); }
+  .layer[data-layer="3"] .layer-num { background: var(--layer3); }
+  .layer[data-layer="4"] .layer-num { background: var(--layer4); }
+  .layer[data-layer="5"] .layer-num { background: var(--layer5); }
+
+  .layer-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: #fff;
+    flex: 1;
+  }
+
+  .layer-title span {
+    font-weight: 300;
+    color: var(--text-dim);
+    margin-left: 8px;
+  }
+
+  .layer-meta {
+    font-size: 11px;
+    color: var(--text-dim);
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .layer-meta .amount {
+    font-size: 16px;
+    color: #fff;
+    font-family: 'Instrument Serif', serif;
+    display: block;
+  }
+
+  .layer-body {
+    padding: 24px;
+    display: none;
+  }
+
+  .layer.open .layer-body { display: block; }
+
+  .layer-toggle {
+    font-size: 18px;
+    color: var(--text-dim);
+    transition: transform 0.2s;
+  }
+
+  .layer.open .layer-toggle { transform: rotate(90deg); }
+
+  /* FLOW DIAGRAM */
+  .flow-diagram {
+    margin: 16px 0;
+    padding: 20px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+  }
+
+  .flow-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 8px 0;
+    font-size: 11px;
+  }
+
+  .flow-entity {
+    padding: 6px 12px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    white-space: nowrap;
+    min-width: 180px;
+  }
+
+  .flow-entity.shell {
+    border-color: var(--accent-gold);
+    color: var(--accent-gold);
+  }
+
+  .flow-entity.external { color: var(--text-dim); }
+  .flow-entity.sink { border-color: var(--accent-red); color: var(--accent-red); }
+
+  .flow-arrow {
+    color: var(--text-dim);
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .flow-amount {
+    color: #fff;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .flow-count {
+    color: var(--text-dim);
+    font-size: 10px;
+  }
+
+  /* BALANCE SHEET */
+  .balance-section {
+    margin-top: 60px;
+    margin-bottom: 48px;
+  }
+
+  .section-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 28px;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+
+  .section-subtitle {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-bottom: 32px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+  }
+
+  th {
+    text-align: left;
+    padding: 12px 16px;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    border-bottom: 1px solid var(--border);
+    font-weight: 400;
+  }
+
+  th:not(:first-child) { text-align: right; }
+
+  td {
+    padding: 10px 16px;
+    border-bottom: 1px solid #141418;
+  }
+
+  td:not(:first-child) { text-align: right; font-variant-numeric: tabular-nums; }
+
+  tr:hover td { background: #141418; }
+
+  .positive { color: var(--accent-red); }
+  .negative { color: var(--accent-teal); }
+  .neutral { color: var(--text-dim); }
+
+  tr.total-row td {
+    border-top: 2px solid var(--border);
+    font-weight: 700;
+    color: #fff;
+  }
+
+  tr.total-row .positive { color: var(--accent-red); font-size: 14px; }
+
+  /* PATTERN SECTION */
+  .pattern {
+    margin-bottom: 48px;
+  }
+
+  .pattern-title {
+    font-size: 12px;
+    font-weight: 500;
+    color: #fff;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .pattern-title .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent-red);
+  }
+
+  .timeline {
+    position: relative;
+    padding-left: 32px;
+    border-left: 1px solid var(--border);
+    margin: 16px 0;
+  }
+
+  .timeline-item {
+    position: relative;
+    padding: 12px 0 20px;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -36px;
+    top: 16px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+    border: 2px solid var(--bg);
+  }
+
+  .timeline-item.highlight::before {
+    background: var(--accent-red);
+    box-shadow: 0 0 12px rgba(212, 52, 74, 0.4);
+  }
+
+  .timeline-date {
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+  }
+
+  .timeline-content {
+    font-size: 12px;
+    color: var(--text);
+    margin-top: 4px;
+  }
+
+  .timeline-amount {
+    color: #fff;
+    font-weight: 500;
+  }
+
+  /* FOOTER */
+  .footer {
+    margin-top: 60px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    font-size: 10px;
+    color: var(--text-dim);
+    line-height: 2;
+  }
+
+  .footer a {
+    color: var(--accent-blue);
+    text-decoration: none;
+  }
+
+  @media (max-width: 768px) {
+    h1 { font-size: 32px; }
+    .stats-bar { grid-template-columns: repeat(2, 1fr); }
+    .flow-row { flex-wrap: wrap; }
+    .flow-entity { min-width: 140px; font-size: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <header>
+    <div class="label">Narrative 17 — Epstein Forensic Finance Project</div>
+    <h1>The <em>Architecture</em></h1>
+    <p class="subtitle">382 wires. $558 million. 158 entities across Deutsche Bank, JPMorgan, Citibank, Bank of America, and BNY Mellon. Deutsche Bank's five SAR exhibits map to five functional layers of a financial machine that absorbed $272 million and can account for only $63 million leaving it.</p>
+  </header>
+
+  <div class="stats-bar">
+    <div class="stat">
+      <div class="number">382</div>
+      <div class="label">Wire Transfers</div>
+    </div>
+    <div class="stat">
+      <div class="number">$558M</div>
+      <div class="label">Total Value</div>
+    </div>
+    <div class="stat">
+      <div class="number">9</div>
+      <div class="label">Shell Entities</div>
+    </div>
+    <div class="stat gap">
+      <div class="number">$209M</div>
+      <div class="label">Unresolved Gap</div>
+    </div>
+  </div>
+
+  <!-- LAYER 1 -->
+  <div class="layer open" data-layer="1">
+    <div class="layer-header" onclick="toggleLayer(this)">
+      <div class="layer-num">1</div>
+      <div class="layer-title">ACCUMULATION <span>Exhibit A</span></div>
+      <div class="layer-meta">
+        <span class="amount">$151.5M</span>
+        17 wires
+      </div>
+      <div class="layer-toggle">›</div>
+    </div>
+    <div class="layer-body">
+      <p style="margin-bottom:16px; color: var(--text-dim)">External capital → Southern Trust Company Inc. Every wire flows in one direction. Zero outbound wires in this exhibit.</p>
+      <div class="flow-diagram">
+        <div class="flow-row">
+          <div class="flow-entity external">Leon Black / Apollo (5 entities)</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-entity shell">Southern Trust Company</div>
+          <div class="flow-amount">$106,500,000</div>
+          <div class="flow-count">14 wires</div>
+        </div>
+        <div class="flow-row">
+          <div class="flow-entity external">Edmond de Rothschild (inst. + personal)</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-entity shell">Southern Trust Company</div>
+          <div class="flow-amount">$24,999,980</div>
+          <div class="flow-count">2 wires</div>
+        </div>
+        <div class="flow-row">
+          <div class="flow-entity external">Narrow Holdings / Elysium Mgmt</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-entity shell">Southern Trust Company</div>
+          <div class="flow-amount">$20,000,000</div>
+          <div class="flow-count">1 wire</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAYER 2 -->
+  <div class="layer" data-layer="2">
+    <div class="layer-header" onclick="toggleLayer(this)">
+      <div class="layer-num">2</div>
+      <div class="layer-title">DISTRIBUTION <span>Exhibit B</span></div>
+      <div class="layer-meta">
+        <span class="amount">$33.1M</span>
+        18 wires
+      </div>
+      <div class="layer-toggle">›</div>
+    </div>
+    <div class="layer-body">
+      <p style="margin-bottom:16px; color: var(--text-dim)">Capital deployment into venture/tech investments and returns via Southern Financial LLC.</p>
+      <div class="flow-diagram">
+        <div class="flow-row">
+          <div class="flow-entity external">Tudor Futures Fund</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-entity shell">Southern Financial LLC</div>
+          <div class="flow-amount">$13,503,941</div>
+          <div class="flow-count">2 wires</div>
+        </div>
+        <div class="flow-row">
+          <div class="flow-entity external">Blockchain Capital (3 entities)</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-entity shell">2017 Caterpillar Trust</div>
+          <div class="flow-amount">$15,000,000</div>
+          <div class="flow-count">3 wires</div>
+        </div>
+        <div class="flow-row">
+          <div class="flow-entity shell">Southern Financial LLC</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-entity external">Joichi Ito / Coatue / Neoteny</div>
+          <div class="flow-amount">$4,100,000</div>
+          <div class="flow-count">9 wires</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAYER 3 -->
+  <div class="layer" data-layer="3">
+    <div class="layer-header" onclick="toggleLayer(this)">
+      <div class="layer-num">3</div>
+      <div class="layer-title">OPERATIONS <span>Exhibit C</span></div>
+      <div class="layer-meta">
+        <span class="amount">$89.4M</span>
+        64 wires
+      </div>
+      <div class="layer-toggle">›</div>
+    </div>
+    <div class="layer-body">
+      <p style="margin-bottom:16px; color: var(--text-dim)">Brokerage-to-cash conversion. Jeepers Inc. (DB Brokerage) feeds the NOW/SuperNow operating account.</p>
+      <div class="flow-diagram">
+        <div class="flow-row">
+          <div class="flow-entity shell">Jeepers Inc. (DB Brokerage)</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-entity sink">Epstein NOW/SuperNow Account</div>
+          <div class="flow-amount">$51,876,640</div>
+          <div class="flow-count">21 wires</div>
+        </div>
+        <div class="flow-row">
+          <div class="flow-entity external">Kellerhals Ferguson Kroblin</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-entity sink">Epstein NOW/SuperNow Account</div>
+          <div class="flow-amount">$23,075,000</div>
+          <div class="flow-count">2 wires</div>
+        </div>
+        <div class="flow-row">
+          <div class="flow-entity external">Link Rockenbach / AIC Title</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-entity sink">Epstein NOW/SuperNow Account</div>
+          <div class="flow-amount">$5,000,000</div>
+          <div class="flow-count">2 wires</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAYER 4 -->
+  <div class="layer" data-layer="4">
+    <div class="layer-header" onclick="toggleLayer(this)">
+      <div class="layer-num">4</div>
+      <div class="layer-title">REDISTRIBUTION <span>Exhibit D</span></div>
+      <div class="layer-meta">
+        <span class="amount">$68.8M</span>
+        11 wires
+      </div>
+      <div class="layer-toggle">›</div>
+    </div>
+    <div class="layer-body">
+      <p style="margin-bottom:16px; color: var(--text-dim)">Internal shell-to-shell rebalancing. Haze Trust (art proceeds) redistributes to Southern Financial and Southern Trust.</p>
+      <div class="flow-diagram">
+        <div class="flow-row">
+          <div class="flow-entity external">Sotheby's / Christie's</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-entity shell">The Haze Trust</div>
+          <div class="flow-amount">$18,974,417</div>
+          <div class="flow-count">2 wires</div>
+        </div>
+        <div class="flow-row">
+          <div class="flow-entity shell">The Haze Trust</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-entity shell">Southern Financial (Checking)</div>
+          <div class="flow-amount">$32,000,000</div>
+          <div class="flow-count">5 wires</div>
+        </div>
+        <div class="flow-row">
+          <div class="flow-entity shell">The Haze Trust</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-entity shell">Southern Trust (Checking)</div>
+          <div class="flow-amount">$10,000,000</div>
+          <div class="flow-count">1 wire</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAYER 5 -->
+  <div class="layer" data-layer="5">
+    <div class="layer-header" onclick="toggleLayer(this)">
+      <div class="layer-num">5</div>
+      <div class="layer-title">LEGITIMIZATION <span>Exhibit E</span></div>
+      <div class="layer-meta">
+        <span class="amount">$6.3M</span>
+        12 wires
+      </div>
+      <div class="layer-toggle">›</div>
+    </div>
+    <div class="layer-body">
+      <p style="margin-bottom:16px; color: var(--text-dim)">Charitable outflow. Gratitude America creates the paper trail of philanthropic purpose.</p>
+      <div class="flow-diagram">
+        <div class="flow-row">
+          <div class="flow-entity shell">Gratitude America MMDA</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-entity external">Gratitude America Ltd. (MS/Citi/FBPR)</div>
+          <div class="flow-amount">$5,800,000</div>
+          <div class="flow-count">4 wires</div>
+        </div>
+        <div class="flow-row">
+          <div class="flow-entity shell">Gratitude America MMDA</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-entity external">Melanoma Research / Moskowitz / CRW</div>
+          <div class="flow-amount">$453,493</div>
+          <div class="flow-count">8 wires</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BALANCE SHEET -->
+  <div class="balance-section">
+    <div class="section-title">The Balance Sheet</div>
+    <div class="section-subtitle">$272 million entered. $63 million is visible leaving. Where is the other $209 million?</div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Shell Entity</th>
+          <th>External In</th>
+          <th>Shell In</th>
+          <th>Shell Out</th>
+          <th>External Out</th>
+          <th>Net Position</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Southern Trust</td>
+          <td>$160.4M</td>
+          <td>$10.0M</td>
+          <td class="neutral">$0</td>
+          <td>$30.2M</td>
+          <td class="positive">+$140.2M</td>
+        </tr>
+        <tr>
+          <td>NOW/SuperNow</td>
+          <td>$31.1M</td>
+          <td>$51.9M</td>
+          <td class="neutral">$0</td>
+          <td class="neutral">$0</td>
+          <td class="positive">+$83.0M</td>
+        </tr>
+        <tr>
+          <td>Southern Financial</td>
+          <td>$14.3M</td>
+          <td>$37.0M</td>
+          <td class="neutral">$0</td>
+          <td>$4.1M</td>
+          <td class="positive">+$47.2M</td>
+        </tr>
+        <tr>
+          <td>Caterpillar Trust</td>
+          <td>$15.0M</td>
+          <td class="neutral">$0</td>
+          <td class="neutral">$0</td>
+          <td class="neutral">$0</td>
+          <td class="positive">+$15.0M</td>
+        </tr>
+        <tr>
+          <td>Haze Trust</td>
+          <td>$50.3M</td>
+          <td class="neutral">$0</td>
+          <td>$47.0M</td>
+          <td>$3.7M</td>
+          <td class="negative">−$0.4M</td>
+        </tr>
+        <tr>
+          <td>Jeepers Inc.</td>
+          <td class="neutral">$0</td>
+          <td class="neutral">$0</td>
+          <td>$51.9M</td>
+          <td class="neutral">$0</td>
+          <td class="negative">−$51.9M</td>
+        </tr>
+        <tr>
+          <td>Plan D LLC</td>
+          <td class="neutral">~$0</td>
+          <td class="neutral">$0</td>
+          <td class="neutral">$0</td>
+          <td>$18.0M</td>
+          <td class="negative">−$18.0M</td>
+        </tr>
+        <tr>
+          <td>Gratitude America</td>
+          <td>$0.9M</td>
+          <td class="neutral">$0</td>
+          <td class="neutral">$0</td>
+          <td>$6.4M</td>
+          <td class="negative">−$5.5M</td>
+        </tr>
+        <tr>
+          <td>NES LLC</td>
+          <td class="neutral">$0</td>
+          <td class="neutral">$0</td>
+          <td class="neutral">$0</td>
+          <td>$0.6M</td>
+          <td class="negative">−$0.6M</td>
+        </tr>
+        <tr class="total-row">
+          <td>SYSTEM TOTAL</td>
+          <td>$272.0M</td>
+          <td></td>
+          <td></td>
+          <td>$63.0M</td>
+          <td class="positive">+$209.1M</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- DECEMBER 2015 CONVERGENCE -->
+  <div class="pattern">
+    <div class="section-title">December 2015 Convergence</div>
+    <div class="section-subtitle">$45M from two continents in 14 days — bracketing the DOJ non-prosecution agreement</div>
+
+    <div class="timeline">
+      <div class="timeline-item highlight">
+        <div class="timeline-date">DEC 17, 2015</div>
+        <div class="timeline-content">
+          Edmond de Rothschild (Suisse) SA → Southern Trust — <span class="timeline-amount">$10,000,000</span>
+          <br><span style="color:var(--text-dim)">Institutional wire. Day before DOJ announcement.</span>
+        </div>
+      </div>
+      <div class="timeline-item highlight">
+        <div class="timeline-date">DEC 18, 2015</div>
+        <div class="timeline-content">
+          Black Family Partners LP → Southern Trust — <span class="timeline-amount">$10,000,000</span>
+          <br><span style="color:var(--accent-red)">DOJ announces EdR Suisse non-prosecution agreement. Penalty: $45,245,000.</span>
+        </div>
+      </div>
+      <div class="timeline-item highlight">
+        <div class="timeline-date">DEC 21, 2015</div>
+        <div class="timeline-content">
+          Benjamin Edmond de Rothschild → Southern Trust — <span class="timeline-amount">$14,999,980</span>
+          <br><span style="color:var(--text-dim)">Personal wire. 3 days after DOJ deal. Combined Rothschild total: $24,999,980.</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">DEC 30, 2015</div>
+        <div class="timeline-content">
+          Leon & Debra Black c/o Apollo Mgmt → Southern Trust — <span class="timeline-amount">$10,000,000</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Epstein Forensic Finance Project — Narrative 17<br>
+    Data: Master Wire Ledger Phase 25 (382 wires, $558M) | Entity Classification Index (158 entities)<br>
+    Source: Deutsche Bank SAR Exhibits A–E, EFTA Document Production (DOJ Epstein Files Transparency Act, Feb 2026)<br>
+    <a href="https://github.com/Tweederrr/epstein-forensic-finance" target="_blank">github.com/Tweederrr/epstein-forensic-finance</a>
+  </div>
+
+</div>
+
+<script>
+function toggleLayer(header) {
+  const layer = header.closest('.layer');
+  layer.classList.toggle('open');
+}
+</script>
+
+</body>
+</html>
