@@ -12,33 +12,24 @@ export function renderEntitySmallMultiples(selector, data, options = {}) {
     const container = document.querySelector(selector);
     if (!container) return;
 
-    // 1. Data Processing
+    // 1. Data Processing - Exact Transaction Level
     const entityVolumeMap = new Map();
-    const globalTimeline = new Map();
-    let minYear = Infinity;
-    let maxYear = -Infinity;
 
-    // Extract all transactions and assign to source and target entity
     data.edges.forEach(edge => {
         if (!edge.transactions) return;
 
         edge.transactions.forEach(tx => {
             if (!tx.date || !tx.amount) return;
-            // Parse YYYY-MM
-            const match = tx.date.match(/^(\d{4})-(\d{2})/);
-            if (!match) return;
-
-            const year = parseInt(match[1], 10);
-            const monthStr = `${match[1]}-${match[2]}`; // e.g. "2008-05"
             const amount = parseFloat(tx.amount);
-            if (year < 1990 || year > 2030) return;
+            const txDate = new Date(tx.date);
+            if (isNaN(txDate)) return;
 
-            minYear = Math.min(minYear, year);
-            maxYear = Math.max(maxYear, year);
+            const year = txDate.getFullYear();
+            if (year < 1990 || year > 2030) return;
 
             const initEntity = (id) => {
                 if (!entityVolumeMap.has(id)) {
-                    entityVolumeMap.set(id, { label: id, grossVolume: 0, netMonths: new Map() });
+                    entityVolumeMap.set(id, { label: id, grossVolume: 0, transactions: [] });
                 }
             };
 
@@ -48,18 +39,15 @@ export function renderEntitySmallMultiples(selector, data, options = {}) {
             initEntity(source);
             initEntity(target);
 
-            // Update gross volume for rankings
-            entityVolumeMap.get(source).grossVolume += amount;
-            entityVolumeMap.get(target).grossVolume += amount;
-
-            // Update net flow per month
             // Source is sending money out: negative flow
             const sData = entityVolumeMap.get(source);
-            sData.netMonths.set(monthStr, (sData.netMonths.get(monthStr) || 0) - amount);
+            sData.grossVolume += amount;
+            sData.transactions.push({ date: txDate, amount: -amount });
 
             // Target is receiving money in: positive flow
             const tData = entityVolumeMap.get(target);
-            tData.netMonths.set(monthStr, (tData.netMonths.get(monthStr) || 0) + amount);
+            tData.grossVolume += amount;
+            tData.transactions.push({ date: txDate, amount: amount });
         });
     });
 
@@ -73,86 +61,64 @@ export function renderEntitySmallMultiples(selector, data, options = {}) {
         .sort((a, b) => b.grossVolume - a.grossVolume)
         .slice(0, 12);
 
-    // Find precise bounds strictly based on top 12 entities' actual transactions
-    // This removes the massive 2008 empty-space gap by snapping to the exact network activity.
-    let minDate = new Date('2030-01-01');
-    let maxDate = new Date('1990-01-01');
+    // Find precise global date bounds across the exact transactions of the top 12
+    let globalDomainMinDate = new Date('2030-01-01');
+    let globalDomainMaxDate = new Date('1990-01-01');
 
     topEntities.forEach(entity => {
-        for (const monthStr of entity.netMonths.keys()) {
-            const [y, m] = monthStr.split('-');
-            const d = new Date(parseInt(y), parseInt(m) - 1, 1);
-            if (d < minDate) minDate = d;
-            if (d > maxDate) maxDate = d;
-        }
+        entity.transactions.forEach(tx => {
+            if (tx.date < globalDomainMinDate) globalDomainMinDate = tx.date;
+            if (tx.date > globalDomainMaxDate) globalDomainMaxDate = tx.date;
+        });
     });
 
-    const startYear = minDate.getFullYear();
-    const endYear = maxDate.getFullYear();
+    const startYear = globalDomainMinDate.getFullYear();
+    const endYear = globalDomainMaxDate.getFullYear();
 
-    // Define the full continuous timeline array for padding
-    const timelineDomain = [];
-    if (mode === 'month') {
-        let current = new Date(startYear, minDate.getMonth(), 1);
-        const end = new Date(endYear, maxDate.getMonth(), 1);
-        while (current <= end) {
-            const y = current.getFullYear();
-            const m = current.getMonth() + 1;
-            const mm = m < 10 ? `0${m}` : `${m}`;
-            timelineDomain.push(`${y}-${mm}`);
-            current.setMonth(current.getMonth() + 1);
-        }
-    } else {
-        // year mode
-        for (let y = startYear; y <= endYear; y++) {
-            timelineDomain.push(y.toString()); // 'YYYY'
-        }
-    }
-
-    // Format data for D3: pad missing periods with 0
+    // Format data for D3: calculate running balances chronologically
     let globalMaxBalance = -Infinity;
     let globalMinBalance = Infinity;
 
-    const parseDateMonth = d3.timeParse('%Y-%m');
-    const parseDateYear = d3.timeParse('%Y');
-
     const multiplesData = topEntities.map(entity => {
+        // Sort chronologically
+        entity.transactions.sort((a, b) => a.date - b.date);
+
         let runningBalance = 0;
         let localMaxBalance = -Infinity;
         let localMinBalance = Infinity;
 
-        const paddedTimeline = timelineDomain.map(timeStr => {
-            let netChange = 0;
-            if (mode === 'month') {
-                netChange = entity.netMonths.get(timeStr) || 0;
-            } else {
-                // In year mode, timeStr is 'YYYY'. We sum all 12 months in that year.
-                for (let m = 1; m <= 12; m++) {
-                    const mm = m < 10 ? `0${m}` : `${m}`;
-                    netChange += entity.netMonths.get(`${timeStr}-${mm}`) || 0;
-                }
-            }
-            runningBalance += netChange;
+        const timeline = [];
+
+        // Prepend starting point so graph extends to left bound
+        timeline.push({ date: globalDomainMinDate, balance: 0, volume: 0 });
+
+        entity.transactions.forEach(tx => {
+            runningBalance += tx.amount;
 
             globalMaxBalance = Math.max(globalMaxBalance, runningBalance);
             globalMinBalance = Math.min(globalMinBalance, runningBalance);
-
             localMaxBalance = Math.max(localMaxBalance, runningBalance);
             localMinBalance = Math.min(localMinBalance, runningBalance);
 
-            return {
-                dateStr: timeStr,
-                date: mode === 'month' ? parseDateMonth(timeStr) : parseDateYear(timeStr),
+            timeline.push({
+                date: tx.date,
                 balance: runningBalance,
-                volume: netChange // Keep volume for tooltip reference if needed
-            };
+                volume: tx.amount
+            });
         });
+
+        // Append ending point so graph extends to right bound
+        timeline.push({ date: globalDomainMaxDate, balance: runningBalance, volume: 0 });
+
+        if (localMinBalance === Infinity) localMinBalance = 0;
+        if (localMaxBalance === -Infinity) localMaxBalance = 0;
+
         return {
             label: entity.label,
             grossVolume: entity.grossVolume,
             localMinBalance,
             localMaxBalance,
-            timeline: paddedTimeline
+            timeline
         };
     });
 
@@ -186,13 +152,8 @@ export function renderEntitySmallMultiples(selector, data, options = {}) {
     const width = firstNode ? firstNode.clientWidth : 300;
     const innerWidth = Math.max(width - margin.left - margin.right, 100);
 
-    const xDomainStart = mode === 'month'
-        ? new Date(startYear, minDate.getMonth(), 1)
-        : new Date(startYear, 0, 1);
-
-    const xDomainEnd = mode === 'month'
-        ? new Date(endYear, maxDate.getMonth(), 1)
-        : new Date(endYear, 0, 1);
+    const xDomainStart = globalDomainMinDate;
+    const xDomainEnd = globalDomainMaxDate;
 
     const x = d3.scaleTime()
         .domain([xDomainStart, xDomainEnd])
@@ -201,7 +162,7 @@ export function renderEntitySmallMultiples(selector, data, options = {}) {
     const isIndependent = options.independentY === true;
 
     // Generators
-    const activeCurve = mode === 'month' ? d3.curveStep : d3.curveMonotoneX;
+    const activeCurve = d3.curveStepAfter;
 
     // 4. Draw Individual Charts
     const svgs = multiplesContainers.append('svg')
@@ -375,7 +336,20 @@ export function renderEntitySmallMultiples(selector, data, options = {}) {
             .attr('stroke-width', 2);
 
         // 5. Hover Interactions (Crosshair / Point highlighting)
-        g.append('line')
+
+        // Add a clipPath constraint for the interactive hover elements to prevent bleeding into Chart 3
+        const hoverClipId = `clip-hover-${i}`;
+        g.append('clipPath')
+            .attr('id', hoverClipId)
+            .append('rect')
+            .attr('width', innerWidth)
+            .attr('height', innerHeight)
+            .attr('x', 0)
+            .attr('y', 0);
+
+        const hoverGroup = g.append('g').attr('clip-path', `url(#${hoverClipId})`);
+
+        hoverGroup.append('line')
             .attr('class', 'hover-line')
             .attr('y1', 0)
             .attr('y2', innerHeight)
@@ -385,7 +359,7 @@ export function renderEntitySmallMultiples(selector, data, options = {}) {
             .style('opacity', 0)
             .style('pointer-events', 'none');
 
-        g.append('circle')
+        hoverGroup.append('circle')
             .attr('class', 'hover-dot')
             .attr('r', 4)
             .attr('fill', 'var(--bg-base)')
@@ -394,7 +368,7 @@ export function renderEntitySmallMultiples(selector, data, options = {}) {
             .style('opacity', 0)
             .style('pointer-events', 'none');
 
-        g.append('text')
+        hoverGroup.append('text')
             .attr('class', 'hover-label')
             .attr('fill', 'var(--text-bright)')
             .attr('font-size', 12)
@@ -418,7 +392,7 @@ export function renderEntitySmallMultiples(selector, data, options = {}) {
                 const [mouseX] = d3.pointer(event);
                 const activeDate = x.invert(mouseX);
 
-                // Snap to closest month in our timeline
+                // Snap to closest point in our exact transaction timeline
                 const bisectDate = d3.bisector(d => d.date).left;
 
                 // Fire event globally across all SVG siblings to sync crosshairs
@@ -441,39 +415,38 @@ export function renderEntitySmallMultiples(selector, data, options = {}) {
                         .domain([sibYMin, sibYMax])
                         .range([innerHeight, 0])
                         .nice();
-                    const i = bisectDate(parentD.timeline, activeDate, 1);
-                    const d0 = parentD.timeline[i - 1];
-                    const d1 = parentD.timeline[i];
-                    let activeData = d0;
+
+                    const idx = bisectDate(parentD.timeline, activeDate, 1);
+                    const d0 = parentD.timeline[idx - 1];
+                    const d1 = parentD.timeline[idx];
+                    let activePoint = d0;
                     if (d1 && (activeDate - d0.date > d1.date - activeDate)) {
-                        activeData = d1;
+                        activePoint = d1;
                     }
 
-                    const snapDate = activeData.date;
-                    const snapStr = activeData.dateStr; // For label YYYY-MM
-                    const vol = activeData.volume;
+                    const snapDate = activePoint.date;
+                    const snapStr = d3.timeFormat('%Y-%m-%d')(snapDate);
+                    const runningBal = activePoint.balance;
 
                     const currentSvgNode = this;
                     const isHoveredSvg = (currentSvgNode === event.currentTarget.parentNode.parentNode);
 
-                    // Handle Crosshair
+                    // Handle Crosshair positioning
                     d3.select(this).selectAll('line.hover-line')
-                        // Just selecting the existing hover line (which we need to add class 'hover-line' to below!)
                         .attr('x1', x(snapDate))
                         .attr('x2', x(snapDate))
                         .style('opacity', 0.6);
 
-                    const runningBal = activeData.balance;
-
                     d3.select(this).selectAll('circle.hover-dot')
                         .attr('cx', x(snapDate))
-                        .attr('cy', y(runningBal))
+                        .attr('cy', sibY(runningBal))
+                        .style('stroke', runningBal < 0 ? '#F44336' : 'var(--text-bright)')
                         .style('opacity', 1);
 
                     d3.select(this).selectAll('text.hover-label')
                         .text(`${snapStr}: ${fmtAmount(runningBal)}`)
                         .attr('x', x(snapDate))
-                        .attr('y', y(runningBal) - 10)
+                        .attr('y', sibY(runningBal) - 10)
                         .attr('text-anchor', snapDate.getFullYear() > maxYear - 2 ? 'end' : 'start')
                         .style('fill', runningBal < 0 ? '#F44336' : 'var(--text-bright)')
                         .style('opacity', 1);

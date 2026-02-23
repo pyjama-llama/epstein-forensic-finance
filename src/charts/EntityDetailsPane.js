@@ -1,11 +1,12 @@
 import * as d3 from 'd3';
 import { fmtAmount } from './chartUtils.js';
+import { entityNarratives } from '../data/entityNarratives.js';
 
 /**
  * EntityDetailsPane
  * Autonomous component to render a side-panel ledger of transactions for a specific entity.
  */
-export function renderEntityDetails(selector, entityName, data) {
+export function renderEntityDetails(selector, entityName, data, onClose) {
     const container = d3.select(selector);
     container.html(''); // Clear previous content
 
@@ -55,7 +56,28 @@ export function renderEntityDetails(selector, entityName, data) {
     ledger.sort((a, b) => new Date(b.date) - new Date(a.date));
 
     // 3. Render Header Profile
-    const header = container.append('div').style('margin-bottom', '24px');
+    const header = container.append('div')
+        .style('position', 'relative')
+        .style('margin-bottom', '24px');
+
+    if (onClose) {
+        header.append('button')
+            .html('&times;')
+            .style('position', 'absolute')
+            .style('right', '0')
+            .style('top', '0')
+            .style('background', 'transparent')
+            .style('border', 'none')
+            .style('color', 'var(--text-muted)')
+            .style('font-size', '20px')
+            .style('line-height', '1')
+            .style('cursor', 'pointer')
+            .on('click', () => {
+                onClose();
+            })
+            .on('mouseover', function () { d3.select(this).style('color', 'var(--text-bright)'); })
+            .on('mouseout', function () { d3.select(this).style('color', 'var(--text-muted)'); });
+    }
 
     header.append('h3')
         .style('margin', '0 0 12px')
@@ -63,6 +85,7 @@ export function renderEntityDetails(selector, entityName, data) {
         .style('color', 'var(--text-bright)')
         .style('word-break', 'break-word')
         .style('line-height', '1.3')
+        .style('padding-right', '24px') // leave room for close btn
         .text(entityName);
 
     const statsGroup = header.append('div')
@@ -80,6 +103,21 @@ export function renderEntityDetails(selector, entityName, data) {
         .style('display', 'flex')
         .style('flex-direction', 'column')
         .html(`<span style="color:var(--text-muted); font-size: 11px; text-transform: uppercase; margin-bottom: 2px;">Total Out</span><span style="color: #F44336; font-weight: 500;">${fmtAmount(totalOut)}</span>`);
+
+    // 3.5 Inject Entity Narrative Context
+    if (entityNarratives[entityName]) {
+        container.append('article')
+            .style('margin-bottom', '24px')
+            .style('padding', '16px')
+            .style('background', 'rgba(255, 255, 255, 0.03)')
+            .style('border-left', '3px solid var(--text-muted)')
+            .style('border-radius', '0 4px 4px 0')
+            .style('color', 'var(--text-secondary)')
+            .style('font-size', '13px')
+            .style('line-height', '1.5')
+            .style('font-style', 'italic')
+            .text(entityNarratives[entityName]);
+    }
 
     // 4. Render Ledger List
     const tableContainer = container.append('div')

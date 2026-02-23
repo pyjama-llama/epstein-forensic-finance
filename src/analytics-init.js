@@ -77,7 +77,9 @@ async function main() {
             independentY: smallMultiplesYMode === 'independent',
             onEntityClick: (entityName) => {
                 detailsPane.style.display = 'block';
-                safeRender(renderEntityDetails, '#entity-details-content', entityName, graph);
+                safeRender(renderEntityDetails, '#entity-details-content', entityName, graph, () => {
+                    detailsPane.style.display = 'none';
+                });
             }
         });
     };
