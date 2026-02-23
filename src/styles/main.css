@@ -110,6 +110,8 @@ body {
   padding: 0 20px;
   background: var(--bg-surface);
   border-bottom: 1px solid var(--border);
+  height: var(--topbar-h);
+  flex-shrink: 0;
   z-index: 100;
   gap: 16px;
 }
@@ -185,6 +187,49 @@ body {
   flex: 0 0 auto;
   display: flex;
   gap: 8px;
+}
+
+/* ── Page Navigation Tabs ─────────────────────────────────────────────────── */
+#page-nav {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.nav-tab {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 14px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
+  cursor: pointer;
+  letter-spacing: 0;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.nav-tab:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-primary);
+  border-color: var(--border);
+}
+
+.nav-tab.active {
+  background: var(--bg-elevated);
+  color: var(--text-bright);
+  border-color: var(--border-light);
+}
+
+.topbar-divider {
+  width: 1px;
+  height: 20px;
+  background: var(--border);
+  margin: 0 6px;
 }
 
 /* Buttons */
@@ -427,8 +472,8 @@ body {
 }
 
 .filter-check input[type="checkbox"]:checked {
-  background: var(--accent);
-  border-color: var(--accent);
+  background: var(--text-muted);
+  border-color: var(--border-light);
 }
 
 .filter-check input[type="checkbox"]:checked::after {
@@ -468,14 +513,15 @@ body {
 }
 
 .pill.active {
-  border-color: var(--accent-dim);
-  color: var(--accent);
-  background: var(--accent-glow);
+  border-color: var(--border-light);
+  color: var(--text-primary);
+  background: var(--bg-elevated);
 }
 
 .pill:hover {
-  border-color: var(--accent-dim);
-  color: var(--accent);
+  border-color: var(--border-light);
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.04);
 }
 
 /* Range slider */
@@ -501,15 +547,16 @@ body {
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: var(--accent);
+  background: var(--text-secondary);
   border: 2px solid var(--bg-base);
   cursor: pointer;
   pointer-events: all;
-  transition: transform var(--t-fast);
+  transition: transform var(--t-fast), background var(--t-fast);
 }
 
 .range-input::-webkit-slider-thumb:hover {
-  transform: scale(1.2);
+  background: var(--text-primary);
+  transform: scale(1.15);
 }
 
 .range-labels {
@@ -555,8 +602,8 @@ body {
 
 .date-input:focus {
   outline: none;
-  border-color: var(--accent-dim);
-  box-shadow: 0 0 0 2px var(--accent-glow);
+  border-color: var(--border-light);
+  box-shadow: none;
 }
 
 .date-sep {
@@ -587,7 +634,7 @@ body {
 
 .legend-node {
   border-radius: 50%;
-  background: var(--accent);
+  background: var(--text-muted);
   opacity: 0.7;
   flex-shrink: 0;
 }

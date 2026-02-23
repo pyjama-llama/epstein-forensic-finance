@@ -1,0 +1,240 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Analytics Dashboard — Styles
+   Inherits all design tokens from main.css
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Override: analytics page CAN scroll ─────────────────────────────────── */
+/* main.css sets overflow: hidden on html/body for the network graph.         */
+/* We need scroll for the analytics dashboard.                                */
+html,
+body {
+    overflow: visible !important;
+    height: auto !important;
+}
+
+/* ── App Shell ───────────────────────────────────────────────────────────── */
+#analytics-app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: var(--bg-base);
+}
+
+/* ── Top Bar — sticky on the analytics page only ─────────────────────────── */
+#topbar {
+    position: sticky;
+    top: 0;
+    z-index: 200;
+}
+
+
+/* ── Scroll Container ────────────────────────────────────────────────────── */
+#analytics-scroll {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* ── Dashboard Content ───────────────────────────────────────────────────── */
+#analytics-main {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 32px 32px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+/* ── Summary KPI Row ─────────────────────────────────────────────────────── */
+.summary-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.summary-card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    transition: border-color var(--t-fast);
+}
+
+.summary-card:hover {
+    border-color: var(--border-light);
+}
+
+.summary-value {
+    font-family: var(--font-mono);
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--text-bright);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+}
+
+.summary-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+/* ── Chart Grid ───────────────────────────────────────────────────────────── */
+.chart-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.chart-panel {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px 28px;
+    transition: border-color var(--t-fast);
+}
+
+.chart-panel:hover {
+    border-color: var(--border-light);
+}
+
+.chart-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text-bright);
+    margin: 0 0 6px;
+    line-height: 1.35;
+}
+
+.chart-subtitle {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 0 0 20px;
+    line-height: 1.5;
+}
+
+/* ── Chart Containers ────────────────────────────────────────────────────── */
+.chart-container {
+    position: relative;
+    width: 100%;
+    min-height: 260px;
+}
+
+.chart-container.chart-tall {
+    min-height: 460px;
+}
+
+.chart-container.chart-medium {
+    min-height: 340px;
+}
+
+/* ── Chart Error State ────────────────────────────────────────────────────── */
+.chart-error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 60px 40px;
+    color: var(--text-muted);
+    font-size: 13px;
+}
+
+.chart-error-icon {
+    font-size: 18px;
+    opacity: 0.6;
+}
+
+/* ── Tooltips ─────────────────────────────────────────────────────────────── */
+.chart-tooltip {
+    position: absolute;
+    pointer-events: none;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius);
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--text-primary);
+    z-index: 100;
+    opacity: 0;
+    transition: opacity 0.1s;
+    max-width: 280px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+}
+
+.chart-tooltip.visible {
+    opacity: 1;
+}
+
+.tt-label {
+    font-weight: 600;
+    color: var(--text-bright);
+    margin-bottom: 3px;
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tt-value {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--accent);
+}
+
+.tt-detail {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 3px;
+}
+
+/* ── SVG text defaults ────────────────────────────────────────────────────── */
+.chart-container svg text {
+    fill: var(--text-muted);
+    font-family: var(--font-ui), sans-serif;
+    font-size: 13px;
+}
+
+.chart-container .tick text {
+    font-size: 13px;
+}
+
+.chart-container .tick line {
+    stroke: var(--border);
+}
+
+.chart-container .domain {
+    stroke: var(--border);
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+    .summary-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    #analytics-main {
+        padding: 20px 16px 60px;
+        gap: 16px;
+    }
+
+    .summary-row {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .summary-value {
+        font-size: 20px;
+    }
+
+    .chart-panel {
+        padding: 18px 16px;
+    }
+}

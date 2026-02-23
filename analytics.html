@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+        content="Financial analytics dashboard for the Epstein forensic network. Charts and analysis of $557M+ in documented wire transfers." />
+    <title>Analytics — Epstein Forensic Finance</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="/src/styles/main.css" />
+    <link rel="stylesheet" href="/src/styles/analytics.css" />
+</head>
+
+<body>
+
+    <div id="analytics-app">
+
+        <!-- Top Bar -->
+        <header id="topbar">
+            <div id="topbar-left">
+                <div id="logo">
+                    <span class="logo-icon">⬡</span>
+                    <span class="logo-text">FORENSIC <span class="logo-accent">NETWORK</span></span>
+                </div>
+            </div>
+
+            <div id="topbar-right">
+                <nav id="page-nav" aria-label="Page navigation">
+                    <a href="./index.html" class="nav-tab">Network</a>
+                    <a href="./analytics.html" class="nav-tab active" aria-current="page">Analytics</a>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Dashboard Scroll Container -->
+        <div id="analytics-scroll">
+            <main id="analytics-main">
+
+                <!-- KPI Cards -->
+                <section class="summary-row" aria-label="Summary statistics">
+                    <div class="summary-card">
+                        <div class="summary-value" id="kpi-total-flow">—</div>
+                        <div class="summary-label">Total Flow</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-value" id="kpi-entities">—</div>
+                        <div class="summary-label">Entities</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-value" id="kpi-transactions">—</div>
+                        <div class="summary-label">Transactions</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-value" id="kpi-date-range">—</div>
+                        <div class="summary-label">Date Range</div>
+                    </div>
+                </section>
+
+                <!-- Charts -->
+                <section class="chart-grid">
+
+                    <!-- Chart 1: Top Entities Bar -->
+                    <article class="chart-panel" id="panel-top-entities">
+                        <h2 class="chart-title">Southern Trust and Leon Black dominate the $558M network</h2>
+                        <p class="chart-subtitle">Top 20 entities ranked by combined inflow and outflow — hover to
+                            inspect</p>
+                        <div id="chart-top-entities" class="chart-container chart-tall"></div>
+                    </article>
+
+                </section>
+
+            </main>
+        </div>
+
+    </div>
+
+    <script type="module" src="/src/analytics-init.js"></script>
+</body>
+
+</html>
