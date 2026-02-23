@@ -176,6 +176,22 @@ export function renderEntitySmallMultiples(selector, data, options = {}) {
         .attr('viewBox', `0 0 ${width} ${height}`)
         .style('overflow', 'visible'); // Allow tooltips/y-axis to spill safely
 
+    const btnResetZoom = document.getElementById('btn-reset-zoom');
+    if (btnResetZoom) {
+        btnResetZoom.style.display = 'none';
+        const newBtn = btnResetZoom.cloneNode(true);
+        btnResetZoom.parentNode.replaceChild(newBtn, btnResetZoom);
+        newBtn.addEventListener('click', () => {
+            x.domain([xDomainStart, xDomainEnd]);
+            newBtn.style.display = 'none';
+            svgs.each(function () {
+                if (typeof this.updateScales === 'function') {
+                    this.updateScales([xDomainStart, xDomainEnd]);
+                }
+            });
+        });
+    }
+
     // Loop through each small multiple container to render its unique local data mapping
     svgs.each(function (activeData, i) {
         const svg = d3.select(this);
@@ -234,6 +250,7 @@ export function renderEntitySmallMultiples(selector, data, options = {}) {
         // Draw Axes
         // X-axis: Dynamic formatting. Outer bounds get 4 digits (e.g. 2012), internal ticks get 2 digits (e.g. '14)
         g.append('g')
+            .attr('class', 'x-axis')
             .attr('transform', `translate(0,${innerHeight})`)
             .call(d3.axisBottom(x)
                 .ticks(d3.timeYear.every(1)) // explicitly tick every year
@@ -397,83 +414,136 @@ export function renderEntitySmallMultiples(selector, data, options = {}) {
             .style('opacity', 0)
             .style('pointer-events', 'none');
 
-        // Invisible overlay for catching mouse events
-        g.append('rect')
-            .attr('class', 'overlay')
-            .attr('width', innerWidth)
-            .attr('height', innerHeight)
-            .attr('fill', 'transparent')
-            .style('cursor', 'pointer')
+        // 5. Build high-performance scales update function attached to DOM node
+        const currentSvg = this;
+        this.updateScales = function (newDomain) {
+            x.domain(newDomain);
+
+            const t = d3.transition().duration(400).ease(d3.easeCubicOut);
+
+            gAbove.select('path:nth-child(1)').transition(t).attr('d', area(activeData.timeline));
+            gAbove.select('path:nth-child(2)').transition(t).attr('d', line(activeData.timeline));
+
+            gBelow.select('path:nth-child(1)').transition(t).attr('d', area(activeData.timeline));
+            gBelow.select('path:nth-child(2)').transition(t).attr('d', line(activeData.timeline));
+
+            volumeSpikes.selectAll('line').transition(t)
+                .attr('x1', d => x(d.date))
+                .attr('x2', d => x(d.date))
+                .attr('opacity', d => (d.date >= newDomain[0] && d.date <= newDomain[1]) ? 0.8 : 0);
+
+            g.select('.x-axis').transition(t).call(
+                d3.axisBottom(x)
+                    .ticks(d3.timeYear.every(1))
+                    .tickFormat(d => {
+                        const startY = newDomain[0].getFullYear();
+                        const endY = newDomain[1].getFullYear();
+                        const year = d.getFullYear();
+                        const zoomDays = (newDomain[1] - newDomain[0]) / (1000 * 60 * 60 * 24);
+                        if (zoomDays < 730) {
+                            return d3.timeFormat('%b %y')(d); // e.g. "Jan 18"
+                        }
+                        if (year === startY || year === endY) {
+                            return d3.timeFormat('%Y')(d);
+                        }
+                        return d3.timeFormat("'%y")(d);
+                    })
+            )
+                .call(axis => axis.select('.domain').attr('stroke', 'var(--border)'))
+                .call(axis => axis.selectAll('line').remove())
+                .call(axis => axis.selectAll('text').style('fill', 'var(--text-secondary)').attr('font-size', 11));
+
+            svgs.selectAll('.hover-line').style('opacity', 0);
+            svgs.selectAll('.hover-dot').style('opacity', 0);
+            svgs.selectAll('.hover-label').style('opacity', 0);
+        };
+
+        // 6. Time Zoom via D3 Brush
+        const brush = d3.brushX()
+            .extent([[0, 0], [innerWidth, innerHeight]])
+            .on('end', function (event) {
+                if (!event.selection) return;
+                const [x0, x1] = event.selection;
+                const newDomain = [x.invert(x0), x.invert(x1)];
+
+                const rBtn = document.getElementById('btn-reset-zoom');
+                if (rBtn) rBtn.style.display = 'inline-block';
+
+                svgs.each(function () {
+                    if (typeof this.updateScales === 'function') {
+                        this.updateScales(newDomain);
+                    }
+                    if (this !== currentSvg) {
+                        d3.select(this).select('.brush').call(brush.move, null);
+                    }
+                });
+                d3.select(currentSvg).select('.brush').call(brush.move, null);
+            });
+
+        const brushGroup = g.append('g')
+            .attr('class', 'brush')
+            .call(brush);
+
+        // Because brush steals our events, bind custom tooltips to brush target recs
+        brushGroup.selectAll('.overlay, .selection')
             .on('click', function (event) {
+                if (event.defaultPrevented) return;
                 onEntityClick(activeData.label);
             })
             .on('mousemove', function (event) {
-                // Find closest date
                 const [mouseX] = d3.pointer(event);
                 const activeDate = x.invert(mouseX);
-
-                // Snap to closest point in our exact transaction timeline
                 const bisectDate = d3.bisector(d => d.date).left;
 
-                // Fire event globally across all SVG siblings to sync crosshairs
                 svgs.each(function (parentD) {
-                    const siblingG = d3.select(this).select('g');
-
-                    // Recompute sibling's local Y-scale to place dot correctly
                     let sibYDomainMin = globalMinBalance;
                     let sibYDomainMax = globalMaxBalance;
                     if (isIndependent) {
                         sibYDomainMin = parentD.localMinBalance;
                         sibYDomainMax = parentD.localMaxBalance;
                     }
-
                     const sibYPad = (sibYDomainMax - sibYDomainMin) * 0.1;
                     const sibYMin = Math.min(0, sibYDomainMin - sibYPad);
                     const sibYMax = Math.max(0, sibYDomainMax + sibYPad);
-
-                    const sibY = d3.scaleLinear()
-                        .domain([sibYMin, sibYMax])
-                        .range([innerHeight, 0])
-                        .nice();
+                    const sibY = d3.scaleLinear().domain([sibYMin, sibYMax]).range([innerHeight, 0]).nice();
 
                     const idx = bisectDate(parentD.timeline, activeDate, 1);
-                    const d0 = parentD.timeline[idx - 1];
-                    const d1 = parentD.timeline[idx];
-                    let activePoint = d0;
-                    if (d1 && (activeDate - d0.date > d1.date - activeDate)) {
-                        activePoint = d1;
-                    }
+                    const priorPoint = parentD.timeline[idx - 1] || parentD.timeline[0];
+                    const exactMouseBal = priorPoint.balance;
 
-                    const snapDate = activePoint.date;
-                    const snapStr = d3.timeFormat('%Y-%m-%d')(snapDate);
-                    const runningBal = activePoint.balance;
-                    const vol = activePoint.volume;
+                    const isHoveredSvg = (this === currentSvg);
 
-                    const currentSvgNode = this;
-                    const isHoveredSvg = (currentSvgNode === event.currentTarget.parentNode.parentNode);
-
-                    // Handle Crosshair positioning
                     d3.select(this).selectAll('line.hover-line')
-                        .attr('x1', x(snapDate))
-                        .attr('x2', x(snapDate))
+                        .attr('x1', mouseX)
+                        .attr('x2', mouseX)
                         .style('opacity', 0.6);
 
                     d3.select(this).selectAll('circle.hover-dot')
-                        .attr('cx', x(snapDate))
-                        .attr('cy', sibY(runningBal))
-                        .style('stroke', runningBal < 0 ? '#F44336' : 'var(--text-bright)')
+                        .attr('cx', mouseX)
+                        .attr('cy', sibY(exactMouseBal))
+                        .style('stroke', exactMouseBal < 0 ? '#F44336' : 'var(--text-bright)')
                         .style('opacity', 1);
 
-                    const labelText = vol !== 0
-                        ? `${snapStr} | Bal: ${fmtAmount(runningBal)} | Tx: ${fmtAmount(vol)}`
-                        : `${snapStr} | Bal: ${fmtAmount(runningBal)}`;
+                    const closestPoint = parentD.timeline[Math.min(parentD.timeline.length - 1, idx)];
+                    let volToShow = 0;
+                    // Roughly 7 days threshold logic based on current exact domain scope
+                    const currentDays = (x.domain()[1] - x.domain()[0]) / (1000 * 60 * 60 * 24);
+                    const hoverThresholdDays = Math.max(1, currentDays * 0.02); // 2% of visible screen acts as snapping threshold
+
+                    if (closestPoint && Math.abs(closestPoint.date - activeDate) < (1000 * 60 * 60 * 24 * hoverThresholdDays)) {
+                        volToShow = closestPoint.volume;
+                    }
+
+                    const labelText = volToShow !== 0
+                        ? `${d3.timeFormat('%Y-%m-%d')(activeDate)} | Bal: ${fmtAmount(exactMouseBal)} | Tx: ${fmtAmount(volToShow)}`
+                        : `${d3.timeFormat('%Y-%m-%d')(activeDate)} | Bal: ${fmtAmount(exactMouseBal)}`;
 
                     d3.select(this).selectAll('text.hover-label')
                         .text(labelText)
-                        .attr('x', x(snapDate))
-                        .attr('y', sibY(runningBal) - 10)
-                        .attr('text-anchor', snapDate.getFullYear() > maxYear - 2 ? 'end' : 'start')
-                        .style('fill', runningBal < 0 ? '#F44336' : 'var(--text-bright)')
+                        .attr('x', mouseX)
+                        .attr('y', sibY(exactMouseBal) - 10)
+                        .attr('text-anchor', mouseX > innerWidth - 100 ? 'end' : 'start')
+                        .style('fill', exactMouseBal < 0 ? '#F44336' : 'var(--text-bright)')
                         .style('opacity', 1);
 
                     d3.select(this).style('opacity', isHoveredSvg ? 1 : 0.4);
