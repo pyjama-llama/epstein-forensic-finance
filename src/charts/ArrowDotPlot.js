@@ -58,7 +58,7 @@ export function renderArrowDotPlot(selector, nodes) {
         .attr('y', d => y(d.label))
         .attr('dy', '0.32em')
         .attr('text-anchor', 'end')
-        .style('fill', 'var(--text-bright)')
+        .style('fill', 'var(--text-secondary)')
         .attr('font-size', 13)
         .text(d => d.label.length > 28 ? d.label.slice(0, 26) + '…' : d.label);
 
