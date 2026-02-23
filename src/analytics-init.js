@@ -7,6 +7,7 @@
  */
 import { safeRender } from './charts/chartUtils.js';
 import { renderTopEntitiesBar } from './charts/TopEntitiesBar.js';
+import { renderArrowDotPlot } from './charts/ArrowDotPlot.js';
 
 async function main() {
     console.log('[Analytics] main() started');
@@ -54,6 +55,7 @@ async function main() {
 
     // ── Render Charts ────────────────────────────────────────────────────────
     safeRender(renderTopEntitiesBar, '#chart-top-entities', nodes);
+    safeRender(renderArrowDotPlot, '#chart-arrow-dot', nodes);
 
     console.log('[Analytics] ✅ All charts rendered.');
 }
