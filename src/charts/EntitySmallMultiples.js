@@ -22,10 +22,12 @@ export function renderEntitySmallMultiples(selector, data) {
 
         edge.transactions.forEach(tx => {
             if (!tx.date || !tx.amount) return;
-            const yearMatch = tx.date.match(/\d{4}/);
-            if (!yearMatch) return;
+            // Parse YYYY-MM
+            const match = tx.date.match(/^(\d{4})-(\d{2})/);
+            if (!match) return;
 
-            const year = parseInt(yearMatch[0], 10);
+            const year = parseInt(match[1], 10);
+            const monthStr = `${match[1]}-${match[2]}`; // e.g. "2008-05"
             const amount = parseFloat(tx.amount);
             if (year < 1990 || year > 2030) return;
 
@@ -34,16 +36,16 @@ export function renderEntitySmallMultiples(selector, data) {
 
             const source = edge.source;
             if (!entityVolumeMap.has(source)) {
-                entityVolumeMap.set(source, { label: source, totalVolume: 0, years: new Map() });
+                entityVolumeMap.set(source, { label: source, totalVolume: 0, months: new Map() });
             }
 
             const entityData = entityVolumeMap.get(source);
             entityData.totalVolume += amount;
 
-            if (!entityData.years.has(year)) {
-                entityData.years.set(year, 0);
+            if (!entityData.months.has(monthStr)) {
+                entityData.months.set(monthStr, 0);
             }
-            entityData.years.set(year, entityData.years.get(year) + amount);
+            entityData.months.set(monthStr, entityData.months.get(monthStr) + amount);
         });
     });
 
@@ -52,30 +54,38 @@ export function renderEntitySmallMultiples(selector, data) {
         return;
     }
 
-    // Sort entities by total volume and take the top 9
+    // Sort entities by total volume and take the top 12
     const topEntities = Array.from(entityVolumeMap.values())
         .sort((a, b) => b.totalVolume - a.totalVolume)
-        .slice(0, 9);
+        .slice(0, 12);
 
     // Ensure our global scale covers 2008 (NPA event) if possible, but match FlowByYear bounds
     minYear = Math.min(minYear, 2008);
 
-    // Define the full continuous timeline array for padding
-    const timelineDomain = d3.range(minYear, maxYear + 1);
+    // Define the full continuous monthly timeline array for padding
+    const timelineDomain = [];
+    for (let y = minYear; y <= maxYear; y++) {
+        for (let m = 1; m <= 12; m++) {
+            const mm = m < 10 ? `0${m}` : `${m}`;
+            timelineDomain.push(`${y}-${mm}`);
+        }
+    }
 
-    // Format data for D3: pad missing years with 0
-    let globalMaxYearVolume = 0;
+    // Format data for D3: pad missing months with 0
+    let globalMaxVolume = 0;
+
+    const parseDate = d3.timeParse('%Y-%m');
 
     const multiplesData = topEntities.map(entity => {
-        const paddedYears = timelineDomain.map(year => {
-            const vol = entity.years.get(year) || 0;
-            globalMaxYearVolume = Math.max(globalMaxYearVolume, vol);
-            return { year, volume: vol };
+        const paddedMonths = timelineDomain.map(monthStr => {
+            const vol = entity.months.get(monthStr) || 0;
+            globalMaxVolume = Math.max(globalMaxVolume, vol);
+            return { dateStr: monthStr, date: parseDate(monthStr), volume: vol };
         });
         return {
             label: entity.label,
             totalVolume: entity.totalVolume,
-            timeline: paddedYears
+            timeline: paddedMonths
         };
     });
 
@@ -109,27 +119,28 @@ export function renderEntitySmallMultiples(selector, data) {
     const width = firstNode ? firstNode.clientWidth : 300;
     const innerWidth = Math.max(width - margin.left - margin.right, 100);
 
-    const x = d3.scaleLinear()
-        .domain([minYear, maxYear])
+    const x = d3.scaleTime()
+        .domain([new Date(minYear, 0, 1), new Date(maxYear, 11, 31)])
         .range([0, innerWidth]);
 
     const y = d3.scaleLinear()
-        // Domain uses global max so the Y axis is identical for all 9 charts
-        .domain([0, globalMaxYearVolume])
+        // Domain uses global max so the Y axis is identical for all 12 charts
+        // Multiply max by 1.1 to give a 10% visual padding so sharp spikes don't clip the bounding box
+        .domain([0, globalMaxVolume * 1.1])
         .range([innerHeight, 0])
         .nice();
 
     // Generators
     const area = d3.area()
-        .x(d => x(d.year))
+        .x(d => x(d.date))
         .y0(innerHeight)
         .y1(d => y(d.volume))
-        .curve(d3.curveMonotoneX); // Smooth interpolation
+        .curve(d3.curveStep); // Use Step for monthly financial data to indicate harsh discrete transfers
 
     const line = d3.line()
-        .x(d => x(d.year))
+        .x(d => x(d.date))
         .y(d => y(d.volume))
-        .curve(d3.curveMonotoneX);
+        .curve(d3.curveStep);
 
     // 4. Draw Individual Charts
     const svgs = multiplesContainers.append('svg')
@@ -160,10 +171,10 @@ export function renderEntitySmallMultiples(selector, data) {
         .text(d => `Total: ${fmtAmount(d.totalVolume)}`);
 
     // Draw Axes
-    // X-axis (only show min and max year to keep it clean)
+    // X-axis (only show min and max year to keep it clean, but use scaleTime)
     g.append('g')
         .attr('transform', `translate(0,${innerHeight})`)
-        .call(d3.axisBottom(x).tickValues([minYear, maxYear]).tickFormat(d3.format('d')))
+        .call(d3.axisBottom(x).tickValues([new Date(minYear, 0, 1), new Date(maxYear, 0, 1)]).tickFormat(d3.timeFormat('%Y')))
         .call(axis => axis.select('.domain').attr('stroke', 'var(--border)'))
         .call(axis => axis.selectAll('line').remove()) // remove ticks
         .call(axis => axis.selectAll('text').style('fill', 'var(--text-secondary)').attr('font-size', 11));
@@ -209,7 +220,8 @@ export function renderEntitySmallMultiples(selector, data) {
         .attr('clip-path', (d, i) => `url(#${clipId(d, i)})`);
 
     // 5. Hover Interactions (Crosshair / Point highlighting)
-    const hoverLines = g.append('line')
+    g.append('line')
+        .attr('class', 'hover-line')
         .attr('y1', 0)
         .attr('y2', innerHeight)
         .attr('stroke', 'var(--text-secondary)')
@@ -218,7 +230,8 @@ export function renderEntitySmallMultiples(selector, data) {
         .style('opacity', 0)
         .style('pointer-events', 'none');
 
-    const hoverDots = g.append('circle')
+    g.append('circle')
+        .attr('class', 'hover-dot')
         .attr('r', 4)
         .attr('fill', 'var(--bg-base)')
         .attr('stroke', 'var(--text-bright)')
@@ -226,7 +239,8 @@ export function renderEntitySmallMultiples(selector, data) {
         .style('opacity', 0)
         .style('pointer-events', 'none');
 
-    const hoverLabels = g.append('text')
+    g.append('text')
+        .attr('class', 'hover-label')
         .attr('fill', 'var(--text-bright)')
         .attr('font-size', 12)
         .attr('font-family', 'var(--font-mono)')
@@ -241,56 +255,58 @@ export function renderEntitySmallMultiples(selector, data) {
         .attr('height', innerHeight)
         .attr('fill', 'transparent')
         .on('mousemove', function (event, d) {
-            // Find closest year
+            // Find closest date
             const [mouseX] = d3.pointer(event);
-            const rawYear = x.invert(mouseX);
-            // Snap to closest integer year
-            const activeYear = Math.round(rawYear);
+            const activeDate = x.invert(mouseX);
 
-            // Constrain bounds
-            if (activeYear < minYear || activeYear > maxYear) return;
+            // Snap to closest month in our timeline
+            const bisectDate = d3.bisector(d => d.date).left;
 
-            // Update crosshair line
-            // We use standard selection iteration because multiple svgs exist,
-            // but we only want to update the crosshair inside the *hovered* multiple.
-            // Actually, we can update ALL multiples simultaneously to show synchronous timelines!
-            svgs.selectAll('line').filter((_, i, nodes) => nodes[i] === hoverLines.nodes()[0] || nodes[i].getAttribute('stroke-dasharray') === '3,3')
-                .attr('x1', x(activeYear))
-                .attr('x2', x(activeYear))
-                .style('opacity', 0.6);
+            // Map the parsed Date to the closest 'YYYY-MM' matching object in `timeline`
+            // d in this context is the overlay. We need the actual multiple data to find the nearest point
+            svgs.each(function (parentD) {
+                // The exact same operation handles the hover state globally to sync all SVGs
+                const i = bisectDate(parentD.timeline, activeDate, 1);
+                const d0 = parentD.timeline[i - 1];
+                const d1 = parentD.timeline[i];
+                let activeData = d0;
+                if (d1 && (activeDate - d0.date > d1.date - activeDate)) {
+                    activeData = d1;
+                }
 
-            hoverDots
-                .attr('cx', x(activeYear))
-                .attr('cy', parentD => {
-                    const yearData = parentD.timeline.find(t => t.year === activeYear);
-                    return y(yearData ? yearData.volume : 0);
-                })
-                .style('opacity', 1);
+                const snapDate = activeData.date;
+                const snapStr = activeData.dateStr; // For label YYYY-MM
+                const vol = activeData.volume;
 
-            hoverLabels
-                .text(parentD => {
-                    const yearData = parentD.timeline.find(t => t.year === activeYear);
-                    return yearData && yearData.volume > 0 ? fmtAmount(yearData.volume) : '';
-                })
-                .attr('x', x(activeYear))
-                .attr('y', parentD => {
-                    const yearData = parentD.timeline.find(t => t.year === activeYear);
-                    return y(yearData ? yearData.volume : 0) - 10;
-                })
-                .attr('text-anchor', activeYear > maxYear - 2 ? 'end' : 'start')
-                .style('opacity', 1);
+                const currentSvgNode = this;
+                const isHoveredSvg = (currentSvgNode === event.currentTarget.parentNode.parentNode);
 
-            // Dim everything except the currently hovered SVG
-            // event.currentTarget is the `<rect class="overlay">`. We need its parent SVG
-            const currentSvgNode = this.parentNode.parentNode;
-            svgs.style('opacity', function () {
-                return this === currentSvgNode ? 1 : 0.4;
+                // Handle Crosshair
+                d3.select(this).selectAll('line.hover-line')
+                    // Just selecting the existing hover line (which we need to add class 'hover-line' to below!)
+                    .attr('x1', x(snapDate))
+                    .attr('x2', x(snapDate))
+                    .style('opacity', 0.6);
+
+                d3.select(this).selectAll('circle.hover-dot')
+                    .attr('cx', x(snapDate))
+                    .attr('cy', y(vol))
+                    .style('opacity', 1);
+
+                d3.select(this).selectAll('text.hover-label')
+                    .text(vol > 0 ? `${snapStr}: ${fmtAmount(vol)}` : '')
+                    .attr('x', x(snapDate))
+                    .attr('y', y(vol) - 10)
+                    .attr('text-anchor', snapDate.getFullYear() > maxYear - 2 ? 'end' : 'start')
+                    .style('opacity', 1);
+
+                d3.select(this).style('opacity', isHoveredSvg ? 1 : 0.4);
             });
         })
         .on('mouseleave', function () {
-            hoverLines.style('opacity', 0);
-            hoverDots.style('opacity', 0);
-            hoverLabels.style('opacity', 0);
+            svgs.selectAll('.hover-line').style('opacity', 0);
+            svgs.selectAll('.hover-dot').style('opacity', 0);
+            svgs.selectAll('.hover-label').style('opacity', 0);
             svgs.style('opacity', 1);
         });
 
