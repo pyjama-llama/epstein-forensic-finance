@@ -53,7 +53,7 @@ export function renderTopEntitiesBar(selector, nodes) {
         .attr('y', d => y(d.label))
         .attr('width', d => Math.max(0, x(d.totalFlow) - margin.left))
         .attr('height', y.bandwidth())
-        .attr('fill', 'var(--tier-verified)')
+        .attr('fill', 'var(--text-muted)')
         .attr('opacity', 0.8)
         .attr('rx', 2)
         .style('cursor', 'pointer')
