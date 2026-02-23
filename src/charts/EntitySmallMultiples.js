@@ -2,8 +2,24 @@ import * as d3 from 'd3';
 import { fmtAmount } from './chartUtils.js';
 
 /**
- * Chart 4: Entity Small Multiples (Shaded Area Charts)
- * Shows the individual volume timelines for the top network entities.
+ * Chart 4: Entity Small Multiples (Combination Area + Lollipop Chart)
+ * 
+ * Architecture & Design:
+ * - Maps the timeline of the top 12 network participants down to the EXACT transaction date (no monthly binning).
+ * - Visualizes *two* metrics simultaneously on a shared X-axis:
+ *   1. Cumulative Running Balance: Rendered as a shaded Area chart in the background. 
+ *      Uses `d3.curveStepAfter` so the balance correctly holds flat over periods of inactivity.
+ *      Uses geometric SVG clip-paths to dynamically split the area color (white above $0, red below $0).
+ *   2. Individual Transaction Volume: Rendered as vertical Lollipop spikes in the foreground. 
+ *      Inflows (positive) shoot up tightly in green, outflows (negative) drop down in orange/red.
+ * 
+ * Interactivity (High Performance):
+ * - Time Zoom: Implements `d3.brushX` natively. Brushing a time window on ONE chart calculates a new X-domain 
+ *   and triggers a highly optimized `updateScales()` transition loop on all 11 siblings. It instantly morphs 
+ *   SVG path `d` strings without tearing down the DOM, keeping framerates at 60fps.
+ * - Smart Crosshairs: A naive nearest-neighbor snap would make the cursor jump violently horizontally over flat 
+ *   `curveStepAfter` lines. Instead, the X-crosshair unbinds to exactly track the user's `mouseX` pixel, while 
+ *   the Y-data tooltip uses `d3.bisectLeft` to mathematically query the true running balance of the *previous* transaction event.
  */
 export function renderEntitySmallMultiples(selector, data, options = {}) {
     const mode = options.mode || 'month';
@@ -236,6 +252,10 @@ export function renderEntitySmallMultiples(selector, data, options = {}) {
             .attr('fill', 'var(--text-bright)')
             .attr('font-size', '13px')
             .attr('font-weight', '600')
+            .style('cursor', 'pointer')
+            .on('click', () => onEntityClick(activeData.label))
+            .on('mouseover', function () { d3.select(this).style('fill', 'var(--accent)'); })
+            .on('mouseout', function () { d3.select(this).style('fill', 'var(--text-bright)'); })
             .text(d => d.label.length > 28 ? d.label.slice(0, 26) + '…' : d.label);
 
         svg.append('text')
