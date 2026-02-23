@@ -96,18 +96,8 @@ export function renderEntitySmallMultiples(selector, data, options = {}) {
         // Prepend starting point so graph extends to left bound
         timeline.push({ date: globalDomainMinDate, originalDate: globalDomainMinDate, balance: 0, volume: 0 });
 
-        let lastPlotDate = new Date(globalDomainMinDate);
-
         entity.transactions.forEach(tx => {
             runningBalance += tx.amount;
-
-            // Enforce minimum visual width (14 days) from the last plotted point so same-day spikes are visible
-            let plotDate = new Date(tx.date);
-            const minDaysDelay = 14 * 86400000;
-            if (plotDate.getTime() <= lastPlotDate.getTime() + minDaysDelay) {
-                plotDate = new Date(lastPlotDate.getTime() + minDaysDelay);
-            }
-            lastPlotDate = plotDate;
 
             globalMaxBalance = Math.max(globalMaxBalance, runningBalance);
             globalMinBalance = Math.min(globalMinBalance, runningBalance);
@@ -115,7 +105,7 @@ export function renderEntitySmallMultiples(selector, data, options = {}) {
             localMinBalance = Math.min(localMinBalance, runningBalance);
 
             timeline.push({
-                date: plotDate,
+                date: tx.date,
                 originalDate: tx.date,
                 balance: runningBalance,
                 volume: tx.amount
@@ -123,8 +113,7 @@ export function renderEntitySmallMultiples(selector, data, options = {}) {
         });
 
         // Append ending point so graph extends to right bound
-        const finalPlotDate = new Date(Math.max(globalDomainMaxDate.getTime(), lastPlotDate.getTime()));
-        timeline.push({ date: finalPlotDate, originalDate: globalDomainMaxDate, balance: runningBalance, volume: 0 });
+        timeline.push({ date: globalDomainMaxDate, originalDate: globalDomainMaxDate, balance: runningBalance, volume: 0 });
 
         if (localMinBalance === Infinity) localMinBalance = 0;
         if (localMaxBalance === -Infinity) localMaxBalance = 0;
@@ -359,9 +348,9 @@ export function renderEntitySmallMultiples(selector, data, options = {}) {
             .attr('id', hoverClipId)
             .append('rect')
             .attr('width', innerWidth)
-            .attr('height', innerHeight)
+            .attr('height', innerHeight + 40)
             .attr('x', 0)
-            .attr('y', 0);
+            .attr('y', -20);
 
         const hoverGroup = g.append('g').attr('clip-path', `url(#${hoverClipId})`);
 

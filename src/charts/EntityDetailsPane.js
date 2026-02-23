@@ -52,8 +52,18 @@ export function renderEntityDetails(selector, entityName, data, onClose) {
         }
     });
 
-    // 2. Sort ledger by date descending
-    ledger.sort((a, b) => new Date(b.date) - new Date(a.date));
+    // 2. Sort ledger by date descending (handle unknown/invalid dates)
+    ledger.sort((a, b) => {
+        const dateA = new Date(a.date);
+        const dateB = new Date(b.date);
+        const isValidA = !isNaN(dateA);
+        const isValidB = !isNaN(dateB);
+
+        if (isValidA && isValidB) return dateB - dateA;
+        if (isValidA && !isValidB) return -1; // Valid dates come first
+        if (!isValidA && isValidB) return 1;
+        return 0;
+    });
 
     // 3. Render Header Profile
     const header = container.append('div')
@@ -103,6 +113,40 @@ export function renderEntityDetails(selector, entityName, data, onClose) {
         .style('display', 'flex')
         .style('flex-direction', 'column')
         .html(`<span style="color:var(--text-muted); font-size: 11px; text-transform: uppercase; margin-bottom: 2px;">Total Out</span><span style="color: #F44336; font-weight: 500;">${fmtAmount(totalOut)}</span>`);
+
+    statsGroup.append('button')
+        .style('margin-left', 'auto')
+        .style('padding', '0 12px')
+        .style('height', '32px')
+        .style('align-self', 'center')
+        .style('background', 'var(--bg-base)')
+        .style('border', '1px solid var(--border)')
+        .style('color', 'var(--text-bright)')
+        .style('font-size', '11px')
+        .style('font-family', 'var(--font-mono)')
+        .style('cursor', 'pointer')
+        .style('border-radius', '4px')
+        .text('Download CSV')
+        .on('click', () => {
+            const headers = ['Date', 'Type', 'Amount', 'Counterparty', 'Purpose'];
+            const rows = ledger.map(tx => [
+                tx.date,
+                tx.type,
+                tx.amount,
+                `"${tx.counterparty.replace(/"/g, '""')}"`,
+                `"${tx.purpose.replace(/"/g, '""')}"`
+            ].join(','));
+            const csv = [headers.join(','), ...rows].join('\n');
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${entityName.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_ledger.csv`;
+            a.click();
+            URL.revokeObjectURL(url);
+        })
+        .on('mouseover', function () { d3.select(this).style('background', 'var(--border)'); })
+        .on('mouseout', function () { d3.select(this).style('background', 'var(--bg-base)'); });
 
     // 3.5 Inject Entity Narrative Context
     if (entityNarratives[entityName]) {
