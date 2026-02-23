@@ -318,13 +318,14 @@ export function renderEntitySmallMultiples(selector, data, options = {}) {
         gAbove.append('path') // Area
             .attr('d', area(activeData.timeline))
             .attr('fill', 'var(--text-muted)')
-            .attr('opacity', 0.2);
+            .attr('opacity', 0.1); // Reduced from 0.2 for combination chart
 
         gAbove.append('path') // Line
             .attr('d', line(activeData.timeline))
             .attr('fill', 'none')
             .attr('stroke', 'var(--text-bright)')
-            .attr('stroke-width', 2);
+            .attr('stroke-width', 1.5)
+            .attr('opacity', 0.4);
 
         // Region: Below Zero (Negative)
         const gBelow = gSweep.append('g').attr('clip-path', `url(#${clipBelowId})`);
@@ -332,13 +333,27 @@ export function renderEntitySmallMultiples(selector, data, options = {}) {
         gBelow.append('path') // Area
             .attr('d', area(activeData.timeline))
             .attr('fill', '#f44336') // Material Red
-            .attr('opacity', 0.2);
+            .attr('opacity', 0.1);
 
         gBelow.append('path') // Line
             .attr('d', line(activeData.timeline))
             .attr('fill', 'none')
             .attr('stroke', '#f44336')
-            .attr('stroke-width', 2);
+            .attr('stroke-width', 1.5)
+            .attr('opacity', 0.4);
+
+        // Foreground Action: Volume Spikes (Lollipops)
+        const volumeSpikes = gSweep.append('g').attr('class', 'volume-spikes');
+        volumeSpikes.selectAll('line')
+            .data(activeData.timeline.filter(d => d.volume !== 0))
+            .join('line')
+            .attr('x1', d => x(d.date))
+            .attr('x2', d => x(d.date))
+            .attr('y1', y(0))
+            .attr('y2', d => y(d.volume))
+            .attr('stroke', d => d.volume > 0 ? '#4CAF50' : '#FF9800') // Green for inflows, Orange for outflows
+            .attr('stroke-width', 2)
+            .attr('opacity', 0.8);
 
         // 5. Hover Interactions (Crosshair / Point highlighting)
 
@@ -432,6 +447,7 @@ export function renderEntitySmallMultiples(selector, data, options = {}) {
                     const snapDate = activePoint.date;
                     const snapStr = d3.timeFormat('%Y-%m-%d')(snapDate);
                     const runningBal = activePoint.balance;
+                    const vol = activePoint.volume;
 
                     const currentSvgNode = this;
                     const isHoveredSvg = (currentSvgNode === event.currentTarget.parentNode.parentNode);
@@ -448,8 +464,12 @@ export function renderEntitySmallMultiples(selector, data, options = {}) {
                         .style('stroke', runningBal < 0 ? '#F44336' : 'var(--text-bright)')
                         .style('opacity', 1);
 
+                    const labelText = vol !== 0
+                        ? `${snapStr} | Bal: ${fmtAmount(runningBal)} | Tx: ${fmtAmount(vol)}`
+                        : `${snapStr} | Bal: ${fmtAmount(runningBal)}`;
+
                     d3.select(this).selectAll('text.hover-label')
-                        .text(`${snapStr}: ${fmtAmount(runningBal)}`)
+                        .text(labelText)
                         .attr('x', x(snapDate))
                         .attr('y', sibY(runningBal) - 10)
                         .attr('text-anchor', snapDate.getFullYear() > maxYear - 2 ? 'end' : 'start')
