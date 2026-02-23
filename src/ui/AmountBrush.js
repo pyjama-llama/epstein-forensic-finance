@@ -11,8 +11,8 @@ export class AmountBrush {
         // Extract all edge amounts > 0
         this.amounts = [];
         data.edges.forEach(e => {
-            if (e.properties && e.properties.amount && e.properties.amount > 0) {
-                this.amounts.push(parseFloat(e.properties.amount));
+            if (e.totalAmount > 0) {
+                this.amounts.push(parseFloat(e.totalAmount));
             }
         });
 

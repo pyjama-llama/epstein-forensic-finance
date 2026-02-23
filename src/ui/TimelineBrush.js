@@ -11,13 +11,17 @@ export class TimelineBrush {
         // Extract all years from data to build histogram
         this.years = [];
 
-        // Match how chartUtils extracts dates: Look at edges with date fields
+        // Match how chartUtils extracts dates: Look at transactions with date fields
         data.edges.forEach(e => {
-            if (e.date) {
-                const yearMatch = e.date.match(/\\d{4}/);
-                if (yearMatch) {
-                    this.years.push(parseInt(yearMatch[0], 10));
-                }
+            if (e.transactions && Array.isArray(e.transactions)) {
+                e.transactions.forEach(t => {
+                    if (t.date) {
+                        const yearMatch = t.date.match(/\d{4}/);
+                        if (yearMatch) {
+                            this.years.push(parseInt(yearMatch[0], 10));
+                        }
+                    }
+                });
             }
         });
 
