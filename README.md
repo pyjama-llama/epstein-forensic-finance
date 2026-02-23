@@ -259,21 +259,22 @@ Only one gap ($5-15M excluded tiers) has a credible dollar estimate. The others 
 
 ---
 
-## Data Narratives
+## 🔺 New Finding: One-Way Money
 
-### 🔺 Original Finding: One-Way Money
+I ran a balance sheet on the nine shell entities at the center of Epstein's financial network — not one bank at a time, but across all eight banking institutions, all 382 wires, all $558 million in the master ledger.
 
-> **The banks documented every dollar going in and almost none of it coming out.**
->
-> I ran a balance sheet on the nine shell entities at the center of this network — across eight banking institutions, 382 wires, $558 million. **$272 million entered from the outside. $63 million is visible leaving. The other $209 million has no documented exit in any production from any institution.**
->
-> This is the first complete multi-institution balance sheet ever published on the Epstein shell network. Nobody else has run one.
->
-> **→ [Read Narrative 17: One-Way Money](narratives/17_the_architecture.md)** · [Interactive Visualization](https://randallscott25-star.github.io/epstein-forensic-finance/visualizations/17_one_way_money.html)
+**$272 million entered from external sources. $63 million is visible leaving. The other $209 million has no documented exit in any production from any institution.**
+
+The banks recorded every dollar going in. Almost none of it is recorded coming out. That's not a gap in my analysis — that's a gap in theirs. Nine shells, five exhibits, eight banks, and not one of them produced a complete outbound record.
+
+Nobody has published this before. Not the DOJ. Not the banks. Not the press. This is the first multi-institution balance sheet ever run on the Epstein shell network.
+
+**→ [Read the full analysis: Narrative 17 — One-Way Money](narratives/17_the_architecture.md)**
+**→ [Interactive Visualization: Five-Layer Architecture](https://randallscott25-star.github.io/epstein-forensic-finance/visualizations/17_one_way_money.html)**
 
 ---
 
-### All 17 Published Narratives
+## Data Narratives
 
 **→ [Read all Data Narratives](narratives/)**
 
@@ -300,7 +301,6 @@ Only one gap ($5-15M excluded tiers) has a credible dollar estimate. The others 
 Source workbook: **[Forensic Workbook](https://docs.google.com/spreadsheets/d/11lw0QjMZ-rYIjWesv5VG1YKts57ahPEm/edit?usp=sharing&ouid=103970896670138914877&rtpof=true&sd=true)** · [Interactive Shell Network](https://randallscott25-star.github.io/epstein-forensic-finance/visualizations/shell_network.html)
 
 *Every claim anchored to specific wire transfers, entity classifications, and court exhibit references from the master ledger.*
-
 ---
 
 ## Repository Contents
