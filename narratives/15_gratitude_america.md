@@ -80,7 +80,7 @@ The most frequently occurring transaction amounts are $2 million, $5 million, $2
 
 **Karyna Shuliak** appears on **8 Gratitude America files**.
 
-Karyna Shuliak was Jeffrey Epstein's girlfriend at the time of his death. She is a Belarusian-born former model who was approximately 30 years old when Epstein died in 2019. Shuliak was named as a beneficiary in Epstein's estate filings.
+Karyna Shuliak was Jeffrey Epstein's girlfriend at the time of his death. She is a Belarusian-born dentist who graduated from Columbia University's College of Dental Medicine in 2015. She was approximately 30 years old when Epstein died in 2019. Shuliak was named as the primary beneficiary in Epstein's estate filings, with a bequest of approximately $50–100 million.
 
 Her name appears in the context of Gratitude America financial records alongside entities like "Baleto Teatras" — a Lithuanian ballet theater. Shuliak's Eastern European background and the Lithuanian ballet connection suggest that some of Gratitude America's minimal charitable activity may have been directed by or for the benefit of Epstein's personal relationship rather than arm's-length charitable purposes.
 
@@ -177,7 +177,7 @@ Key wires demonstrating investment vs. charitable split:
 - **Gratitude America**: 209 total files, 89 financial documents
 - **Investment/Charity ratio**: 83% investment (Boothbay, Honeycomb, Valar, Coatue, Foundation Medicine) / 17% charitable (Baleto Teatras, Cancer Research, C.O.U.Q., Florida Science, Moskowitz) by document frequency
 - **BV70 LLC**: Sole capitalization source at $10M (confirmed by wire ledger and rhowardstone)
-- **Karyna Shuliak**: 8 files — Epstein's girlfriend, Lithuanian-born, connected to Baleto Teatras
+- **Karyna Shuliak**: 8 files — Epstein's girlfriend, Belarusian-born dentist, connected to Baleto Teatras
 - **Deutsche Bank AG**: 76 files — primary banking relationship
 - **Method**: Entity co-occurrence analysis across Gratitude America financial documents
 
